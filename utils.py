@@ -31,3 +31,32 @@ def random_correlation(n, low=0.1, high=1.0):
     """
     return np.diag(np.random.uniform(low=low, high=high, size=n))
 
+def random_rotation(n):
+    """
+    Generate a random rotation matrix.
+
+    Adapted from:  http://arxiv.org/pdf/math-ph/0609050v2.pdf and
+    http://www.mathworks.com/matlabcentral/newsreader/view_thread/298500
+
+    **Parameters**
+
+        **n** : int
+
+            Size of the rotation matrix.
+
+    **Returns**
+
+        **q** : `numpy.matrix`
+
+            Random rotation matrix.
+
+    """
+    z = np.random.randn(n, n)
+    (q, r) = np.linalg.qr(z)
+    if (np.linalg.det(q) < 0):
+        i = int(np.random.random() * n)
+        q[:, i] = -q[:, i]
+    assert (np.abs(np.linalg.inv(q) - q.T) < 10**(-12)).all(), np.linalg.inv(q)
+    assert np.abs(np.linalg.det(q) - 1.0) < 10**(-12), np.linalg.det(q)
+    return q
+
