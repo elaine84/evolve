@@ -29,7 +29,7 @@ def random_correlation(n, low=0.1, high=1.0):
             is a diagonal (n x n) matrix.  Each entry is ~ U(0.1, 1).
     
     """
-    return np.diag(np.random.uniform(low=low, high=high, size=n))
+    return np.matrix(np.diag(np.random.uniform(low=low, high=high, size=n)))
 
 def random_rotation(n):
     """
@@ -58,5 +58,4 @@ def random_rotation(n):
         q[:, i] = -q[:, i]
     assert (np.abs(np.linalg.inv(q) - q.T) < 10**(-12)).all(), np.linalg.inv(q)
     assert np.abs(np.linalg.det(q) - 1.0) < 10**(-12), np.linalg.det(q)
-    return q
-
+    return np.matrix(q)
