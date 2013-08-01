@@ -1,6 +1,31 @@
 import numpy as np
 
 
+def random_response(k=10, n=100):
+    """
+    Generate a k-sparse vector of length n, with non-zero elements ~ U[-1, 1].
+
+    **Parameters**
+
+        **k** : int
+
+            Support size of the response.
+
+        **n** : int
+
+            Number of dimensions.
+
+    **Returns**
+
+        **w** : numpy.matrix
+
+            (n x 1) random vector that is k-sparse.
+
+    """
+    y = np.random.random(n) * 2 - 1
+    y[k:] = 0
+    return np.matrix(y[np.random.permutation(n)]).T
+
 def random_correlation(n, low=0.1, high=1.0):
     """
     Generates a random correlation matrix for an axis-aligned n-dim Gaussian.
