@@ -56,4 +56,4 @@ def enumerate_mutants(x, xmin=-1, xmax=1, delta=0.01):
         S[:, k] = -x[k]
         M = np.concatenate([M, S])
 
-    return M
+    return np.matrix(M)
