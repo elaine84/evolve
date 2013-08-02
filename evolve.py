@@ -26,6 +26,7 @@ def evolve(k=10, n=100, low=0.1, high=1.0, xmin=-1, xmax=1, delta=0.01, T=20):
     for t in range(T):
 
         # Generate all possible mutants.
+        # Um this forgot to apply the diffs...
         M = mutate.enumerate_mutants(np.array(u).flatten(), xmin=xmin, xmax=xmax, delta=delta).T
 
         # Expected L2 loss for each of the mutant responses.
@@ -40,3 +41,5 @@ def evolve(k=10, n=100, low=0.1, high=1.0, xmin=-1, xmax=1, delta=0.01, T=20):
         # Find the winner.
         u = M[:, i]
         se = SE[i]
+
+    return (w, u, rotation, cor)
