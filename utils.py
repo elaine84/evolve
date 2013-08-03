@@ -79,7 +79,8 @@ def random_rotation(n):
     z = np.random.randn(n, n)
 	 # QR Decomposition
     (q, r) = np.linalg.qr(z)
-	 q[:, 1] = -q[:, 1]
+    if (np.linalg.det(q) < 0):
+	   q[:, 1] = -q[:, 1]
     assert (np.abs(np.linalg.inv(q) - q.T) < 10**(-12)).all(), np.linalg.inv(q)
     assert np.abs(np.linalg.det(q) - 1.0) < 10**(-12), np.linalg.det(q)
     return np.matrix(q)
