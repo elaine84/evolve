@@ -5,7 +5,7 @@ import mutate
 import utils
 
 
-def evolve(k=10, n=100, low=0.1, high=1.0, xmin=-1, xmax=1, delta=0.01, T=20):
+def evolve(k=10, n=100, low=0.1, high=1.0, xmin=-1, xmax=1, delta=0.01, T=100):
 
     # Generate random target response.
     w = utils.random_response(k=k, n=n)
@@ -26,8 +26,7 @@ def evolve(k=10, n=100, low=0.1, high=1.0, xmin=-1, xmax=1, delta=0.01, T=20):
     for t in range(T):
 
         # Generate all possible mutants.
-        # Um this forgot to apply the diffs...
-        M = mutate.enumerate_mutants(np.array(u).flatten(), xmin=xmin, xmax=xmax, delta=delta).T
+        M = u + mutate.enumerate_mutants(np.array(u).flatten(), xmin=xmin, xmax=xmax, delta=delta).T
 
         # Expected L2 loss for each of the mutant responses.
         SE = np.array([error.sq_err(w, M[:, i], rotation, cor) for i in range(M.shape[1])])
