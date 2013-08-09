@@ -77,7 +77,7 @@ def random_rotation(n):
 
     """
     z = np.random.randn(n, n)
-	 # QR Decomposition
+    # QR Decomposition
     (q, r) = np.linalg.qr(z)
     if (np.linalg.det(q) < 0):
         q[:, 0] = -q[:, 0]

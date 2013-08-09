@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage[usenames]{color}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[round,colon]{natbib}
+
+\input{latex_macros}
+
+\begin{document}
+\title{Evolvability of Functions with Few Relevant Variables}
+\author{Elaine Angelino~\thanks{E. A. would like to thank Hugh Laurie} \\
+Harvard University \\ \texttt{elaine@eecs.harvard.edu} \and Varun
+Kanade~\thanks{This author is supported by a Simons Postdoctoral Fellowship.} \\
+UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}}
+
+\maketitle
+
+\begin{abstract}
+\input{files/abstract}
+\end{abstract}
+
+\section{Introduction}
+\todov{Testing this}
+\input{files/introduction}
+
+\section{Notation and Preliminaries}
+\input{files/notation}
+
+\section{Evolving Sparse Linear Functions}
+\input{files/sparse_linear}
+
+\section{Evolving Sparse LTFs}
+\input{files/sparse_LTF}
+
+\section{Evolving Sparse Disjunctions}
+\input{files/sparse_disj}
+
+\section{Conclusion and Future Work}
+\input{files/conclusion.tex}
+
+\subsection*{Acknowledgements} 
+
+\bibliography{all-refs}
+\nocite{*}
+\bibliographystyle{plainnat}
+
+\end{document}
