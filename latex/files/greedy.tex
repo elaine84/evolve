@@ -1,0 +1,25 @@
+We define a mutator that effectively minimizes $\lerr_D(w, w^*)$ in a greedy
+fashion with respect to $\lznorm w$.
+Assume that $w$ is initialized so that $S_w = \{i\}$ for some $i \in [n]$ and
+$w_i \in [-B, B]$ uniformly at random.
+For $w \in R$, define the mutated representation $w^\prime$, output by the mutator as:
+\begin{enumerate}
+\item With probability $1/2$ do nothing, set $w^\prime = w$.
+\item (Scaling) With probability $1/6 - \delta/3$, choose $\gamma \in [-1, 1]$ uniformly at random and
+let $w^\prime = \alpha w$. 
+\item (Adjusting) With probability $1/6 - \delta/3$, do the following. Let $S_w = \{ i~|~ w_i \neq 0
+\}$. Pick $i \in S_w$ uniformly at random. Let $w^\prime$ denote the
+mutated representation, where $w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in
+[-B, B]$ uniformly at random. 
+\item (Swapping) With probability $1/6 - \delta/3$, choose $i_1 \in S_w$ uniformly at random. Then, choose
+$i_2 \in [n] \setminus S_w$ uniformly at random. Let $w^\prime$ be the mutated
+representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$. Set
+$w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime$ uniformly from the range $[-B,
+B]$. Recall that in this case, $\lznorm{w^\prime} = \lznorm{w} = K$ with
+probability $1$, and that $w^\prime \in R$.
+\item (Adding) With the remaining probability $\delta$, do the following.
+If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random. Let
+$w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for $j \neq
+i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
+Otherwise, if $|S_w| = K$, do nothing, set $w^\prime = w$.
+\end{enumerate}
