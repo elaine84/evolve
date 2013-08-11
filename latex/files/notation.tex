@@ -1,5 +1,76 @@
-\vknote{We need to describe briefly the evolvability framework here.}
+We first provide an overview of the evolvability framework of
+\citet{Valiant:2009}. For a more detailed description of the various models
+studied in this framework the reader is referred to \cite{Kanade:2012}.
 
-\begin{definition} A distribution $D$ over $\reals^n$ is said to be
-\emph{need-a-good-word-here} 
+\subsection{Valiant's Evolvability Framework}
+
+\subsection{Notation and Elementary Results}
+
+We are mainly interested in the case when the instance space is $\reals^n$.
+Also, we will focus on distributions $D$ over $\reals^n$ that are sub-Gaussian,
+\ie for any $w \in \reals^n$ with $\ltwonorm{w} = 1$, if $X ~ D$, $\E[\exp((X
+\cdot w) t)] \leq \exp(c^2t^2/2)$ for some constant $c$.  For a random variable
+$X$, let $\var(X)$ denote the variance of $X$. Recall that for random variables
+$X, Y$, the correlation, $\corr(X, Y) = \E[(X - \E[X]) (Y - E[Y])]/\sqrt{\var(X)
+\var(Y)}$. We will work with the class of distributions, which we call zero-mean
+bounded-variance sub-Gaussian $\Delta$-smooth distributions.
+
+\vknote{This definition should be broken up and cleaned-up.} 
+
+\begin{definition} A distribution $D$ over $\reals^n$ is zero-mean
+bounded-variance $c^2$-sub-Gaussian and $\Delta$-smooth if
+\begin{enumerate}
+\item $\E[X] = 0$
+\item For $1 \leq i \leq n$, $\E[X_i^2] \leq 1$
+\item $D$ is $c^2$ sub-Gaussian
+\item $\E[\var(X_i ~|~ X_{-i})] \geq \Delta^2$.
+\end{enumerate}
 \end{definition}
+
+We will make repeated use for the following simple observation regarding this
+class of distributions.
+
+\begin{lemma} Let $D$ be a $\Delta$-smooth distribution. Then for all $i, j$,
+$|\corr(X_i, X_j)| \leq 1 - \Delta^2/2$.
+\end{lemma}
+\begin{proof}
+
+\end{proof}
+
+\subsection{Sparse Linear Functions} 
+
+We will represent a linear functions from $\reals^n \rightarrow \reals$ by a
+vector $w \in \reals^n$, where $x \mapsto w \cdot x$.  For a vector $w \in
+\reals^n$, $\lznorm{w}$ is the number of non-zero elements of $w$. Let $D$ be a
+distribtion over $\reals^n$. For $w, w^\prime$, define the inner product
+$\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$. (Note that
+$w \cdot x = \sum_{i = 1}^n w_i x_i$ denotes the standard dot product in
+$\reals^n$.) In the rest of this paper, we use $\ltwonorm{w}^2$ to denote the
+inner-product $\ip{w}{w}$. Whenever necessary, we will $\sum_{i} w_i^2$
+explicitly.
+
+For any $0 < l < u$ and integer $k$. Define the class of linear functions:
+\[
+C^k_{l, u} = \{ x \mapsto w \cdot x ~|~ \lznorm{w} \leq k, \forall i,
+w_i = 0 \mbox{ or } l \leq |w_i| \leq u \}
+\]
+
+Thus, $C^k_{l, u}$ is the class of sparse linear functions, where the influence
+of each variable is upper and lower bounded.
+
+For a distribution $D$ in the distribution class, we have the following useful
+properties. 
+\begin{lemma} Let $D$ be a zero-mean bounded-variance $c^2$-sub-Gaussian
+$\Delta$-smooth distribution. Then the following are true:
+\begin{enumerate}
+\item For any $w \in \reals^n$, $w^2_i \leq \ip{w}{w}/\Delta^2$
+\item For any $w \in \reals^n$, there exists $i$ such that $w^2_i \leq
+\frac{\ip{w}{w}}{\lznorm{w}\Delta^2}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+
+\end{proof}
+
+
+

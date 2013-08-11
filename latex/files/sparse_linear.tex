@@ -1,0 +1,145 @@
+In this section, we present a simple evolutionary algorithm for the class of
+sparse linear functions. The set of representations used by the evolutionary
+algorithm are themselves sparse linear functions.
+
+First, we define the class of representations used by the evolutionary
+algorithm. Each representation used by the algorithm will be a linear function
+with sparsity $K$, and the absolute value of each coefficient is bounded by $B$.
+We will specify $K$ and $B$ shortly. Thus, the representation class $R$ is
+\[ 
+R = \{ w \mapsto w \cdot x ~|~ \lznorm{w} \leq K, |w_i| \leq B \}
+\]
+
+Next, we define the mutator. Recall that the mutator is a randomized algorithm
+that takes as input an element from $R$ and outputs another element from $R$.
+For $w \in R$, define the mutated representation $w^\prime$, output by the mutator as:
+\begin{enumerate}
+\item With probability $1/2$ do nothing, set $w^\prime = w$.
+\item (Scaling) With probability $1/6$, choose $\gamma \in [-1, 1]$ uniformly at random and
+let $w^\prime = \alpha w$. 
+\item (Adjusting) With probability $1/6$, do the following. Let $S_w = \{ i~|~ w_i \neq 0
+\}$. Pick $i \in S_w$ uniformly at random. Let $w^\prime$ denote the
+mutated representation, where $w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in
+[-B, B]$ uniformly at random. 
+\item With the remaining $1/6$th probability, do the following:
+\begin{enumerate}
+\item (Swapping) If $|S_w| = K$, choose $i_1 \in S_w$ uniformly at random. Then, choose
+$i_2 \in [n] \setminus S_w$ uniformly at random. Let $w^\prime$ be the mutated
+representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$. Set
+$w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime$ uniformly from the range $[-B,
+B]$. Recall that in this case, $\lznorm{w^\prime} = \lznorm{w} = K$ with
+probability $1$, and that $w^\prime \in R$.
+\item (Adding) If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random. Let
+$w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for $j \neq
+i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
+\end{enumerate}
+\end{enumerate}
+
+In the ensuing discussion, we will prove that for any target function $w^* \in
+C^k_{l,u}$, if $w \in R$ is such that $\lerr_D(w, w^*) = \ltwonorm{w - w^*}^2 >
+\epsilon$, then the mutator outputs a mutation which descreases the error by a
+non-negligible amount with non-negligible probability. To simplify notation,
+henceforth we think of $w$ as our current representation and $S \subseteq [n]$
+the variables for which $w_i \neq 0$. Note that $|S| \leq K$.  Let $w^*_S$
+denote the best approximation of $w^*$ using the variables in the set $S$.
+Formally, 
+\[ 
+w^*_S = \argmin_{w \in R ~:~	w_i = 0 \vee i \in S} \ltwonorm{w^*- w}^2
+\]
+
+We will establish our claim by proving the following claims.
+\begin{enumerate}
+\item[Claim A] If $\ltwonorm{w} \geq 2 \ltwonorm{w^*_S}$, then the probability
+with probability at least $1/48$ the mutator outputs a mutation that reduces
+$\lerror$ by at least $\ltwonorm{w - w^*_S}^2/12$.
+\item[Claim B] When $\ltwonorm{w} \leq 2 \ltwonorm{w^*_S}$ and $\ltwonorm{w - w^*_S}
+\geq \alpha$, then with probability at least $\alpha$, there exists a mutation
+that decreases the $\lerror$ by at least $\alpha$.
+\item[Claim C] When $\ltwonorm{w - w^*_S} \leq \epsilon$, but $\sparseset{w^*}
+\not\subseteq S$, then there exists a mutation that decreases $\lerror$ by at
+least \emph{BLAH}.
+\end{enumerate}
+
+Finally, note that when $\sparseset{w^*} \subseteq S$, then $w_S^* = w^*$ (under
+the class of our distributions). Thus, in this case when $\ltwonorm{w - w^*_S}^2
+\leq \epsilon$, the evolutionary algorithm has succeeded.
+
+To establish Claim A above, note that if one is only allowed to scale $w$ then
+the best approximation to $w^*S$ is obtained by
+$\frac{\ip{w}{w^*_S}}{\ltwonorm{w}^2} w$.  Clearly we have that, 
+\[
+\left\Vert \frac{\ip{w}{w^*_S}}{\ltwonorm{w}^2} w \right\Vert \leq
+\ltwonorm{w^*_S} \leq \ltwonorm{w}/2
+\]
+Hence, if $\gamma \in [1/2, 3/4]$ if $\ip{w}{w^*_S} > 0$ (and similarly for
+$\gamma \in [-3/4, -1/2]$ if $\ip{w}{w^*_S} < 0$), we have that,
+\begin{align*}
+\ltwonorm{\gamma w - w^*S}^2 &= \ltwonorm{w - w^*_S}^2 - 2 (1 - \gamma) \ip{w -
+w^*S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
+&\leq \ltwonorm{w - w^*_S}^2 - (1 - \gamma) \ltwonorm{w}^2 + (1 - \gamma)^2
+\ltwonorm{w}^2 \\
+&\leq \ltwonorm{w - w^*_S}^2 - (\gamma - \gamma^2) \ltwonorm{w}^2
+\intertext{Finally, by observing that for $\gamma \in [1/2, 3/4]$, $\gamma -
+\gamma^2 \geq 3/16$ and that $\ltwonorm{w} \geq (2/3)\ltwonorm{w - w^*_S}$ when
+$\ltwonorm{w} \geq 2 \ltwonorm{w^*_S}$, we get that}
+\ltwonorm{\gamma w - w^*_S}^2 &\leq \ltwonorm{w - w^*_S}^2 - \frac{1}{12}
+\ltwonorm{w - w^*_S}^2
+\end{align*}
+
+This establishes Claim A above. Next, we establish Claim B. By
+Lemma~\ref{lem:large_coeff}, there must be some $i$ for which, $(w_i -
+(w^*_S)_i)\ip{e_i}{w - w^*_S} \geq \ltwonorm{w - w^*_S}^2/|S|$. Note that
+$\lznorm{w - w^*_S} \leq |S|$. Next, let $\beta = \ip{e_i}{w
+- w^*_S}/\ltwonorm{e_i}^2$. Consider any $w^\prime \in R$ satisfying: (i)
+$w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in [w_i + \beta/2, w_i +
+3\beta/2]$. Assuming that $w^\prime$ is a valid mutation, \ie $|w^\prime_i|
+\leq B$, we know that the probability of some such $w^\prime$ being the output
+by the mutator is at least $\beta/(12KB)$. Then for any such $w^\prime$, we have
+\begin{align*}
+\ltwonorm{w^*_S - w^\prime}^2 &= \ltwonorm{w^*S - w - \gamma e_i}^2
+\intertext{Here, $\gamma \in [\beta/2, 3\beta/2]$}
+&= \ltwonorm{w^*_S - w}^2 - 2 \gamma \ip{e_i}{w^*_S - w} + \gamma^2
+\ltwonorm{e_i}^2
+&= \ltwonorm{w^*_S - w}^2 - (2 \gamma \beta - \gamma^2) \ltwonorm{e_i}^2
+\leq \ltwonorm{w^*_S - w}^2 - (3/4)\beta^2
+\intertext{Using Lemma~\ref{lemma:not-very-large}, the definition of $\beta$ and
+the condition that $(w_i - (w^*_S)_i) \ip{e_i}{w^*_S - w} \geq \ltwonorm{w^*_S -
+w}^2/K$, we get that}
+\ltwonorm{w^*_S - w^\prime}^2 &\leq \ltwonorm{w^*_S - w}^2 - \frac{\Delta^2
+\ltwonorm{w^*S - w}^2}{K^2}
+\end{align*}
+
+Thus, as long as $\ltwonorm{w^*S - w}^2 \geq \epsilon$, we know that either a
+mutated representation obtained by \emph{scaling} or by \emph{adjusting} is
+always strictly beneficial by margin $\frac{\epsilon \Delta^2}{K^2}$. Now, if
+$\sparseset{w^*} \subseteq S$, then $w^* = w^*_S$ and evolution has succeeded.
+Next, we make the simple observation that as long as $S$ is missing at least one
+element from $\sparseset(w^*)$, $\ltwonorm{w^* - w^*_S} \geq u \Delta^2$. In
+order to show establish Claim C, we show that by adding some variable from
+$\sparseset(w^*) \setminus S$ and deleting some variable from $S$, we decrease
+$\lerror$. Note that, if $|S| < K$ and we don't need to delete a variable, then
+the situation is even better. So we only consider the case when $|S| = K$. 
+
+Here, we assume that $\ltwonorm{w^*_S - w}^2 \leq \epsilon$ (because otherwise
+we konw that a beneficial mutation already exists with non-negligible
+probability). Using Lemma~\ref{lemma:at-least-one-small}, we know that there
+exists $i \in S$, such that $|w_i| \leq \ltwonorm{w}/(\Delta \sqrt{K}$. Consider
+the following:
+
+\begin{align*}
+\ltwonorm{w^* - w}^2 &= \ip{w^* - w}{w^* - w}
+&= \ip{w^* - w^*_S}{w^* - w} + \ip{w^*S - w}{w^* - w}
+\intertext{Since $\ltwonorm{w^*S - w} \leq \sqrt{\epsilon}$ and $\ltwonorm{w^* -
+w} \leq 3 \ltwonorm{w^*}$, we get that for $\epsilon$ small enough,}
+\ltwonorm{w^* - w}^2 &\leq 2 \ip{w^* - w^*_S}{w^* - w}
+\intertext{Next, we observe that $\ip{w^* - w^*_S}{e_i} = 0$ for every $i \in
+S$, since by definition of $w^*_S$ is the projection of $w^*$ in the space
+spanned by the variables in the set $S$. Thus, it must be the case that there
+exists some $j \in \sparseset(w^*) \setminus S$, such that}
+w^*_j \ip{w^* - w}{e_j} &\geq \frac{\ltwonorm{w^* - w}^2}{2k} \geq \frac{\Delta^2
+l^2}{2k}
+\intertext{Let $\beta = \ip{w^* - w}{e_j}/\ltwonorm{e_j}^2$. As argued in the
+proof of Claim $B$, if $\gamma \in [\beta/2, 3\beta/2$ causes $\lerror$ to drop
+by at least $3 \beta^2/ 4$. Also in this case, we need to verify that $\beta \in
+[-B, B]$.}
+\end{align*}
