@@ -5,7 +5,7 @@ For $w \in R$, define the mutated representation $w^\prime$, output by the mutat
 \begin{enumerate}
 \item With probability $1/2$ do nothing, set $w^\prime = w$.
 \item (Scaling) With probability $1/4 - \delta/2$, choose $\gamma \in [-1, 1]$ uniformly at random and
-let $w^\prime = \alpha w$. 
+let $w^\prime = \gamma w$.
 \item (Adjusting) With probability $1/4 - \delta/2$, do the following. Let $S_w = \{ i~|~ w_i \neq 0
 \}$. Pick $i \in S_w$ uniformly at random. Let $w^\prime$ denote the
 mutated representation, where $w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in
