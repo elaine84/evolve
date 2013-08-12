@@ -1,18 +1,84 @@
-We define a mutator that effectively minimizes $\lerr_D(w, w^*)$ in a greedy
-fashion with respect to $\sparseset(w)$.
-Assume that $w$ is initialized so that $\sparseset(w) = \emptyset$.
+We define a mutator that, under strong enough selection,
+minimizes $\lerr_D(w, w^*)$ in a greedy fashion with respect to $\sparseset(w)$.
 For $w \in R$, define the mutated representation $w^\prime$, output by the mutator as:
 \begin{enumerate}
 \item With probability $1/2$ do nothing, set $w^\prime = w$.
-\item (Scaling) With probability $1/4 - \delta/2$, choose $\gamma \in [-1, 1]$ uniformly at random and
-let $w^\prime = \gamma w$.
-\item (Adjusting) With probability $1/4 - \delta/2$, do the following. Let $S_w = \{ i~|~ w_i \neq 0
-\}$. Pick $i \in S_w$ uniformly at random. Let $w^\prime$ denote the
-mutated representation, where $w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in
-[-B, B]$ uniformly at random. 
-\item (Adding) With the remaining probability $\delta$, do the following.
-If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random. Let
-$w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for $j \neq
-i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
+\item (Scaling) With probability $1/4 - \lambda/2$, choose $\gamma \in [-1, 1]$
+uniformly at random and let $w^\prime = \gamma w$.
+\item (Adjusting) With probability $1/4 - \lambda/2$, do the following.
+Let $S_w = \{ i~|~ w_i \neq 0\}$. Pick $i \in S_w$ uniformly at random.
+Let $w^\prime$ denote the mutated representation, where
+$w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in [-B, B]$ uniformly at random.
+\item (Adding) With the remaining probability $\lambda$, do the following.
+If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random.
+Let $w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for
+$j \neq i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$.
 Otherwise, if $|S_w| = K$, do nothing, set $w^\prime = w$.
 \end{enumerate}
+
+We present a selection framework that results in greedy progress in the sense
+that, with high probability, $\lerr_D(w, w^*_S)$ is minimized for fixed $|S|$
+before an adding step increments $|S|$.
+Specifically, selection initializes $w = 0$ so that $\sparseset(w) = \emptyset$,
+then greedily identifies $\sparseset(w^*)$ such that
+$\sparseset(w) \subseteq \sparseset(w^\prime) \subseteq \sparseset(w^*)$
+throughout the selection process.
+This is inspired by and can be thought of as a robust version of a
+greedy algorithm known in the signal processing literature as
+orthogonal matching pursuit (OMP)~\cite{donoho48,tropp156}.
+For an excellent review of related algorithms and issues from the perspective
+of compressed sensing, see~\cite{donoho}.
+
+\begin{enumerate}
+\item (Initialization) Selection initializes $w = 0$, so $\sparseset(w) = \emptyset$.
+\item (Main iteration)
+	\begin{enumerate}
+	\item Choose one class of mutations at random according to their probabilities.
+	\item Generate $M > 2B(n - K) / \delta$ (+ extra?) mutants uniformly at random within that class.
+	\item Set $w^\prime$ to the winner.
+	\end{enumerate}
+\end{enumerate}
+
+In the ensuing discussion, we will prove that for any target function
+$w^* \in C^k_{l,u}$, if $w \in R$ is such that
+$\lerr_D(w, w^*) = \ltwonorm{w - w^*}^2 > \epsilon$,
+then the mutator outputs a mutation which decreases the error by a
+non-negligible amount with non-negligible probability.
+We will establish our claim by proving the following claims.
+
+\begin{enumerate}
+\item[Claim A] For $\lambda$ small enough, if $\ltwonorm{w - w^*_S}^2 > \epsilon$,
+then with non-negligible probability, the mutator will output a mutation $w^\prime$ such
+that $\sparseset(w^\prime) = \sparseset(w)$ and it reduces $\lerror$ by at least some amount.
+\item[Claim B] If $\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
+such that either $\sparseset(w^\prime) = \sparseset(w)$ and
+$\ltwonorm{w^\prime - w^*_S}^2 < \epsilon$, or
+$\sparseset(w^\prime) \setminus \sparseset(w) = \{i\}$ where $i \in \sparseset(w^*)$
+and $w^\prime$ reduces $\lerror$ by at least some amount.
+\end{enumerate}
+
+To establish Claim A above,
+
+For Claim B, in the case that selection chose the adding class of mutations,
+we must show that the new index $i \in \sparseset(w^*)$, where
+$\{i\} = \sparseset(w^\prime) \setminus \sparseset(w)$.
+We show that among the set of mutants output by the mutator, with high probability
+there will exist at least one mutant such that it reduces $\lerror$ by something.
+
+Let $\hat{w}$ be the best approximation of $w^*$ such that $\hat{w}_i \in [-B, B]$
+for some $i \in [n] \setminus \sparseset(w)$ and $\hat{w}_j = w_j$ for $j \neq i$;
+in other words, $\hat{w}$ is the best possible output achieved by mutating $w$ with
+one adding step.
+In expectation, if $\lznorm{w} = k$, then $M / (n - k)$ of the generated mutants
+$v$ will have $\sparseset(v) = \sparseset(\hat{w})$, and each will satisfy
+$\ltwonorm{v - \hat{w}}^2 < \delta$ with probability $\delta/2B$.
+Thus in expectation, $\delta M / 2B(n - k) > 1$ mutants will be
+``$\delta$-close'' to $\hat{w}$.
+The remaining mutants with $\sparseset(v) \neq \sparseset(\hat{w})$ have
+$\ltwonorm{v - \hat{w}}^2 > \rho$ because the things aren't very correlated \dots
+
+We must show that $i \in \sparseset(w^*)$ and furthermore that
+$\ltwonorm{\hat{w} - w^*}^2 < \ltwonorm{w - w^*}^2 - something$.
+We start with the initial representation, $w=0$.
+Without loss of generality, arrange $w^*$ so that $\sparseset(w^*) = [K]$,
+in decreasing order of the values \dots. Initially, the residual is $w^*$.
