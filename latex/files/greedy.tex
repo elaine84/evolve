@@ -47,19 +47,33 @@ non-negligible amount with non-negligible probability.
 We will establish our claim by proving the following claims.
 
 \begin{enumerate}
-\item[Claim A] For $\lambda$ small enough, if $\ltwonorm{w - w^*_S}^2 > \epsilon$,
-then with non-negligible probability, the mutator will output a mutation $w^\prime$ such
-that $\sparseset(w^\prime) = \sparseset(w)$ and it reduces $\lerror$ by at least some amount.
-\item[Claim B] If $\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
+\item[Claim A] If $\ltwonorm{w} \ge 2 \ltwonorm{w^*_S}$, then for $M \ge 1$,
+with probability at least $1/16 - \lambda/8 \ge something$ the mutator outputs
+a mutation that reduces $\lerror$ by at least $\ltwonorm{w - w^*_S}^2 / 8$.
+\item[Claim B] If $\ltwonorm{w} \le 2 \ltwonorm{w^*_S}$ and
+$\ltwonorm{w - w^*_S} \ge \alpha$, then with probability at least $\alpha$,
+there exists a mutation that decreases the $\lerror$ by at least $\alpha$.
+\item[Claim C] If $\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
 such that either $\sparseset(w^\prime) = \sparseset(w)$ and
 $\ltwonorm{w^\prime - w^*_S}^2 < \epsilon$, or
 $\sparseset(w^\prime) \setminus \sparseset(w) = \{i\}$ where $i \in \sparseset(w^*)$
 and $w^\prime$ reduces $\lerror$ by at least some amount.
 \end{enumerate}
 
-To establish Claim A above,
+To establish Claims A and B above, we follow the lines of reasoning from the
+previous section.
+For Claim A, we consider the case where selection has chosen the scaling class
+of mutants.  With the assumption that $\ltwonorm{w} \ge 2 \ltwonorm{w_S^2}$ and
+for each of the generated mutants $\gamma w$ with $\gamma \in [1/2, 3/4]$,
+we obtain
 
-For Claim B, in the case that selection chose the adding class of mutations,
+\[
+\ltwonorm{\gamma w - w^*_S}^2 \le \ltwonorm{w - w^*_S}^2 - \frac{1}{8}\ltwonorm{w - w^*_S}^2.
+\]
+
+For Claim B, \dots
+
+For Claim C, in the case that selection chose the adding class of mutations,
 we must show that the new index $i \in \sparseset(w^*)$, where
 $\{i\} = \sparseset(w^\prime) \setminus \sparseset(w)$.
 We show that among the set of mutants output by the mutator, with high probability
@@ -75,10 +89,14 @@ $\ltwonorm{v - \hat{w}}^2 < \delta$ with probability $\delta/2B$.
 Thus in expectation, $\delta M / 2B(n - k) > 1$ mutants will be
 ``$\delta$-close'' to $\hat{w}$.
 The remaining mutants with $\sparseset(v) \neq \sparseset(\hat{w})$ have
-$\ltwonorm{v - \hat{w}}^2 > \rho$ because the things aren't very correlated \dots
+$\ltwonorm{v - \hat{w}}^2 > \rho = some~function~of~\Delta$
+because the things aren't very correlated \dots
 
 We must show that $i \in \sparseset(w^*)$ and furthermore that
 $\ltwonorm{\hat{w} - w^*}^2 < \ltwonorm{w - w^*}^2 - something$.
 We start with the initial representation, $w=0$.
 Without loss of generality, arrange $w^*$ so that $\sparseset(w^*) = [K]$,
 in decreasing order of the values \dots. Initially, the residual is $w^*$.
+
+By Lemma~\ref{} we have $|\corr(X_i, X_j)| \leq 1 - \Delta^2/2$.
+
