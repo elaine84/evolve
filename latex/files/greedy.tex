@@ -25,9 +25,9 @@ $\sparseset(w) \subseteq \sparseset(w^\prime) \subseteq \sparseset(w^*)$
 throughout the selection process.
 This is inspired by and can be thought of as a robust version of a
 greedy algorithm known in the signal processing literature as
-orthogonal matching pursuit (OMP)~\cite{donoho48,tropp156}.
+orthogonal matching pursuit (OMP)~\cite{Tropp:2004-greed,Donoho:2006-recovery}.
 For an excellent review of related algorithms and issues from the perspective
-of compressed sensing, see~\cite{donoho}.
+of compressed sensing, see~\cite{Donoho:2009-sparse}.
 
 \begin{enumerate}
 \item (Initialization) Selection initializes $w = 0$, so $\sparseset(w) = \emptyset$.
@@ -54,7 +54,7 @@ a mutation that reduces $\lerror$ by at least $\ltwonorm{w - w^*_S}^2 / 8$.
 \item[Claim B] If $\ltwonorm{w} \le 2 \ltwonorm{w^*_S}$ and
 $\ltwonorm{w - w^*_S} \ge \alpha$, then with probability at least $\alpha$,
 there exists a mutation that decreases the $\lerror$ by at least $\alpha$.
-\item[Claim C] If $\sparsity(w^*_S) = K < (1 + 1/(1-\Delta^2))/2$ and
+\item[Claim C] If $\sparsity(w^*) = K < (1 + 1/(1-\Delta^2))/2$ and
 $\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
 such that either $\sparseset(w^\prime) = \sparseset(w)$ and
 $\ltwonorm{w^\prime - w^*_S}^2 < \epsilon$, or
@@ -109,17 +109,14 @@ $\hat{w}_{\{j\}}$ for each $j \in [n]$ that minimizes the residual to within
 $\delta$ of the optimal solution restricted to $\{j\}$, i.e.,
 $\ltwonorm{\hat{w}_{\{j\}} - w^*}^2 < \ltwonorm{w^*_{\{j\}} - w^*}^2 + \delta$.
 The $\lerror$ of $w^*_{\{j\}}$ is
-\eanote{Check the last step in the statement below!}
+\eanote{Check the last step below!}
 
-\[
+\begin{align*}
 \ltwonorm{w^*_{\{j\}} - w^*}^2 = \min_{w_{\{j\}}}{\ltwonorm{w_{\{j\}} - w^*}}^2
-= \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} - w^* \bigg \Vert^2
-\]
-
-\[
-= \ltwonorm{w^*}^2 - 2 \bigg \langle e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2}, w^* \bigg \rangle + \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} \bigg \Vert^2 
-= \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
-\]
+&= \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} - w^* \bigg \Vert^2 \\
+&= \ltwonorm{w^*}^2 - 2 \bigg \langle e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2}, w^* \bigg \rangle + \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} \bigg \Vert^2 \\
+&= \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
+\end{align*}
 
 \noindent Note that
 
@@ -144,31 +141,23 @@ $|\corr(X_i, X_j)| \leq 1 - \Delta^2$ from Lemma~\ref{} and also
 that we arranged the $w^*_k \vert \sqrt{\var(X_k)}$ in decreasing order.
 On the left,
 
-\[
+\begin{align*}
 \bigg\vert \frac{\ip{e_1}{w^*}}{\ltwonorm{e_1}} \bigg\vert
-= \frac{\vert\sum_{k=1}^K w^*_k \E[X_1 X_k]\vert}{\sqrt{\var(X_1)}}
-\]
-\[
-\ge \frac{\vert w^*_1 \E[X_1 X_1]\vert}{\sqrt{\var(X_1)}} - \frac{\sum_{k=2}^K \vert w^*_k \E[X_1 X_k] \vert}{\sqrt{\var(X_1)}}
-= \vert w^*_1 \vert \sqrt{\var(X_1)} - \sum_{k=2}^K \vert w^*_k \vert \sqrt{\var(X_k)}~\vert \corr(X_1, X_k) \vert
-\]
-\[
-\ge \vert w^*_1 \vert \sqrt{\var(X_1)} - \sum_{k=2}^K \vert w^*_k \vert \sqrt{\var(X_k)} (1 - \Delta^2/2)
-\ge \vert w^*_1 \vert \sqrt{\var(X_1)}(1 - (1 - \Delta^2) (K-1))
-\]
+&= \frac{\vert\sum_{k=1}^K w^*_k \E[X_1 X_k]\vert}{\sqrt{\var(X_1)}} \\
+&\ge \frac{\vert w^*_1 \E[X_1 X_1]\vert}{\sqrt{\var(X_1)}} - \frac{\sum_{k=2}^K \vert w^*_k \E[X_1 X_k] \vert}{\sqrt{\var(X_1)}} \\
+&= \vert w^*_1 \vert \sqrt{\var(X_1)} - \sum_{k=2}^K \vert w^*_k \vert \sqrt{\var(X_k)}~\vert \corr(X_1, X_k) \vert \\
+&\ge \vert w^*_1 \vert \sqrt{\var(X_1)}(1 - (1 - \Delta^2) (K-1))
+\end{align*}
 
 \noindent On the right,
 
-\[
+\begin{align*}
 \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert
 = \frac{\vert\sum_{k=1}^K w^*_k \E[X_i X_k]\vert}{\sqrt{\var(X_i)}}
 \le \sum_{k=1}^K \vert w^*_k \vert \frac{\vert \E[X_i X_k]\vert}{\sqrt{\var(X_i)}}
-= \sum_{k=1}^K \vert w^*_k \vert \sqrt{\var(X_k)} \corr(X_i, X_k)
-\]
-\[
-\le \sum_{k=1}^K \vert w^*_k \vert \sqrt{\var(X_k)} (1 - \Delta^2)
-\le \vert w^*_1 \vert \sqrt{\var(X_1)} (1 - \Delta^2) K.
-\]
+&= \sum_{k=1}^K \vert w^*_k \vert \sqrt{\var(X_k)} \corr(X_i, X_k) \\
+&\le \vert w^*_1 \vert \sqrt{\var(X_1)} (1 - \Delta^2) K.
+\end{align*}
 
 \noindent Putting these bounds together now gives the requirement
 
@@ -179,12 +168,13 @@ On the left,
 \ge \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert,
 \]
 
-\noindent thus
+\noindent and so
 
-\[
-1 - (1 - \Delta^2) (K-1) = 2 - K + \Delta^2 K - \Delta^2 > (1 - \Delta^2) K
-\]
-\[
-\Rightarrow 1 + (1 - \Delta^2) > 2 (1 - \Delta^2) K
-\qquad \Rightarrow \qquad K < \frac{1}{2} \biggl( 1 + \frac{1}{1 - \Delta^2} \biggr)
-\]
+\begin{align*}
+&1 - (1 - \Delta^2) (K-1) = 2 - K + \Delta^2 K - \Delta^2 > (1 - \Delta^2) K \\
+\Rightarrow & \qquad 1 + (1 - \Delta^2) > 2 (1 - \Delta^2) K
+\qquad \Rightarrow \qquad K < \frac{1}{2} \biggl( 1 + \frac{1}{1 - \Delta^2} \biggr).
+\end{align*}
+
+\noindent  This is the required condition for $\sparsity(w^*)$ in our claim.
+\eanote{Finally, argue that subsequent steps work too.}
