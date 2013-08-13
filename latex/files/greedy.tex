@@ -108,8 +108,12 @@ Note that the $\lerror$ of $w^*_{\{j\}}$ is
 
 \[
 \ltwonorm{w^*_{\{j\}} - w^*}^2 = \min_{w_{\{j\}}}{\ltwonorm{w_{\{j\}} - w^*}}^2
-= \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} - w^* \bigg \Vert_2^2
-= \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
+= \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} - w^* \bigg \Vert_2^2 \ge 0
+\]
+
+\[
+= \ltwonorm{w^*}^2 - 2 \bigg \langle e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2}, w^* \bigg \rangle + \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} \bigg \Vert_2^2 
+= \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.~[check]
 \]
 
 Now notice that
@@ -118,6 +122,7 @@ Now notice that
 \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2}
 = \frac{(\E[(e_j \cdot X)(w^* \cdot X)])^2}{\E[(e_j \cdot X)(e_j \cdot X)]}
 = \frac{(\E[X_j (w^* \cdot X)])^2}{\E[X_j^2]}
+= \frac{(\sum_{k=1}^K w^*_k \E[X_j X_k]))^2}{\E[X_j^2]}
 \]
 
 For selection to choose a mutant $\hat{w}_{\{j\}}$ with
