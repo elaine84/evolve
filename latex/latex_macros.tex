@@ -1,5 +1,7 @@
-\newcommand{\todov}[1]{{\marginpar{\color{blue} VK: #1}}}
-\newcommand{\vknote}[1]{{\color{blue} #1}}
+\newcommand{\todovk}[1]{{\marginpar{\color{blue} (VK) #1}}}
+\newcommand{\todoea}[1]{{\marginpar{\color{blue} (EA) #1}}}
+\newcommand{\vknote}[1]{{\color{blue} (VK) #1}}
+\newcommand{\eanote}[1]{{\color{red} (EA) #1}}
 
 \def\ie{{\it i.e.}~}
 \def\eg{{\it e.g.}~}
@@ -40,11 +42,13 @@
 \def\evalg{\mathrm{EA}}
 \def\Sel{\mathsf{Sel}}
 \def\Dists{{\mathcal D}}
+\def\loss{\mathrm{L}}
+\def\lin{\mathsf{Lin}}
 
 \newcommand{\dtv}[1]{{ \Vert #1 \Vert_{\mbox{\footnotesize{TV}}}}}
 \newcommand{\pinorm}[1]{{ \Vert #1 \Vert_{\pi}}}
 \newcommand{\lznorm}[1]{\mathrm{sparsity}(#1)}
-\newcommand{\ltwonorm}[1]{{\Vert #1 \Vert_{2}}}
+\newcommand{\ltwonorm}[1]{\Vert #1 \Vert}
 \newcommand{\ip}[2]{\langle #1, #2 \rangle}
 
 \newtheorem{lemma}{Lemma}

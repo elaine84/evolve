@@ -1,8 +1,22 @@
+@string{ jacm = "Journal of the ACM"}
+@string{ cacm = "Communications of the ACM"}
+@string{ jcss = "Journal of Computing "}
+@string{ stoc = "Proceedings of the Symposium on the Theory of Computation (STOC)"}
+@string{ colt = "Proceedings of the Conference on Learning Theory (COLT)"}
+@string{ jmlr = "Journal of Machine Learning Research (JMLR)"}
+@string{ itcs = "Proceedings of Innovations in Theoretical Computer Science (ITCS)"}
+@string{ focs = "Proceedings of IEEE Conference on the Foundations of Computer Science (FOCS)"}
+@string{ nips = "Neural Information Processing Systems (NIPS)"}
+@string{ pnas = "Proceedings of the National Academy of Science"}
+@string{ stacs = "Proceedings of the Symposium on Theoretical Aspects of
+Computer Science"}
+@string{ alt = "Proceedings of Algorithmic Learning Theory"}
+
 @article{JSV:2004,
 	author = {Jerrum, Mark and Sinclair, Alistair and Vigoda, Eric},
 	title = {A polynomial-time approximation algorithm for the permanent of a
 	matrix with nonnegative entries},
-  	journal = {J. ACM},
+  	journal = jacm,
 	volume = {51}, 
 	number = {4}, 
 	month = {jul}, 
@@ -220,3 +234,50 @@
 	pages = {308--317},
 } 
 
+@article{Valiant:2009-evolvability, 
+	author = {Valiant, Leslie G.}, 
+	title = {Evolvability}, 
+	journal = jacm, 
+	volume = {56}, 
+	number = {1}, 
+	year = {2009}, 
+	pages = {3:1--3:21}, 
+	publisher = {ACM}, 
+	address = {New York, NY, USA}, 
+	keywords = {Evolvable, PAC learning, SQ learning}, 
+} 
+
+@inproceedings{Feldman:2008-evolvability,
+	title = "Evolution from Learning Algorithms",
+	author = "Vitaly Feldman",
+	year = "2008",
+	booktitle = stoc,
+}
+
+@inproceedings{Feldman:2009-robustness,
+	title = "Robustness of Evolvability",
+	author = "Vitaly Feldman",
+	year = "2009",
+	booktitle = colt,
+}
+
+@inproceedings{Valiant:2012-real,
+	title = "Evolvability of Real-Valued Functions",
+	author = "Paul Valiant",
+	year = "2012",
+	booktitle = itcs,
+}
+
+@phdthesis{Kanade:2012-thesis,
+	title = "Computational Questions in Evolution",
+	author = "Varun Kanade",
+	year = "2012",
+	school = "Harvard University",
+}
+
+@inproceedings{KVV:2010-drift,
+	title = "Evolution with Drifting Targets",
+	author = "Varun Kanade and Jennifer Wortman Vaughan and Leslie G. Valiant",
+	year = "2010",
+	booktitle = colt,
+}
