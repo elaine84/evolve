@@ -1,0 +1,84 @@
+Darwin's theory of evolution through natural selection has been central to the
+study of evolution. The modern theory of genetics  -- phenotype -- genotype --
+regulatory networks. 
+
+Valiant (2006) introduced a model of evolution to address the question of
+complexity that may arise through Darwinian mechanisms. In particular, in
+Valiant's model a creature is a representation that computes a boolean function
+on some domain $X$. The goal is to compute a function that is close to an
+\emph{ideal function} with respect to some underlying distribution on $X$.
+Valiant defines what feasible mutations may be applied to a representation, and
+how (natural) selection may be modeled. The model is described in some detail in
+Section~\ref{sec:evolve-model}, but the main idea is that from the pool of
+possible mutations, one that increases performance is selected. In the spirit of
+computational learning theory, the question is for what classes of ideal
+functions, does evolution always succeed within feasible resources?
+
+In a remarkable result, Feldman~\cite{Feldman:2008}, showed that the class of
+functions \emph{evolvable} in Valiant's model is exactly captured by the class
+of functions learnable in a restriction of Kearns' statistical query
+model~\cite{Kearns:1998}, the correlational SQ model. Feldman's reduction
+cleverly encodes the state of the algorithm, including the queries it may make,
+and shows that combined with selection of beneficial mutations this essentially
+simulates query responses. 
+
+P. Valiant considers the evolution of \emph{real-valued}
+functions~\cite{Valiant:2012-reals}. When considering real-valued functions, the
+choice of \emph{loss} or \emph{performance} metric, measuring the distance
+between the candidate and ideal function becomes important. P. Valiant showed
+that,  -- weak oracle -- optimization -- similar to Feldman's reduction.
+
+On the other hand, more direct evolutionary algorithms have been considered.
+Valiant in his original paper, showed that under the uniform distribution the
+class of disjunctions are evolvable by a set of simple
+mutations~\cite{Valiant:2009}. Later, Kanade, Valiant and Vaughan showed that
+the class of homogeneous linear separators under radially symmetric
+distributions may also be evolved through simple mutations~\cite{KVV:2010}. P.
+Valiant showed that under squared loss, the class of low-degree polynomials is
+evolvable, again using essentially random mutations.
+
+\subsection{The Biology of Representation}
+
+In Valiant's model, a creature is regarded as computing a boolean function from
+some domain $X$, $r : X \rightarrow \{0, 1\}$. Valiant allows the representation
+of $\langle r \rangle$ to be an arbitrary binary string, such that there is an
+\emph{efficient} Turing machine $M$, that given the description $\langle r
+\rangle$ and $x \in X$ as input, outputs $r(x)$. The generality of this
+definition is appealing, because it very elegantly captures the outer limits of
+evolution, under the Church-Turing hypothesis. However, this generality also has
+the effect of allowing encoding of arbitrary computations, inherent in the proof
+of equivalence between evolvability and correlational statistical query
+learning.
+
+In several biological situtations, however, it may be important to restrict the
+class of representation. In the following discussion, we focus on transcription
+regulatory networks. However, depending on the system concerned one may come up
+with suitable restrictions on the class of representations.
+
+Systems bio -- blah -- fill this in. In the case of transcription networks, a
+set of proteins called \emph{transcription factors}, may regulate a gene. The
+protein encoded by this gene may itself be a transcription factor, or an
+\vknote{output}. The way in which a transcription factor regulates the
+production (or inhibits production) of a protein, is by binding to the promoter
+region just \emph{upstream} (adjacent), to the gene. This introduces physical
+limits on how many TFs may affect a particular gene. Another important factor,
+is the number of steps before the desired output is produced. In transcription
+networks, in order for sufficient quantity of protein to be produced requires
+time that is the same order of magnitude as cell-division time. Hence, the
+number of steps, before the desired output is produced is typically very small.
+These regulatory networks are represented by directed acyclic graphs. 
+
+Thus, a natural restriction one may place on the representation used by
+evolution is that it must be the description of a constant-depth circuit with
+constant fan-in gates. Of course, any such function can depend only on a
+constant number of all possible variables. Thus, if one restricts the class of
+functions where each function depends only on a constant number of variables, it
+makes sense.. 
+
+\section{Our Contributions}
+
+Motivated by biological factors, we consider evovlability of sparse linear
+functions. ... blah .. 
+
+blah .. 
+
