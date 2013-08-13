@@ -78,7 +78,7 @@ we must show that the new index $i \in \sparseset(w^*)$, where
 $\{i\} = \sparseset(w^\prime) \setminus \sparseset(w)$.
 We show that among the set of mutants output by the mutator, with high probability
 there will exist at least one mutant such that it reduces $\lerror$ by something.
-Our proof is related to \dots
+\eanote{Explain how this relates to the proof in Donoho and give the correct citation(s)}.
 
 Let $\hat{w}$ be the best approximation of $w^*$ such that $\hat{w}_i \in [-B, B]$
 for some $i \in [n] \setminus \sparseset(w)$ and $\hat{w}_j = w_j$ for $j \neq i$;
@@ -97,7 +97,8 @@ We must show that $i \in \sparseset(w^*)$ and furthermore that
 $\ltwonorm{\hat{w} - w^*}^2 < \ltwonorm{w - w^*}^2 - something$.
 We start with the initial representation, $w=0$.
 Without loss of generality, arrange $w^*$ so that $\sparseset(w^*) = [K]$,
-in decreasing order of the values \dots. Initially, the residual is $w^*$.
+in decreasing order of the values $\vert w^*_k \vert \sqrt{\var(X_k)}$.
+Initially, the residual is $w^*$.
 Let $w^*_{\{j\}}$ be the best approximation of $w^*$ with
 $\sparseset(w^*_{\{j\}}) = \{j\}$, so $w^*_{\{j\}}$ \dots
 With high probability, the mutator generates at least one mutant
@@ -116,13 +117,13 @@ Note that the $\lerror$ of $w^*_{\{j\}}$ is~\eanote{Check this!}
 = \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
 \]
 
-Now notice that
+Note that
 
 \[
 \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2}
 = \frac{(\E[(e_j \cdot X)(w^* \cdot X)])^2}{\E[(e_j \cdot X)(e_j \cdot X)]}
 = \frac{(\E[X_j (w^* \cdot X)])^2}{\E[X_j^2]}
-= \frac{(\sum_{k=1}^K w^*_k \E[X_j X_k]))^2}{\E[X_j^2]}
+= \frac{(\sum_{k=1}^K w^*_k \E[X_j X_k]))^2}{\var(X_j)}
 \]
 
 For selection to choose a mutant $\hat{w}_{\{j\}}$ with
@@ -133,7 +134,53 @@ $j \in \sparseset(w^*) = [K]$, it must be the case that for any $i > K$,
 > \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert + something(\Delta).
 \]
 
-Since
+We construct lower and upper bounds for the left- and right-hand sides,
+respectively, making use of the fact that
+$|\corr(X_i, X_j)| \leq 1 - \Delta^2$ from Lemma~\ref{} and also
+that we arranged the $w^*_k \vert \sqrt{\var(X_k)}$ in decreasing order.
+On the left,
 
-By Lemma~\ref{} we have $|\corr(X_i, X_j)| \leq 1 - \Delta^2/2$.
+\[
+\bigg\vert \frac{\ip{e_1}{w^*}}{\ltwonorm{e_1}} \bigg\vert
+= \frac{\vert\sum_{k=1}^K w^*_k \E[X_1 X_k]\vert}{\sqrt{\var(X_1)}}
+\]
+\[
+\ge \frac{\vert w^*_1 \E[X_1 X_1]\vert}{\sqrt{\var(X_1)}} - \frac{\sum_{k=2}^K \vert w^*_k \E[X_1 X_k] \vert}{\sqrt{\var(X_1)}}
+= \vert w^*_1 \vert \sqrt{\var(X_1)} - \sum_{k=2}^K \vert w^*_k \vert \sqrt{\var(X_k)}~\vert \corr(X_1, X_k) \vert
+\]
+\[
+\ge \vert w^*_1 \vert \sqrt{\var(X_1)} - \sum_{k=2}^K \vert w^*_k \vert \sqrt{\var(X_k)} (1 - \Delta^2/2)
+\ge \vert w^*_1 \vert \sqrt{\var(X_1)}(1 - (1 - \Delta^2) (K-1))
+\]
 
+\noindent On the right,
+
+\[
+\bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert
+= \frac{\vert\sum_{k=1}^K w^*_k \E[X_i X_k]\vert}{\sqrt{\var(X_i)}}
+\le \sum_{k=1}^K \vert w^*_k \vert \frac{\vert \E[X_i X_k]\vert}{\sqrt{\var(X_i)}}
+= \sum_{k=1}^K \vert w^*_k \vert \sqrt{\var(X_k)} \corr(X_i, X_k)
+\]
+\[
+\le \sum_{k=1}^K \vert w^*_k \vert \sqrt{\var(X_k)} (1 - \Delta^2)
+\le \vert w^*_1 \vert \sqrt{\var(X_1)} (1 - \Delta^2) K.
+\]
+
+\noindent Putting our bounds together now gives the requirement
+
+\[
+\bigg\vert \frac{\ip{e_1}{w^*}}{\ltwonorm{e_1}} \bigg\vert
+\ge \vert w^*_1 \vert \sqrt{\var(X_1)}(1 - (1 - \Delta^2) (K-1))
+> \vert w^*_1 \vert \sqrt{\var(X_1)} (1 - \Delta^2) K
+\ge \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert,
+\]
+
+\noindent thus
+
+\[
+1 - (1 - \Delta^2) (K-1) = 2 - K + \Delta^2 K - \Delta^2 > (1 - \Delta^2) K
+\]
+\[
+\Rightarrow 1 + (1 - \Delta^2) > 2 (1 - \Delta^2) K
+\qquad \Rightarrow \qquad K < \frac{1}{2} \biggl( 1 + \frac{1}{1 - \Delta^2} \biggr)
+\]
