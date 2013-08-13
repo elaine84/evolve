@@ -34,7 +34,7 @@ of compressed sensing, see~\cite{donoho}.
 \item (Main iteration)
 	\begin{enumerate}
 	\item Choose one class of mutations at random according to their probabilities.
-	\item Generate $M > 2B(n - K) / \delta$ (+ extra?) mutants uniformly at random within that class.
+	\item Generate $M > 2B(n - K) / \delta$ \eanote{(+ extra?)} mutants uniformly at random within that class.
 	\item Set $w^\prime$ to the winner.
 	\end{enumerate}
 \end{enumerate}
@@ -48,12 +48,14 @@ We will establish our claim by proving the following claims.
 
 \begin{enumerate}
 \item[Claim A] If $\ltwonorm{w} \ge 2 \ltwonorm{w^*_S}$, then for $M \ge 1$,
-with probability at least $1/16 - \lambda/8 \ge something$ the mutator outputs
+with probability at least $1/16 - \lambda/8 \ge $ \eanote{something} the mutator outputs
 a mutation that reduces $\lerror$ by at least $\ltwonorm{w - w^*_S}^2 / 8$.
+\eanote{I think this 1/8 is correct and applies in the above section.}
 \item[Claim B] If $\ltwonorm{w} \le 2 \ltwonorm{w^*_S}$ and
 $\ltwonorm{w - w^*_S} \ge \alpha$, then with probability at least $\alpha$,
 there exists a mutation that decreases the $\lerror$ by at least $\alpha$.
-\item[Claim C] If $\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
+\item[Claim C] If $\sparsity(w^*_S) = K < (1 + 1/(1-\Delta^2))/2$ and
+$\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
 such that either $\sparseset(w^\prime) = \sparseset(w)$ and
 $\ltwonorm{w^\prime - w^*_S}^2 < \epsilon$, or
 $\sparseset(w^\prime) \setminus \sparseset(w) = \{i\}$ where $i \in \sparseset(w^*)$
@@ -86,38 +88,40 @@ in other words, $\hat{w}$ is the best possible output achieved by mutating $w$ w
 one adding step.
 In expectation, if $\lznorm{w} = k$, then $M / (n - k)$ of the generated mutants
 $v$ will have $\sparseset(v) = \sparseset(\hat{w})$, and each will satisfy
-$\ltwonorm{v - \hat{w}}^2 < \delta$ with probability $\delta/2B$.
-Thus in expectation, $\delta M / 2B(n - k) > 1$ mutants will be
+$|v_i - \hat{w}_i| \le \delta$, $\delta < B$, and so
+$\ltwonorm{v - \hat{w}} \le \delta$ with probability $\delta/2B$.
+Thus in expectation, for $\delta > 2B(n-k) / M$, at least one mutant will be
 ``$\delta$-close'' to $\hat{w}$.
-The remaining mutants with $\sparseset(v) \neq \sparseset(\hat{w})$ have
-$\ltwonorm{v - \hat{w}}^2 > some~function~of~\Delta$
-because the things aren't very correlated \dots
+Below we argue that the remaining mutants with
+$\sparseset(v) \neq \sparseset(\hat{w})$ will not be better than this mutant by
+a margin of at least \eanote{fill in this condition}.
 
 We must show that $i \in \sparseset(w^*)$ and furthermore that
-$\ltwonorm{\hat{w} - w^*}^2 < \ltwonorm{w - w^*}^2 - something$.
-We start with the initial representation, $w=0$.
+\eanote{fill in this condition}.
+Selection starts with the initial representation, $w=0$.
 Without loss of generality, arrange $w^*$ so that $\sparseset(w^*) = [K]$,
 in decreasing order of the values $\vert w^*_k \vert \sqrt{\var(X_k)}$.
-Initially, the residual is $w^*$.
+Initially, the residual $w^* - w$ is $w^*$.
 Let $w^*_{\{j\}}$ be the best approximation of $w^*$ with
 $\sparseset(w^*_{\{j\}}) = \{j\}$, so $w^*_{\{j\}}$ \dots
 With high probability, the mutator generates at least one mutant
 $\hat{w}_{\{j\}}$ for each $j \in [n]$ that minimizes the residual to within
 $\delta$ of the optimal solution restricted to $\{j\}$, i.e.,
 $\ltwonorm{\hat{w}_{\{j\}} - w^*}^2 < \ltwonorm{w^*_{\{j\}} - w^*}^2 + \delta$.
-Note that the $\lerror$ of $w^*_{\{j\}}$ is~\eanote{Check this!}
+The $\lerror$ of $w^*_{\{j\}}$ is
+\eanote{Check the last step in the statement below!}
 
 \[
 \ltwonorm{w^*_{\{j\}} - w^*}^2 = \min_{w_{\{j\}}}{\ltwonorm{w_{\{j\}} - w^*}}^2
-= \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} - w^* \bigg \Vert_2^2 \ge 0
+= \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} - w^* \bigg \Vert^2
 \]
 
 \[
-= \ltwonorm{w^*}^2 - 2 \bigg \langle e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2}, w^* \bigg \rangle + \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} \bigg \Vert_2^2 
+= \ltwonorm{w^*}^2 - 2 \bigg \langle e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2}, w^* \bigg \rangle + \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} \bigg \Vert^2 
 = \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
 \]
 
-Note that
+\noindent Note that
 
 \[
 \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2}
@@ -131,7 +135,7 @@ $j \in \sparseset(w^*) = [K]$, it must be the case that for any $i > K$,
 
 \[
 \bigg\vert \frac{\ip{e_1}{w^*}}{\ltwonorm{e_1}} \bigg\vert
-> \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert + something(\Delta).
+> \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert + \eanote{~something}.
 \]
 
 We construct lower and upper bounds for the left- and right-hand sides,
@@ -166,7 +170,7 @@ On the left,
 \le \vert w^*_1 \vert \sqrt{\var(X_1)} (1 - \Delta^2) K.
 \]
 
-\noindent Putting our bounds together now gives the requirement
+\noindent Putting these bounds together now gives the requirement
 
 \[
 \bigg\vert \frac{\ip{e_1}{w^*}}{\ltwonorm{e_1}} \bigg\vert
