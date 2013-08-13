@@ -4,38 +4,97 @@ studied in this framework the reader is referred to \cite{Kanade:2012}.
 
 \subsection{Valiant's Evolvability Framework}
 
-\subsection{Notation and Elementary Results}
+Let $X$ denote a set of instances, \eg $X = \reals^n$ or $X = \{0, 1\}^n$. We
+will assume that the length of representing each $x \in X$ is captured by the
+parameter $n$. To avoid excessive notation, we will keep this size parameter
+implicit in our description of the model. Let $D$ be a distribution over $X$. An
+organism is considered as computing a function from $X \rightarrow Y$ (typically
+$Y = \{0, 1\}$ or $Y = \reals$). Each $x \in X$ is considered a setting of
+environmental factors, and the distribution $D$, may represent the distribution
+over environmental settings that an organism may face in a life time. An ideal
+function, $f : X \rightarrow Y$, represents the optimal behaviour in every
+possible environmental setting.
 
-We are mainly interested in the case when the instance space is $\reals^n$.
-Also, we will focus on distributions $D$ over $\reals^n$ that are sub-Gaussian,
-\ie for any $w \in \reals^n$ with $\ltwonorm{w} = 1$, if $X ~ D$, $\E[\exp((X
-\cdot w) t)] \leq \exp(c^2t^2/2)$ for some constant $c$.  For a random variable
-$X$, let $\var(X)$ denote the variance of $X$. Recall that for random variables
-$X, Y$, the correlation, $\corr(X, Y) = \E[(X - \E[X]) (Y - E[Y])]/\sqrt{\var(X)
-\var(Y)}$. We will work with the class of distributions, which we call zero-mean
-bounded-variance sub-Gaussian $\Delta$-smooth distributions.
+\subsubsection*{Representations}
 
-\vknote{This definition should be broken up and cleaned-up.} 
+Let $H : X \rightarrow Y$ be a class of functions. Let $R \subseteq \{0, 1\}^*$.
+We say that $R$ \emph{represents} $H$, if there is a map $\sigma : R \rightarrow
+H$ and there exists an \emph{efficient} Turing machine that given input $r \in
+R$ and $x \in X$, outputs $(\sigma(r))(x)$. 
 
-\begin{definition} A distribution $D$ over $\reals^n$ is zero-mean
-bounded-variance $c^2$-sub-Gaussian and $\Delta$-smooth if
+\subsubsection*{Evolutionary Algorithms}
+
+Let $\ell : Y \times Y \rightarrow \reals^+$ be a loss function, such that
+$\ell(y, y) = 0$. For a function $g : X \rightarrow Y$, define the expected loss
+with respecte to ideal function $f : X \rightarrow Y$, over distribution $D$
+over $X$, as $L_{f, D} = \E_{x \sim D}[\ell(g(x), f(x))]$\footnote{This definition
+does not require the expected loss to be bounded, but we'll mainly be interested
+in situations when that is the case.}. The goal of evolution is to reach a
+funciton $g$ such that $\L_{f, D}(g) < \epsilon$.
+
+A mutation algorithm for a class of representations $R$, $\Mut$, is a randomised
+Turing machine that takes as in put a representation $r \in R$, $\epsilon$ and
+outputs a multiset $\Neigh(r, \epsilon)$. 
+
+Next, we describe the notion of selection in Valiant's model. Selection is based
+on empirical performance of each representation. Let $s : R \times [0, 1]
+\rightarrow \naturals$ be a sample size function. First, the mutation algorithm,
+$\Mut(r, \epsilon)$ is run to produce mutliset $\Neigh(r, \epsilon)$. Then an i.i.d. sample
+$\langle x_i \rangle_{i=1}^s$ is drawn from the distribution $D$ over $X$, where
+$s = s(r, \epsilon)$.
+Denote the empirical performance of each $r^\prime \in \Neigh(r, \epsilon)$ as
+%
+\[ \hat{L}_{f, D}(g) = \frac{1}{s}\sum_{i=1}^s \ell(r^\prime(x_i), f(x_i)) \]
+%
+Finally, let $t : R \times [0, 1] \rightarrow \reals$ be a tolerance function. 
+Valiant introduced two possible selection mechanisms: 
 \begin{enumerate}
-\item $\E[X] = 0$
-\item For $1 \leq i \leq n$, $\E[X_i^2] \leq 1$
-\item $D$ is $c^2$ sub-Gaussian
-\item $\E[\var(X_i ~|~ X_{-i})] \geq \Delta^2$.
+\item {\bf Selection based on beneficial and neutral mutations}: Let $\Bene =
+\{r^\prime \in \Neigh(r, \epsilon) ~|~ \hat{L}_{f, D}(r^\prime) \leq \hat{L}_{f,
+D}(r) - t(r, \epsilon) \}$ and let $\Neut = \{r^\prime \in \Neigh(r, \epsilon)
+~|~ |\hat{L}_{f, D}(r^\prime) - \hat{L}_{f,
+D}(r)| <  t(r, \epsilon) \}$. Then, if $\Bene \neq \empty$, $r^\prime$ is
+randomly selected from $\Bene$ as the surviving creature at the next generation.
+If $\Bene = \emptyset$ and $\Neut \neq\emptyset$, then $r^\prime$ is selected
+randomly from $\Neut$ as the surviving creature at the next generation.
+Otherwise, $\bot$ is produce signifying failure of evolution.
+\item {\bf Selection based on optimisation}: Let $\hat{\opt} = \min_{r^\prime
+\in \Neigh(r, \epsilon)} \hat{L}_{f, D}(r^\prime)$. If $\opt < \hat{L}_{f, D}(r)
++ t(r, \epsilon)$, then $\bot$ is produced signifying failure of evolution.
+Otherwise, let $\best = \{ r^\prime \in
+\Neigh(r, \epsilon) ~|~ \hat{L}_{f, D}(r^\prime) \leq \opt + t(r, \epsilon) \}$.
+Then $r^\prime$ is chosen from $\best$ randomly as the surviving creature at the
+next generation.
 \end{enumerate}
+
+An evolutionary algorithm is a tuple $(R, \Mut, s, t, \Sel)$. When $\evalg$ is
+run starting from $r_0 \in R$ with respect to distribution $D$ over $X$, an
+ideal function $f$, loss function $\ell$ and parameter $\epsilon$, a sequence
+$r_0, r_1, r_2, \ldots$ is produced, where $r_i$ is obtained from $r_{i-1}$
+through application of the selection rule $\Sel$ using $M$, $s$, $t$. If $r_i =
+\bot$ for some $i$, we consider evolution as halted and $r_j = \bot$ for $j >
+i$. We say that $\evalg$ succeeds at generation $g$, if $g$ is the smallest for
+which $\L_{f, D}(r_g) \leq \epsilon$.
+
+\begin{definition} We say that a concept class $C$ is evolvable under a class of
+distributions $\Dists$ using a representation class $R$, if there exists an
+evolutionary algorithm $\evalg = (R, \Mut, s, t, \Sel)$, such that for every $D
+\in \Dists$, every $f \in C$, and every $\epsilon > 0$, every $r_0 \in R$, with
+probability at least $1 - \epsilon$, $\evalg$ run starting from $r_0$ with
+respect to $f, D, \epsilon$, produces $r_g$ for which $L_{f, D}(r_g) <
+\epsilon$. Furthermore, $g$ is bounded by a polynomial in $n, 1/\epsilon$.
 \end{definition}
 
-We will make repeated use for the following simple observation regarding this
-class of distributions.
+\subsubsection{Strictly Beneficial Neighbourhoods}
 
-\begin{lemma} Let $D$ be a $\Delta$-smooth distribution. Then for all $i, j$,
-$|\corr(X_i, X_j)| \leq 1 - \Delta^2/2$.
-\end{lemma}
-\begin{proof}
-
-\end{proof}
+\begin{definition}{Strictly Beneficial Neighbourhood Mutator} For a concept class
+$C$, class of distributions $D$, $b : [0, 1] \rightarrow \reals$, we say that a
+mutator is a $b$-strictly beneficial neighbourhood mutator over representation
+class $R$, if for every $r \in R$, $\epsilon > 0$, if $\Neigh(r, \epsilon)$ is
+produced by running the mutator $\Mut$ with $r$ and $\epsilon$ as inputs is such
+that with probability $1$, there exists $r^\prime \in \Neigh(r, \epsilon)$, such
+that $\L_{f, D}(r^\prime) < \L_{f, D}(r)$.
+\end{definition}
 
 \subsection{Sparse Linear Functions} 
 
@@ -58,6 +117,39 @@ w_i = 0 \mbox{ or } l \leq |w_i| \leq u \}
 Thus, $C^k_{l, u}$ is the class of sparse linear functions, where the influence
 of each variable is upper and lower bounded.
 
+\subsubsection{Banana Distributions}
+
+We are mainly interested in the case when the instance space is $\reals^n$.
+Also, we will focus on distributions $D$ over $\reals^n$ that are sub-Gaussian,
+\ie for any $w \in \reals^n$ with $\ltwonorm{w} = 1$, if $X ~ D$, $\E[\exp((X
+\cdot w) t)] \leq \exp(c^2t^2/2)$ for some constant $c$.  For a random variable
+$X$, let $\var(X)$ denote the variance of $X$. Recall that for random variables
+$X, Y$, the correlation, $\corr(X, Y) = \E[(X - \E[X]) (Y - E[Y])]/\sqrt{\var(X)
+\var(Y)}$. We will work with the class of distributions, which we call zero-mean
+bounded-variance sub-Gaussian $\Delta$-smooth distributions.
+
+\vknote{This definition should be broken up and cleaned-up.} 
+
+\begin{definition} A distribution $D$ over $\reals^n$ is $(c, \Delta)$-banana
+distribution if the following hold:
+\begin{enumerate}
+\item $\E[X] = 0$
+\item For $1 \leq i \leq n$, $\E[X_i^2] \leq 1$
+\item $D$ is $c^2$ sub-Gaussian
+\item $\E[\var(X_i ~|~ X_{-i})] \geq 2 \Delta^2$.
+\end{enumerate}
+\end{definition}
+
+We will make repeated use for the following simple observation regarding this
+class of distributions.
+
+\begin{lemma} Let $D$ be a $(c, \Delta)$-smooth distribution. Then for all $i, j$,
+$|\corr(X_i, X_j)| \leq 1 - \Delta^2$.
+\end{lemma}
+\begin{proof}
+
+\end{proof}
+
 For a distribution $D$ in the distribution class, we have the following useful
 properties. 
 \begin{lemma} Let $D$ be a zero-mean bounded-variance $c^2$-sub-Gaussian
@@ -71,6 +163,3 @@ $\Delta$-smooth distribution. Then the following are true:
 \begin{proof}
 
 \end{proof}
-
-
-
