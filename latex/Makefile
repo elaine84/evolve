@@ -1,5 +1,5 @@
 main: main.pdf clean
-main.pdf: main.tex all-refs.bib files/*.tex
+main.pdf: main.tex all-refs.bib files/*.tex latex_macros.tex
 	pdflatex main
 	pdflatex main
 	bibtex main
