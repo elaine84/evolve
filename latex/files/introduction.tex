@@ -59,11 +59,12 @@ restrictions on the class of representations -- for example, cite Paul and give
 an argument for bounded quantities (discrete, finite numbers of molecules).
 
 We focus on transcription networks, which are a specific class of
-networks of interacting genes and proteins. For an splendid introduction to
+networks of interacting genes and proteins. For a splendid introduction to
 transcription networks and other biological circuits, see Alon~\cite{alon};
 below we review some motivating and simplified concepts.
 A protein is encoded in DNA as a gene, that when transcribed produces mRNA
 that is translated into protein (Figure~\ref{}).
+
 In a transcription network, a gene's expression, which can be
 thought of as the rate at which resultant the protein is produced,
 may be regulated by a set of proteins called \emph{transcription factors} (TFs).
@@ -72,8 +73,10 @@ or some other ``output'' of interest, such as an enzyme that catalyzes a
 metabolic reaction.
 In this discussion, we focus on feed-forward transcription networks without
 loops, i.e., networks that can be represented as directed acyclic graphs.
-In general, transcription networks can have cycles, e.g., feed-forward loops
-whose output inhibits or further activates an upstream component.
+In general, transcription networks can have cycles, e.g., a feed-forward loop
+with output that inhibits or further activates an upstream component.
+
+[Insert and cite some numbers -- hundreds of TFs, thousands of genes.]
 
 TFs represent information about the environment,
 for example by changing shape when bound to by a certain small molecule.
@@ -82,20 +85,21 @@ gene; the shape of a TF affects its ability to bind,
 which in turn can have a positive or negative effect on gene production.
 The binding of TFs to DNA introduces physical limits on how many TFs may affect
 a particular gene's expression --
-typically, there are only X binding sites~\cite{}.
+[say something like most genes have only 1 or 2 binding sites]~\cite{biology}.
 
 An important property of a transcription network is its depth, i.e.,
 the number of steps before a desired output is produced. In transcription
-networks, in order for sufficient quantity of protein to be produced requires
-time that is the same order of magnitude as cell-division time. Hence, the
-number of steps, before the desired output is produced is typically very small.
+networks, in order for protein production to keep up with cell division,
+it must occur on a time scale of the same order of magnitude. Hence, the
+number of steps, before the desired output is produced is typically very small
+-- [give numbers here]~\cite{biology}.
 
 Thus, a natural restriction one may place on the representation used by
 evolution is that it must be the description of a constant-depth circuit with
 constant fan-in gates. Of course, any such function can depend only on a
-constant number of all possible variables. Thus, if one restricts the class of
-functions where each function depends only on a constant number of variables, it
-makes sense.. 
+constant number of all possible variables. Thus, we consider the class of
+functions restricted so that each function depends only on a constant number of
+variables.
 
 %Other important constraints on transcription networks arise from the fact that
 %a dividing cell must replicate its DNA and essentially double its protein
@@ -103,8 +107,7 @@ makes sense..
 
 \section{Our Contributions}
 
-Motivated by biological factors, we consider evovlability of sparse linear
-functions. ... blah .. 
+Motivated by properties of biological systems, we consider evolvability of
+sparse linear functions. ... blah ..
 
-blah .. 
-
+blah ..
