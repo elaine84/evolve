@@ -11,8 +11,8 @@ Valiant defines what feasible mutations may be applied to a representation, and
 how (natural) selection may be modeled. The model is described in some detail in
 Section~\ref{sec:evolve-model}, but the main idea is that from the pool of
 possible mutations, one that increases performance is selected. In the spirit of
-computational learning theory, the question is for what classes of ideal
-functions, does evolution always succeed within feasible resources?
+computational learning theory, the question is, for what classes of ideal
+functions does evolution always succeed within feasible resources?
 
 In a remarkable result, Feldman~\cite{Feldman:2008}, showed that the class of
 functions \emph{evolvable} in Valiant's model is exactly captured by the class
@@ -24,12 +24,12 @@ simulates query responses.
 
 P. Valiant considers the evolution of \emph{real-valued}
 functions~\cite{Valiant:2012-reals}. When considering real-valued functions, the
-choice of \emph{loss} or \emph{performance} metric, measuring the distance
+choice of \emph{loss} or \emph{performance} metric that measures the distance
 between the candidate and ideal function becomes important. P. Valiant showed
 that,  -- weak oracle -- optimization -- similar to Feldman's reduction.
 
 On the other hand, more direct evolutionary algorithms have been considered.
-Valiant in his original paper, showed that under the uniform distribution the
+Valiant, in his original paper, showed that under the uniform distribution the
 class of disjunctions are evolvable by a set of simple
 mutations~\cite{Valiant:2009}. Later, Kanade, Valiant and Vaughan showed that
 the class of homogeneous linear separators under radially symmetric
@@ -42,31 +42,53 @@ evolvable, again using essentially random mutations.
 In Valiant's model, a creature is regarded as computing a boolean function from
 some domain $X$, $r : X \rightarrow \{0, 1\}$. Valiant allows the representation
 of $\langle r \rangle$ to be an arbitrary binary string, such that there is an
-\emph{efficient} Turing machine $M$, that given the description $\langle r
+\emph{efficient} Turing machine $M$ that, given the description $\langle r
 \rangle$ and $x \in X$ as input, outputs $r(x)$. The generality of this
-definition is appealing, because it very elegantly captures the outer limits of
+definition is appealing because it very elegantly captures the outer limits of
 evolution, under the Church-Turing hypothesis. However, this generality also has
-the effect of allowing encoding of arbitrary computations, inherent in the proof
-of equivalence between evolvability and correlational statistical query
-learning.
+the effect of allowing the encoding of arbitrary computations, this is
+inherent in the proof of equivalence between evolvability and correlational
+statistical query learning.
 
-In several biological situtations, however, it may be important to restrict the
-class of representation. In the following discussion, we focus on transcription
-regulatory networks. However, depending on the system concerned one may come up
-with suitable restrictions on the class of representations.
+Real biological systems somehow function with conspicuously restricted
+representation classes. Of particular interest to us here is that sparsity is a
+ubiquitous property in networks of interacting genes and proteins that respond
+to the environment and regulate cellular function.
+Biological systems can be constrained in ways that correspond to other suitable
+restrictions on the class of representations -- for example, cite Paul and give
+an argument for bounded quantities (discrete, finite numbers of molecules).
 
-Systems bio -- blah -- fill this in. In the case of transcription networks, a
-set of proteins called \emph{transcription factors}, may regulate a gene. The
-protein encoded by this gene may itself be a transcription factor, or an
-\vknote{output}. The way in which a transcription factor regulates the
-production (or inhibits production) of a protein, is by binding to the promoter
-region just \emph{upstream} (adjacent), to the gene. This introduces physical
-limits on how many TFs may affect a particular gene. Another important factor,
-is the number of steps before the desired output is produced. In transcription
+We focus on transcription networks, which are a specific class of
+networks of interacting genes and proteins. For an splendid introduction to
+transcription networks and other biological circuits, see Alon~\cite{alon};
+below we review some motivating and simplified concepts.
+A protein is encoded in DNA as a gene, that when transcribed produces mRNA
+that is translated into protein (Figure~\ref{}).
+In a transcription network, a gene's expression, which can be
+thought of as the rate at which resultant the protein is produced,
+may be regulated by a set of proteins called \emph{transcription factors} (TFs).
+The protein encoded by a gene may itself be a TF that regulates other genes,
+or some other ``output'' of interest, such as an enzyme that catalyzes a
+metabolic reaction.
+In this discussion, we focus on feed-forward transcription networks without
+loops, i.e., networks that can be represented as directed acyclic graphs.
+In general, transcription networks can have cycles, e.g., feed-forward loops
+whose output inhibits or further activates an upstream component.
+
+TFs represent information about the environment,
+for example by changing shape when bound to by a certain small molecule.
+A TF regulates a gene's expression by binding to a region of DNA close to the
+gene; the shape of a TF affects its ability to bind,
+which in turn can have a positive or negative effect on gene production.
+The binding of TFs to DNA introduces physical limits on how many TFs may affect
+a particular gene's expression --
+typically, there are only X binding sites~\cite{}.
+
+An important property of a transcription network is its depth, i.e.,
+the number of steps before a desired output is produced. In transcription
 networks, in order for sufficient quantity of protein to be produced requires
 time that is the same order of magnitude as cell-division time. Hence, the
 number of steps, before the desired output is produced is typically very small.
-These regulatory networks are represented by directed acyclic graphs. 
 
 Thus, a natural restriction one may place on the representation used by
 evolution is that it must be the description of a constant-depth circuit with
@@ -74,6 +96,10 @@ constant fan-in gates. Of course, any such function can depend only on a
 constant number of all possible variables. Thus, if one restricts the class of
 functions where each function depends only on a constant number of variables, it
 makes sense.. 
+
+%Other important constraints on transcription networks arise from the fact that
+%a dividing cell must replicate its DNA and essentially double its protein
+%levels, including the replication machinery...
 
 \section{Our Contributions}
 
