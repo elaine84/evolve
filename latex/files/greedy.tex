@@ -112,6 +112,14 @@ Note that the $\lerror$ of $w^*_{\{j\}}$ is
 = \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
 \]
 
+Now notice that
+
+\[
+\frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2}
+= \frac{(\E[(e_j \cdot X)(w^* \cdot X)])^2}{\E[(e_j \cdot X)(e_j \cdot X)]}
+= \frac{(\E[X_j (w^* \cdot X)])^2}{\E[X_j^2]}
+\]
+
 For selection to choose a mutant $\hat{w}_{\{j\}}$ with
 $j \in \sparseset(w^*) = [K]$, it must be the case that for any $i > K$,
 
@@ -119,6 +127,8 @@ $j \in \sparseset(w^*) = [K]$, it must be the case that for any $i > K$,
 \bigg\vert \frac{\ip{e_1}{w^*}}{\ltwonorm{e_1}} \bigg\vert
 > \bigg\vert \frac{\ip{e_i}{w^*}}{\ltwonorm{e_i}} \bigg\vert + something(\Delta).
 \]
+
+Since
 
 By Lemma~\ref{} we have $|\corr(X_i, X_j)| \leq 1 - \Delta^2/2$.
 
