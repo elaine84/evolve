@@ -104,7 +104,7 @@ With high probability, the mutator generates at least one mutant
 $\hat{w}_{\{j\}}$ for each $j \in [n]$ that minimizes the residual to within
 $\delta$ of the optimal solution restricted to $\{j\}$, i.e.,
 $\ltwonorm{\hat{w}_{\{j\}} - w^*}^2 < \ltwonorm{w^*_{\{j\}} - w^*}^2 + \delta$.
-Note that the $\lerror$ of $w^*_{\{j\}}$ is
+Note that the $\lerror$ of $w^*_{\{j\}}$ is~\eanote{Check this!}
 
 \[
 \ltwonorm{w^*_{\{j\}} - w^*}^2 = \min_{w_{\{j\}}}{\ltwonorm{w_{\{j\}} - w^*}}^2
@@ -113,7 +113,7 @@ Note that the $\lerror$ of $w^*_{\{j\}}$ is
 
 \[
 = \ltwonorm{w^*}^2 - 2 \bigg \langle e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2}, w^* \bigg \rangle + \bigg \Vert e_j \frac{\ip{e_j}{w^*}}{\ltwonorm{e_j}^2} \bigg \Vert_2^2 
-= \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.~[check]
+= \ltwonorm{w^*}^2 - \frac{(\ip{e_j}{w^*})^2}{\ltwonorm{e_j}^2} \ge 0.
 \]
 
 Now notice that

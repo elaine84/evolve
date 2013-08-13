@@ -65,6 +65,8 @@ below we review some motivating and simplified concepts.
 A protein is encoded in DNA as a gene, that when transcribed produces mRNA
 that is translated into protein (Figure~\ref{}).
 
+\todoea{Figure: transcription and a simple network.}
+
 In a transcription network, a gene's expression, which can be
 thought of as the rate at which resultant the protein is produced,
 may be regulated by a set of proteins called \emph{transcription factors} (TFs).
@@ -76,7 +78,7 @@ loops, i.e., networks that can be represented as directed acyclic graphs.
 In general, transcription networks can have cycles, e.g., a feed-forward loop
 with output that inhibits or further activates an upstream component.
 
-[Insert and cite some numbers -- hundreds of TFs, thousands of genes.]
+\todoea{100's of TFs and 1000's of genes.}
 
 TFs represent information about the environment,
 for example by changing shape when bound to by a certain small molecule.
@@ -84,15 +86,17 @@ A TF regulates a gene's expression by binding to a region of DNA close to the
 gene; the shape of a TF affects its ability to bind,
 which in turn can have a positive or negative effect on gene production.
 The binding of TFs to DNA introduces physical limits on how many TFs may affect
-a particular gene's expression --
-[say something like most genes have only 1 or 2 binding sites]~\cite{biology}.
+a particular gene's expression.
+
+\todoea{Most genes have L-U binding sites.}
 
 An important property of a transcription network is its depth, i.e.,
 the number of steps before a desired output is produced. In transcription
 networks, in order for protein production to keep up with cell division,
 it must occur on a time scale of the same order of magnitude. Hence, the
-number of steps, before the desired output is produced is typically very small
--- [give numbers here]~\cite{biology}.
+number of steps, before the desired output is produced is typically very small.
+
+\todoea{Numbers regarding depth.}
 
 Thus, a natural restriction one may place on the representation used by
 evolution is that it must be the description of a constant-depth circuit with
