@@ -166,9 +166,9 @@ beneficial neighbourhood mutator with benefit $b$, then $C$ is evolvable under
 distributions from $\Dists$, with respect to loss function $\ell$ using the
 representation class $R$.  \end{theorem}
 
-The proof of the above Theorem essentially appears in \cite{KVV:2010}, who also
-show that such an algorithm is robust to some modest (inverse polynomial) drift
-in the target function. For the purpose of this paper, we will show the
+The proof of the above Theorem essentially appears in \cite{KVV:2010-drift}, who
+also show that such an algorithm is robust to some modest (inverse polynomial)
+drift in the target function. For the purpose of this paper, we will show the
 existence of strictly beneficial neighbourhood mutators and appeal to
 Theorem~\ref{thm:benefit2evolve}.
 
@@ -184,61 +184,88 @@ For any $0 < l < u$ and integer $k$. Define the class of linear functions:
 \lin^k_{l, u} = \{ x \mapsto w \cdot x ~|~ \lznorm{w} \leq k, \forall i,
 w_i = 0 \mbox{ or } l \leq |w_i| \leq u \}
 \]
-Thus, $\lin^k_{l, u}$ is the class of sparse linear functions, where the influence
-of each variable is upper and lower bounded.
+Thus, $\lin^k_{l, u}$ is the class of sparse linear functions, where the
+``influence'' of each variable is upper and lower bounded\footnote{We do not use
+the word influence in the precise technical sense here}.
 
 Let $D$ be a distribtion over $\reals^n$. For $w, w^\prime$, define the inner
 product $\ip{w}{w^\prime}_D = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$.
 (Note that $w \cdot x = \sum_{i = 1}^n w_i x_i$ denotes the standard dot product
 in $\reals^n$.) In the rest of this paper, we use $\ltwonorm{w}_D$ to denote
-$\sqrt{\ip{w}{w})_D}$. (To avoid confusion, whenever necessary, we
+$\sqrt{\ip{w}{w}_D}$. (To avoid confusion, whenever necessary, we
 will refer to the quantity $\sqrt{\sum_{i} w_i^2}$ explicitly if we mean the standard
 Euclidean norm.) When the distribution $D$ is clear from context we will drop
 the subscript.
 
 
 
-\subsubsection{Banana Distributions}
+\subsubsection*{Pretty Distributions}
 
-We are mainly interested in the case when the instance space is $\reals^n$.
-Also, we will focus on distributions $D$ over $\reals^n$ that are sub-Gaussian,
-\ie for any $w \in \reals^n$ with $\ltwonorm{w} = 1$, if $X ~ D$, $\E[\exp((X
-\cdot w) t)] \leq \exp(c^2t^2/2)$ for some constant $c$.  For a random variable
-$X$, let $\var(X)$ denote the variance of $X$. Recall that for random variables
-$X, Y$, the correlation, $\corr(X, Y) = \E[(X - \E[X]) (Y - E[Y])]/\sqrt{\var(X)
-\var(Y)}$. We will work with the class of distributions, which we call zero-mean
-bounded-variance sub-Gaussian $\Delta$-smooth distributions.
+We focus on distributions over $\reals^n$ which have certain nice properties. A
+distribution $D$ over $\reals^n$ is said to be $c^2$-sub-Gaussian if for any $w
+\in \reals^n$ satisfying $\sum_{i=1}^n w_i^2 = 1$, it is the case that
+$\E_{x~D}[ \exp((w \cdot x)t)] \leq \exp(c^2 t^2 /2)$.\footnote{Here we are
+using a multidimensional analogue of the standard definition of sub-Gaussian
+distributions, \ie the distribution projected along any direction is
+sub-Gaussian.} Furthermore, we assume that the distribution is centered, \ie
+$\E[x] = 0$ and the variance in each component bounded $\E[x_i^2] \leq 1$. The
+last property, we require of a distribution is that no variable is $x_i$ is
+completely determined by the remaining variables, which we denote by $x_{-i}$,
+or more formally, the variance, $\var(x_i ~|~ x_{i-1}) \geq 2 \Delta^2$, for
+some $\Delta > 0$.\footnote{For the purposes of this paper, it suffices if this
+holds only in expectation, \ie $\E_{x_{-i}}[\var(x_i ~|~ x_{i-1})] \geq 2
+\Delta^2$.} We argue that this is a natural \emph{smoothness} condition on the
+distribution. For example, starting from any distribution $D$ over $\reals^n$,
+convolution with a spherical normal distribution with variance $2 \Delta^2$
+results in a distribution having such a property. We define this class of
+distributions formally, and for a lack of a better word call them \emph{pretty}
+distributions.
 
-\vknote{This definition should be broken up and cleaned-up.} 
-
-\begin{definition} A distribution $D$ over $\reals^n$ is $(c, \Delta)$-banana
-distribution if the following hold:
+\begin{definition} A distribution $D$ over $\reals^n$ is a $(c^2,
+2\Delta^2)$-pretty distribution if the following hold:
 \begin{enumerate}
-\item $\E[X] = 0$
-\item For $1 \leq i \leq n$, $\E[X_i^2] \leq 1$
-\item $D$ is $c^2$ sub-Gaussian
-\item $\E[\var(X_i ~|~ X_{-i})] \geq 2 \Delta^2$.
+\item $\E[x] = 0$
+\item For $1 \leq i \leq n$, $\E[x_i^2] \leq 1$
+\item $D$ is $c^2$-sub-Gaussian
+\item $\E_{x_{-i}}[\var(x_i ~|~ x_{-i})] \geq 2\Delta^2$.
 \end{enumerate}
 \end{definition}
 
-We will make repeated use for the following simple observation regarding this
-class of distributions.
+We first show a few useful properties of these distributions. The first is a
+concentration bound for i.i.d. samples drawn from the distribution. The proof of
+the lemma follows directly from the bound on the moment generating function for
+sub-Gaussian distributions.
 
-\begin{lemma} Let $D$ be a $(c, \Delta)$-smooth distribution. Then for all $i, j$,
-$|\corr(X_i, X_j)| \leq 1 - \Delta^2$.
+\begin{lemma}
+Let $w \in \reals^n$. Suppose $x_1, \ldots, x_m$ are drawn independently from
+a $(c^2, 2 \Delta^2)$-pretty distribution $D$. Then,
+\[ 
+\Pr[ ] \leq \exp( ).
+\]
+\end{lemma}
+
+Another useful property of nice distributions is that correlation between any
+pair of variables is bounded away from $1$ and $-1$.  Recall that for random
+variables $X, Y$, the correlation, $\corr(X, Y) = \E[(X - \E[X]) (Y -
+E[Y])]/\sqrt{\var(X) \var(Y)}$. 
+
+\begin{lemma} Let $D$ be a $(c^2, 2 \Delta^2)$-pretty distribution.\footnote{We
+only need the $2 \Delta^2$-smoothness condition for this Lemma to hold.} Then
+for all $i, j$, $|\corr(x_i, x_j)| \leq 1 - \Delta^2$.
 \end{lemma}
 \begin{proof}
 
 \end{proof}
 
-For a distribution $D$ in the distribution class, we have the following useful
-properties. 
-\begin{lemma} Let $D$ be a zero-mean bounded-variance $c^2$-sub-Gaussian
-$\Delta$-smooth distribution. Then the following are true:
+Finally, for linear functions $w : x \mapsto w \cdot x$, let $\NZ(w) = \{ i ~|~
+w_i \neq 0 \}$ denote the non-zero variables in $w$ and $\sparsity(w) =
+|\NZ(w)|$. Then, we have the following Lemma.
+
+\begin{lemma} Let $D$ be a $(c^2, 2 \Delta^2)$-pretty distribution and $w : x
+\mapsto w \cdot x$ denote a linear function. Then the following are true:
 \begin{enumerate}
-\item For any $w \in \reals^n$, $w^2_i \leq \ip{w}{w}/\Delta^2$
-\item For any $w \in \reals^n$, there exists $i$ such that $w^2_i \leq
-\frac{\ip{w}{w}}{\lznorm{w}\Delta^2}$.
+\item For any $i$, $w^2_i \leq \ip{w}{w}/\Delta^2$
+\item There exists an $i$ such that $w^2_i \leq \frac{\ip{w}{w}}{|\NZ(w)| \Delta^2}$.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
