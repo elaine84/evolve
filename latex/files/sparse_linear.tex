@@ -1,42 +1,13 @@
-\vknote{BEGIN: This should actually go in the previous section.}
-\begin{lemma} Let $D$ be a $\Delta$-smooth bounded distribution. Let $w \in
-\reals^n$ be a vector and consider the corresponding linear function, $x \mapsto
-w \cdot x$. Then the following are true:
-\begin{enumerate}
-\item For any $1 \leq i \leq n$, $w_i^2 \leq \frac{\ip{w}{w}}{\Delta^2}$.
-\item There exists an $i$, such that, $w_i^2 \leq
-\frac{\ip{w}{w}}{|\NZ(w)|\Delta^2}$.
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-Note that for any $x \sim D$, we can write $x = \tilde{x} + \eta$, where
-$\tilde{x}$ is drawn from some smooth bounded distribution, and $\eta$ is drawn
-from the uniform distribution over $[-\sqrt{3} \Delta, \sqrt{3} \Delta]$. Note
-that $\eta$ and $\tilde{x}$ are independent, and all components of $\eta$ are
-independent. First, we observe that $\E[x_i^2] = \E[(\tilde{x}_i + \eta_i)^2]
-\geq \E[\eta_i^2] = \Delta^2$. Now, consider the following:
-%%
-\begin{align*}
-\ip{w}{w} &= \E\left[\left(\sum_{i=1}^n w_i x_i\right)^2\right] 
-\intertext{Using the fact that $x = \tilde{x} + \eta$, we get}
-&= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
-&= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
-\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
-\eta_i\right) \right] + \sum_{i=1}^n w_i^2 \E[\eta_i^2] \\
-&\geq \sum_{i = 1}^n w_i^2 \Delta^2  \\
-&= \sum_{i \in \NZ(w)} w_i^2 \Delta^2
-\end{align*}
-The conclusions of the Lemma follow easily by looking at the above expression.
-\end{proof}
-\vknote{END: This should actually go in the previous section.}
 
-We present a simple evolutionary algorithm for the class of sparse linear
-functions. The set of representations used by the evolutionary algorithm are
-themselves sparse linear functions.  Each representation used by the algorithm
-is linear function with sparsity $K$, and the absolute value of each coefficient
-is bounded by $B$. We assume that representation of real numbers is possible,
-the case of finite precision representations is standard.  We will specify $K$
-and $B$ shortly. Thus, the representation class $R$ is
+We present a simple algorithm that evolves the class of sparse linear functions,
+$\lin^k_{l, u}$.  The representation class also consists of sparse linear
+functions, but with greater number of non-zero entries than the \emph{ideal
+function}.
+Each representation used by the algorithm is linear
+function with sparsity $K$, and the absolute value of each coefficient is
+bounded by $B$. We assume that representation of real numbers is possible, the
+case of finite precision representations is standard.  We will specify $K$ and
+$B$ shortly. Thus, the representation class $R$ is
 \[ 
 R = \{ w \mapsto w \cdot x ~|~ \lznorm{w} \leq K, w_i \in [-B, B] \}
 \]
