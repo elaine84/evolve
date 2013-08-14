@@ -1,84 +1,134 @@
-In this section, we present a simple evolutionary algorithm for the class of
-sparse linear functions. The set of representations used by the evolutionary
-algorithm are themselves sparse linear functions.
+\vknote{BEGIN: This should actually go in the previous section.}
+\begin{lemma} Let $D$ be a $\Delta$-smooth bounded distribution. Let $w \in
+\reals^n$ be a vector and consider the corresponding linear function, $x \mapsto
+w \cdot x$. Then the following are true:
+\begin{enumerate}
+\item For any $1 \leq i \leq n$, $w_i^2 \leq \frac{\ip{w}{w}}{\Delta^2}$.
+\item There exists an $i$, such that, $w_i^2 \leq
+\frac{\ip{w}{w}}{|\NZ(w)|\Delta^2}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Note that for any $x \sim D$, we can write $x = \tilde{x} + \eta$, where
+$\tilde{x}$ is drawn from some smooth bounded distribution, and $\eta$ is drawn
+from the uniform distribution over $[-\sqrt{3} \Delta, \sqrt{3} \Delta]$. Note
+that $\eta$ and $\tilde{x}$ are independent, and all components of $\eta$ are
+independent. First, we observe that $\E[x_i^2] = \E[(\tilde{x}_i + \eta_i)^2]
+\geq \E[\eta_i^2] = \Delta^2$. Now, consider the following:
+%%
+\begin{align*}
+\ip{w}{w} &= \E\left[\left(\sum_{i=1}^n w_i x_i\right)^2\right] 
+\intertext{Using the fact that $x = \tilde{x} + \eta$, we get}
+&= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
+&= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
+\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
+\eta_i\right) \right] + \sum_{i=1}^n w_i^2 \E[\eta_i^2] \\
+&\geq \sum_{i = 1}^n w_i^2 \Delta^2  \\
+&= \sum_{i \in \NZ(w)} w_i^2 \Delta^2
+\end{align*}
+The conclusions of the Lemma follow easily by looking at the above expression.
+\end{proof}
+\vknote{END: This should actually go in the previous section.}
 
-First, we define the class of representations used by the evolutionary
-algorithm. Each representation used by the algorithm will be a linear function
-with sparsity $K$, and the absolute value of each coefficient is bounded by $B$.
-We will specify $K$ and $B$ shortly. Thus, the representation class $R$ is
+We present a simple evolutionary algorithm for the class of sparse linear
+functions. The set of representations used by the evolutionary algorithm are
+themselves sparse linear functions.  Each representation used by the algorithm
+is linear function with sparsity $K$, and the absolute value of each coefficient
+is bounded by $B$. We assume that representation of real numbers is possible,
+the case of finite precision representations is standard.  We will specify $K$
+and $B$ shortly. Thus, the representation class $R$ is
 \[ 
-R = \{ w \mapsto w \cdot x ~|~ \lznorm{w} \leq K, |w_i| \leq B \}
+R = \{ w \mapsto w \cdot x ~|~ \lznorm{w} \leq K, w_i \in [-B, B] \}
 \]
 
 Next, we define the mutator. Recall that the mutator is a randomized algorithm
-that takes as input an element from $R$ and outputs another element from $R$.
-For $w \in R$, define the mutated representation $w^\prime$, output by the mutator as:
+that takes as input an element $r \in R$, the accuracy parameter, $\epsilon$,
+and outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Suppose that
+$\Neigh(r, \epsilon)$ is populated by multiple independent draws of the
+following procedure.  For $w \in R$, define the mutated representation
+$w^\prime$, output by the mutator as:
+%%
 \begin{enumerate}
+%
 \item With probability $1/2$ do nothing, set $w^\prime = w$.
-\item (Scaling) With probability $1/6$, choose $\gamma \in [-1, 1]$ uniformly at random and
-let $w^\prime = \alpha w$. 
-\item (Adjusting) With probability $1/6$, do the following. Let $S_w = \{ i~|~ w_i \neq 0
-\}$. Pick $i \in S_w$ uniformly at random. Let $w^\prime$ denote the
-mutated representation, where $w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in
-[-B, B]$ uniformly at random. 
+%
+\item (Scaling) With probability $1/6$, choose $\gamma \in [-1, 1]$ uniformly at
+random and let $w^\prime = \alpha w$. 
+%
+\item (Adjusting) With probability $1/6$, do the following. Recall that $\NZ(w)
+= \{ i~|~ w_i \neq 0 \}$. Pick $i \in \NZ(w)$ uniformly at random. Let
+$w^\prime$ denote the mutated representation, where $w^\prime_j = w_j$ for $j
+\neq i$, $w^\prime_i \in [-B, B]$ uniformly at random. 
+%
 \item With the remaining $1/6$th probability, do the following:
 \begin{enumerate}
-\item (Swapping) If $|S_w| = K$, choose $i_1 \in S_w$ uniformly at random. Then, choose
-$i_2 \in [n] \setminus S_w$ uniformly at random. Let $w^\prime$ be the mutated
-representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$. Set
-$w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime$ uniformly from the range $[-B,
-B]$. Recall that in this case, $\lznorm{w^\prime} = \lznorm{w} = K$ with
-probability $1$, and that $w^\prime \in R$.
+\item (Swapping) If $|\NZ(w)| = K$, choose $i_1 \in \NZ(w)$ uniformly at random.
+Then, choose $i_2 \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$
+be the mutated representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$.
+Set $w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime$ uniformly from the range
+$[-B, B]$. Recall that in this case, $\sparsity(w^\prime) = \sparsity(w) = K$
+with probability $1$, and that $w^\prime \in R$.
 \item (Adding) If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random. Let
 $w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for $j \neq
 i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
 \end{enumerate}
 \end{enumerate}
 
-In the ensuing discussion, we will prove that for any target function $w^* \in
-C^k_{l,u}$, if $w \in R$ is such that $\lerr_D(w, w^*) = \ltwonorm{w - w^*}^2 >
-\epsilon$, then the mutator outputs a mutation which descreases the error by a
-non-negligible amount with non-negligible probability. To simplify notation,
-henceforth we think of $w$ as our current representation and $S \subseteq [n]$
-the variables for which $w_i \neq 0$. Note that $|S| \leq K$.  Let $w^*_S$
-denote the best approximation of $w^*$ using the variables in the set $S$.
-Formally, 
+In the ensuing discussion, we fix the following notation, $f \in C^k_{l, u}$ is
+the target linear function; the underlying distribution is $D$ which is a
+$\Delta$-smooth bounded distribution (see Section~\ref{sec:notation}). Recall
+that for linear functions, $w, w^\prime$, we have the inner product
+$\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$, which also
+defines the norm $\ltwonorm{w} = \ip{w}{w}$.  We will show that for any $w \in
+R$, if $\loss_{f, D}(w) = \ltwonorm{f - w}^2 > \epsilon$, with non-negligible
+(inverse polynomial) probability, the above procedure produces a mutation
+$w^\prime$, such that $\loss_{f, D}(w^\prime) = \ltwonorm{f - w^\prime} \leq
+\loss_{f, D}(w) - b$, for $b = $.
+
+To simplify notation, let $S = \NZ(w)$. Let $f^S$ denote best approximation to
+$f$ using variables in the set $S$. Formally, 
 \[ 
-w^*_S = \argmin_{w \in R ~:~	w_i = 0 \vee i \in S} \ltwonorm{w^*- w}^2
+f^S = \argmin_{w \in R ~:~	w_i = 0 ~\vee~ i \in S} \ltwonorm{f- w}^2
 \]
 
-We will establish our claim by proving the following claims.
-\begin{enumerate}
-\item[Claim A] If $\ltwonorm{w} \geq 2 \ltwonorm{w^*_S}$, then the probability
-with probability at least $1/48$ the mutator outputs a mutation that reduces
-$\lerror$ by at least $\ltwonorm{w - w^*_S}^2/12$.
-\item[Claim B] When $\ltwonorm{w} \leq 2 \ltwonorm{w^*_S}$ and $\ltwonorm{w - w^*_S}
-\geq \alpha$, then with probability at least $\alpha$, there exists a mutation
-that decreases the $\lerror$ by at least $\alpha$.
-\item[Claim C] When $\ltwonorm{w - w^*_S} \leq \epsilon$, but $\sparseset{w^*}
-\not\subseteq S$, then there exists a mutation that decreases $\lerror$ by at
-least \emph{BLAH}.
-\end{enumerate}
+Let $w^\prime$ denote the (random) mutation produced as a result of the
+procedure described above.  We will establish the desired result by proving the
+following claims. \smallskip \\
+%%
+\noindent{\bf Claim A}:  If $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, then with
+probability at least $1/48$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
+\ltwonorm{w - f^S}^2/12$. \medskip \\
+%%
+\noindent{\bf Claim B}: When $\ltwonorm{w} \leq 2 \ltwonorm{w^*_S}$ and
+$\ltwonorm{w - w^*_S} \geq \alpha$, then with probability at least $\alpha$,
+there exists a mutation that decreases the $\lerror$ by at least $\alpha$.  \medskip  \\
+%%
+\noindent{\bf Claim C}: When $\ltwonorm{w - w^*_S} \leq \epsilon$, but
+$\sparseset{w^*} \not\subseteq S$, then there exists a mutation that decreases
+$\lerror$ by at least \emph{BLAH}. \medskip 
 
-Finally, note that when $\sparseset{w^*} \subseteq S$, then $w_S^* = w^*$ (under
-the class of our distributions). Thus, in this case when $\ltwonorm{w - w^*_S}^2
-\leq \epsilon$, the evolutionary algorithm has succeeded.
+Finally, note that when $\NZ(f) \subseteq S$, then $f^S = f$. Thus, in this case
+when $\loss_{f, D}(w) = \ltwonorm{f^S - w}^2 \leq \epsilon$, the evolutionary
+algorithm has succeeded. \medskip 
 
-To establish Claim A above, note that if one is only allowed to scale $w$ then
-the best approximation to $w^*S$ is obtained by
-$\frac{\ip{w}{w^*_S}}{\ltwonorm{w}^2} w$.  Clearly we have that, 
+\noindent{\it Proof of Claim A}: We show that in this case, a ``scaling''
+mutation achieves the desired result. Restricted to the direction $w$, the best
+approximation to $f^S$ is $\frac{\ip{w}{f^S}}{\ltwonorm{w}^2}w$. We have that, 
+%%
 \[
-\left\Vert \frac{\ip{w}{w^*_S}}{\ltwonorm{w}^2} w \right\Vert \leq
-\ltwonorm{w^*_S} \leq \ltwonorm{w}/2
+\left\Vert \frac{\ip{w}{f^S}}{\ltwonorm{w}^2} w \right\Vert \leq
+\ltwonorm{f^S} \leq \frac{\ltwonorm{w}}{2}
 \]
-Hence, if $\gamma \in [1/2, 3/4]$ if $\ip{w}{w^*_S} > 0$ (and similarly for
-$\gamma \in [-3/4, -1/2]$ if $\ip{w}{w^*_S} < 0$), we have that,
+%%
+Hence, if $\ip{w}{f^S} > 0$ for $\gamma \in [1/2, 3/4]$ (and similarly if
+$\ip{w}{f^S} < 0$ for $\gamma \in [-3/4, -1/2]$ ), we have that,
+%%
 \begin{align*}
-\ltwonorm{\gamma w - w^*S}^2 &= \ltwonorm{w - w^*_S}^2 - 2 (1 - \gamma) \ip{w -
-w^*S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
-&\leq \ltwonorm{w - w^*_S}^2 - (1 - \gamma) \ltwonorm{w}^2 + (1 - \gamma)^2
+\ltwonorm{\gamma w - f^S}^2 &= \ltwonorm{w- f^S}^2 - 2 (1 - \gamma) \ip{w -
+f^S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
+&\leq \ltwonorm{w - f^S}^2 - (1 - \gamma) \ltwonorm{w}^2 + (1 - \gamma)^2
 \ltwonorm{w}^2 \\
-&\leq \ltwonorm{w - w^*_S}^2 - (\gamma - \gamma^2) \ltwonorm{w}^2
+&\leq \ltwonorm{w - f^S}^2 - (\gamma - \gamma^2) \ltwonorm{w}^2
 \intertext{Finally, by observing that for $\gamma \in [1/2, 3/4]$, $\gamma -
 \gamma^2 \geq 3/16$ and that $\ltwonorm{w} \geq (2/3)\ltwonorm{w - w^*_S}$ when
 $\ltwonorm{w} \geq 2 \ltwonorm{w^*_S}$, we get that}
