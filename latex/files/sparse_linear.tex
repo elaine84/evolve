@@ -1,30 +1,29 @@
-
 We present a simple algorithm that evolves the class of sparse linear functions,
 $\lin^k_{l, u}$.  The representation class also consists of sparse linear
 functions, but with greater number of non-zero entries than the \emph{ideal
-function}.
-Each representation used by the algorithm is linear
-function with sparsity $K$, and the absolute value of each coefficient is
-bounded by $B$. We assume that representation of real numbers is possible, the
-case of finite precision representations is standard.  We will specify $K$ and
-$B$ shortly. Thus, the representation class $R$ is
+function}. We will define the parameters, $K$ and $B$ in the definition below
+later. We also assume that a linear function is represented by $w \in \reals^n$,
+where each $w_i$ is a real number. (Handling the issues of finite precision is
+standard and is avoided in favour of simplicity.) Formally, the representation
+class is,
 \[ 
 R = \{ w \mapsto w \cdot x ~|~ \lznorm{w} \leq K, w_i \in [-B, B] \}
 \]
 
 Next, we define the mutator. Recall that the mutator is a randomized algorithm
-that takes as input an element $r \in R$, the accuracy parameter, $\epsilon$,
-and outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Suppose that
-$\Neigh(r, \epsilon)$ is populated by multiple independent draws of the
-following procedure.  For $w \in R$, define the mutated representation
-$w^\prime$, output by the mutator as:
+that takes as input an element, $r \in R$, the accuracy parameter, $\epsilon$,
+and outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Here, $\Neigh(r,
+\epsilon)$ is populated by $m$ independent draws from the following procedure,
+where $m$ will be specified later. For $w \in R$, define the mutated
+representation $w^\prime$, output by the mutator as:
 %%
 \begin{enumerate}
 %
-\item With probability $1/2$ do nothing, set $w^\prime = w$.
+\todovk{I don't think we need this mutation 1, we may be able to get rid of it.}
 %
+\item With probability $1/2$ do nothing, set $w^\prime = w$. %
 \item (Scaling) With probability $1/6$, choose $\gamma \in [-1, 1]$ uniformly at
-random and let $w^\prime = \alpha w$. 
+random and let $w^\prime = \gamma w$. 
 %
 \item (Adjusting) With probability $1/6$, do the following. Recall that $\NZ(w)
 = \{ i~|~ w_i \neq 0 \}$. Pick $i \in \NZ(w)$ uniformly at random. Let
@@ -39,50 +38,58 @@ be the mutated representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$.
 Set $w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime$ uniformly from the range
 $[-B, B]$. Recall that in this case, $\sparsity(w^\prime) = \sparsity(w) = K$
 with probability $1$, and that $w^\prime \in R$.
-\item (Adding) If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random. Let
-$w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for $j \neq
-i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
+\item (Adding) If $|\NZ(w)| < K$, choose $i \in [n] \setminus \NZ(w)$ uniformly
+at random. Let $w^\prime$ be the mutated representation, where $w_j^\prime =
+w_j$ for $j \neq i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
 \end{enumerate}
 \end{enumerate}
 
 In the ensuing discussion, we fix the following notation, $f \in C^k_{l, u}$ is
 the target linear function; the underlying distribution is $D$ which is a
-$\Delta$-smooth bounded distribution (see Section~\ref{sec:notation}). Recall
+$\Delta$-smooth bounded distribution (see Section~\ref{sec:notation-class}). Recall
 that for linear functions, $w, w^\prime$, we have the inner product
 $\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$, which also
 defines the norm $\ltwonorm{w} = \ip{w}{w}$.  We will show that for any $w \in
 R$, if $\loss_{f, D}(w) = \ltwonorm{f - w}^2 > \epsilon$, with non-negligible
 (inverse polynomial) probability, the above procedure produces a mutation
 $w^\prime$, such that $\loss_{f, D}(w^\prime) = \ltwonorm{f - w^\prime} \leq
-\loss_{f, D}(w) - b$, for $b = $.
+\loss_{f, D}(w) - b$, for $b = $. \todovk{Missing definition of $b$ add this.}
 
 To simplify notation, let $S = \NZ(w)$. Let $f^S$ denote best approximation to
-$f$ using variables in the set $S$. Formally, 
+$f$ using variables in the set $S$. Formally, \todovk{Try to get Latex to put
+the stuff under argmin like a math operator.}
 \[ 
-f^S = \argmin_{w \in R ~:~	w_i = 0 ~\vee~ i \in S} \ltwonorm{f- w}^2
+f^S = \argmin_{w \in R ~:~	w_i = 0 ~\vee~ i \in S} \ltwonorm{f- w}^2 
 \]
 
-Let $w^\prime$ denote the (random) mutation produced as a result of the
-procedure described above.  We will establish the desired result by proving the
-following claims. \smallskip \\
+Let $w^\prime$ denote a random mutation produced as a result of the procedure
+described above.  We will establish the desired result by proving the following
+claims.
 %%
-\noindent{\bf Claim A}:  If $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, then with
-probability at least $1/48$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
-\ltwonorm{w - f^S}^2/12$. \medskip \\
+\begin{claim} \label{claim:apple} If $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, then
+with probability at least $1/24$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
+\ltwonorm{w - f^S}^2/12$. In particular, a ``scaling'' type mutation achieves
+this. \end{claim}
 %%
-\noindent{\bf Claim B}: When $\ltwonorm{w} \leq 2 \ltwonorm{w^*_S}$ and
-$\ltwonorm{w - w^*_S} \geq \alpha$, then with probability at least $\alpha$,
-there exists a mutation that decreases the $\lerror$ by at least $\alpha$.  \medskip  \\
+\begin{claim} \label{claim:banana} When $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$,
+then with probability at least \vknote{FILL THIS}, 
+there exists a mutation that decreases the $\lerror$ by at least \vknote{FILL
+THIS}. In particular, an ``adjusting'' type mutation achieves this. \end{claim}
 %%
-\noindent{\bf Claim C}: When $\ltwonorm{w - w^*_S} \leq \epsilon$, but
-$\sparseset{w^*} \not\subseteq S$, then there exists a mutation that decreases
-$\lerror$ by at least \emph{BLAH}. \medskip 
+\begin{claim} \label{claim:cantelope} When $\ltwonorm{w - f^S} \leq \epsilon$, but
+$\sparseset{f} \not\subseteq S$, then with probability at least \vknote{FILL
+THIS}, there exists a mutation that decreases
+$\lerror$ by at least \vknote{FILLTHIS}. \end{claim}
 
 Finally, note that when $\NZ(f) \subseteq S$, then $f^S = f$. Thus, in this case
 when $\loss_{f, D}(w) = \ltwonorm{f^S - w}^2 \leq \epsilon$, the evolutionary
 algorithm has succeeded. \medskip 
 
-\noindent{\it Proof of Claim A}: We show that in this case, a ``scaling''
+\vknote{I think we'll eventually structure this by saying -- the proofs of the
+claim are in Appendix Hugh. Then, we'll have a short proof showing that if the
+Claims are true, evolution indeed succeeds.}
+
+\begin{proof}[Proof of Claim \ref{claim:apple}]: We show that in this case, a ``scaling''
 mutation achieves the desired result. Restricted to the direction $w$, the best
 approximation to $f^S$ is $\frac{\ip{w}{f^S}}{\ltwonorm{w}^2}w$. We have that, 
 %%
@@ -91,8 +98,8 @@ approximation to $f^S$ is $\frac{\ip{w}{f^S}}{\ltwonorm{w}^2}w$. We have that,
 \ltwonorm{f^S} \leq \frac{\ltwonorm{w}}{2}
 \]
 %%
-Hence, if $\ip{w}{f^S} > 0$ for $\gamma \in [1/2, 3/4]$ (and similarly if
-$\ip{w}{f^S} < 0$ for $\gamma \in [-3/4, -1/2]$ ), we have that,
+Hence, if $\ip{w}{f^S} > 0$ for $\gamma \in [1/4, 3/4]$ (and similarly if
+$\ip{w}{f^S} < 0$ for $\gamma \in [-3/4, -1/4]$ ), we have that,
 %%
 \begin{align*}
 \ltwonorm{\gamma w - f^S}^2 &= \ltwonorm{w- f^S}^2 - 2 (1 - \gamma) \ip{w -
@@ -100,12 +107,38 @@ f^S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
 &\leq \ltwonorm{w - f^S}^2 - (1 - \gamma) \ltwonorm{w}^2 + (1 - \gamma)^2
 \ltwonorm{w}^2 \\
 &\leq \ltwonorm{w - f^S}^2 - (\gamma - \gamma^2) \ltwonorm{w}^2
-\intertext{Finally, by observing that for $\gamma \in [1/2, 3/4]$, $\gamma -
-\gamma^2 \geq 3/16$ and that $\ltwonorm{w} \geq (2/3)\ltwonorm{w - w^*_S}$ when
-$\ltwonorm{w} \geq 2 \ltwonorm{w^*_S}$, we get that}
-\ltwonorm{\gamma w - w^*_S}^2 &\leq \ltwonorm{w - w^*_S}^2 - \frac{1}{12}
-\ltwonorm{w - w^*_S}^2
+\intertext{Finally, by observing that for $\gamma \in [1/4, 3/4]$, $\gamma -
+\gamma^2 \geq 3/16$ and that by triangle inequality, $\ltwonorm{w} \geq
+(2/3)\ltwonorm{w - f^S}$ when $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, we get that}
+%
+\loss_{f, D}(w^\prime) = \ltwonorm{\gamma w - f^S}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{1}{12}
+\ltwonorm{w - f^S}^2
 \end{align*}
+A correct value of $\gamma$ is chosen with probability at least $1/4$, and
+combined with the probability of choosing a scaling mutation we get the desired
+result.
+\end{proof}
+
+\begin{proof}[Proof of Claim~\ref{claim:banana}] Here, we appeal to a mutation
+that adjusts the relative weights of the variables within the set $S = \NZ(w)$.
+Consider the vector, $f^S - w$, and note that $\NZ(f^S -w ) \subseteq S$. Let
+$r^S = f^S - w$ denote the residual within the space spanned by $S$. Then
+consider, 
+\begin{align*}
+\ip{r^S}{r^S} &= \sum_{i \in S} r^S_i \ip{e^i}{r^S}
+\intertext{Here, $e_i$ is the unit vector representing the linear function $x
+\mapsto e^i \cdot x = x_i$. Therefore, there must exist $i$ for which the
+following is true,}
+r^S_i\ip{e^i}{r^S} &\geq \frac{\ip{r^S}{r^S}}{|S|}
+\intertext{We appeal to Lemma~\ref{lemma:amsterdam} (part 1), which implies that
+$|r^S_i| \leq \sqrt{\ip{r^S}{r^S}/\Delta^2} = \ltwonorm{r^S}{\Delta}$ to
+conclude that,}
+|\ip{e^i}{r^S}| &\geq \frac{\ltwonorm{r^S}}{|S| \Delta}
+\end{align*}
+Let $\beta = \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}^2}$. 
+\end{proof}
+
+
 
 This establishes Claim A above. Next, we establish Claim B. By
 Lemma~\ref{lem:large_coeff}, there must be some $i$ for which, $(w_i -
