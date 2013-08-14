@@ -4,9 +4,9 @@ regulatory networks.
 
 Valiant (2006) introduced a model of evolution to address the question of
 complexity that may arise through Darwinian mechanisms. In this model, an
-organism is an entity that computes a function of it's environment. There is a
+organism is an entity that computes a function of its environment. There is a
 hypothetical \emph{ideal function} indicating the best behaviour in every
-possible environment. The peformance of the organism is measured by how close
+possible environment. The performance of the organism is measured by how close
 the function it computes is to the ideal. Mutations may alter the function an
 organism computes. The performance (fitness) forms the basis of natural
 selection. The resources allowed are the most generous while remaining feasible,
@@ -22,54 +22,65 @@ restrictive in the sense that the only feedback received is aggregate over life
 experiences. Valiant observed that any feasible evolutionary mechanism could be
 simulated in the statistical query framework of Kearns~\cite{Kearns:1994}. In a
 remarkable result, Feldman showed that in fact evolvable concept classes are
-exactly captured by a restriction of Kearns' model, where the learning algorithm
-is only allowed to make \emph{performance queries}, \ie, produce a hypothesis
-and query what the (approximate) loss of that hypothesis is under the
+exactly captured by a restriction of Kearns's model, where the learning algorithm
+is only allowed to make \emph{performance queries}, \ie, it produces a hypothesis
+and then makes a query that returns the (approximate) loss of that hypothesis under the
 distribution.\footnote{Feldman calls these queries correlational statistical
 queries, because when working with Boolean functions with range $\{-1, 1\}$, the
-performance of any hypothesis is the correlation with the ideal function.} P.
-Valiant studied the evolvability of real-valued functions. He shows that
-whenever the corresponding weak optimisation problem, that of approximately
+performance of any hypothesis is its correlation with the ideal function.} P.
+Valiant studied the evolvability of real-valued functions. He showed that
+whenever the corresponding weak optimisation problem, \ie, approximately
 minimising the expected loss, can be solved by a using a weak-evaluation oracle,
 such an algorithm can be converted into an evolutionary
 mechanism~\cite{Valiant:2012-real}. This implies that a large of class of
-functions, low degree real polynomials, can be evolved with respect to any
+functions -- low degree real polynomials -- can be evolved with respect to any
 convex loss function.
 
-On the other hand, there have been a few more direct evolutionary mechanisms
-provided. Valiant~\cite{Valiant:2009-evolvability} showed that the class of
+Direct evolutionary mechanisms \dots \eanote{Summarize what these are and
+what they achieve -- I don't totally understand what ``direct'' means.}
+Valiant~\cite{Valiant:2009-evolvability} showed that the class of
 disjunctions is evolvable using a simple set of mutations under the uniform
 distribution. Kanade, Valiant and Vaughan proposed a simple mechanism for
 evolving homogeneous linear separators under radially symmetric
-distributions~\cite{KVV:2010-drift}.  Feldman considered a model, where the
-ideal function is boolean, but the representation is real-valued, allowing for
+distributions~\cite{KVV:2010-drift}.  Feldman considered a model where the
+ideal function is boolean but the representation is real-valued, allowing for
 more detailed feedback. He presents an algorithm for evolving large margin
 linear separators for a large class of loss functions~\cite{Feldman:2011-LTF}.
-P.  Valiant also shows that with very simple mutations, the class of low-degree
-polynomials can be evolved with respect to the squared loss.
+P.  Valiant also showed that with very simple mutations, the class of low-degree
+polynomials can be evolved with respect to the squared loss~\cite{Valiant:2012-real}.
 
 \todovk{I'd like this paragraph re-worded.}
-In a certain sense, the more direct algorithms are appealing. However, a notion
-of what constitutes natural mutation is hard to define. The generality offered
-by the model by defining mutations as outputs of a Turing machine is appealing,
-because it captures a fundamental notion of the evolvable, including possible
-life forms on distant planets. Also, our current understanding biological
-mutations and the relationship between genotype and phenotype is limited. Thus,
-Valiant~\cite{Valiant:2013-PAC} argues that a temptation to define
-\emph{naturalness} should be resisted. In this work, we suggest that the other
-general aspect in Valiant's model, representations being arbitrary
+\todoea{I think much of this paragraph could be deleted.}
+Modeling mutations as the outputs of a Turing machine offers appealing
+generality that captures a fundamental notion of the evolvable that is not
+specific to life on Earth, \eg, requiring that creatures use sequences of DNA
+to represent their hypotheses.
+At the same time, the more direct algorithms are appealing because \dots
+\eanote{Because of their ``naturalness''?}
+However, it is difficult to define what constraints ``naturalness'' might place
+on mutations.  Our current understanding of biological mutations and the
+relationship between genotype -- the representation of a hypothesis --
+and phenotype -- its corresponding functional output -- is incredibly limited.
+Thus, Valiant~\cite{Valiant:2013-PAC} argued that a temptation to define
+\emph{naturalness} should be resisted, \eanote{while observing that natural
+systems are constrained?}
+
+In this work, we suggest that the other general aspect in Valiant's model, 
+\eanote{What is the first general aspect?} representations being arbitrary
 polynomial-time computable functions, may indeed benefit from a closer study of
-biology. We first describe a particular kind of biological circuits,
+biology. We first describe a particular class of biological circuits,
 \emph{transcription networks}, that motivate our study. We then frame the
 question in the language of computational learning theory, summarize our
-contributions and related work.
+contributions and discuss related work.
 
 \subsection{Representation in Biology}
 
-\todovk{I don't like this paragaraph.. I don't know what to do.}
-Biological systems appear to function with greatly restricted representation
-classes. One striking feature is that when viewed as a computational network,
-the biological.  Of particular interest to us here is that
+\todovk{I don't like this paragraph.. I don't know what to do.}
+Biological systems appear to function successfully with greatly restricted
+representation classes. For example, \emph{Escherichia coli} is a single-celled
+bacterium that has thrived for millions of years in the digestive systems of
+animal hosts; its responses to the environment -- which is dynamic and very
+high-dimensional -- are encoded in about 4,000 genes~\cite{biology}. Notably,
 sparsity is a ubiquitous property in networks of interacting genes and proteins
 that respond to the environment and regulate cellular function.  Biological
 systems can be constrained in ways that correspond to other suitable
@@ -77,8 +88,8 @@ restrictions on the class of representations -- for example, cite Paul and give
 an argument for bounded quantities (discrete, finite numbers of molecules).
 
 We focus on transcription networks, which are a specific class of networks of
-interacting genes and proteins. For a very comprehensible introduction to
-transcription networks and other biological circuits see (Alon~\cite{alon});
+interacting genes and proteins. For an accessible and mathematical introduction to
+transcription networks and other biological circuits, see (Alon~\cite{alon});
 below we present a simplified account that motivates this work. A protein is
 encoded in DNA as a gene, that when transcribed produces mRNA that is translated
 into protein (Figure~\ref{}).
