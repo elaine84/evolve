@@ -54,12 +54,12 @@ a mutation that reduces $\lerror$ by at least $\ltwonorm{w - w^*_S}^2 / 8$.
 \item[Claim B] If $\ltwonorm{w} \le 2 \ltwonorm{w^*_S}$ and
 $\ltwonorm{w - w^*_S} \ge \alpha$, then with probability at least $\alpha$,
 there exists a mutation that decreases the $\lerror$ by at least $\alpha$.
-\item[Claim C] If $\sparsity(w^*) = K < (1 + 1/(1-\Delta^2))/2$ and
+\item[Claim C] If $\Delta^2 > 1 - 1/(2 K - 1)$ and
 $\ltwonorm{w - w^*_S}^2 < \epsilon$, then $w^\prime$ will be
 such that either $\sparseset(w^\prime) = \sparseset(w)$ and
 $\ltwonorm{w^\prime - w^*_S}^2 < \epsilon$, or
 $\sparseset(w^\prime) \setminus \sparseset(w) = \{i\}$ where $i \in \sparseset(w^*)$
-and $w^\prime$ reduces $\lerror$ by at least some amount.
+and $w^\prime$ reduces $\lerror$ \eanote{by at least some amount}.
 \end{enumerate}
 
 To establish Claims A and B above, we follow the lines of reasoning from the
@@ -171,10 +171,12 @@ On the left,
 \noindent and so
 
 \begin{align*}
-&1 - (1 - \Delta^2) (K-1) = 2 - K + \Delta^2 K - \Delta^2 > (1 - \Delta^2) K \\
-\Rightarrow & \qquad 1 + (1 - \Delta^2) > 2 (1 - \Delta^2) K
-\qquad \Rightarrow \qquad K < \frac{1}{2} \biggl( 1 + \frac{1}{1 - \Delta^2} \biggr).
+1 - (1 - \Delta^2) (K-1) = 2 - K + \Delta^2 K - \Delta^2 &> (1 - \Delta^2) K \\
+%\Rightarrow & \qquad 1 + (1 - \Delta^2) > 2 (1 - \Delta^2) K
+%\qquad \Rightarrow \qquad K < \frac{1}{2} \biggl( 1 + \frac{1}{1 - \Delta^2} \biggr)
+\Rightarrow \qquad \Delta^2 &> 1 - \frac{1}{2 K - 1}
 \end{align*}
 
-\noindent  This is the required condition for $\sparsity(w^*)$ in our claim.
+\noindent  This is the condition for $\Delta^2$ in Claim C.
 \eanote{Finally, argue that subsequent steps work too.}
+\eanote{And then we should say something about the CS analog.}
