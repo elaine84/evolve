@@ -1,7 +1,5 @@
 Darwin's theory of evolution through natural selection has been central to the
-study of evolution. The modern theory of genetics  -- phenotype -- genotype --
-regulatory networks. 
-
+study of evolution.
 Valiant (2006) introduced a model of evolution to address the question of
 complexity that may arise through Darwinian mechanisms. In this model, an
 organism is an entity that computes a function of its environment. There is a
@@ -75,7 +73,6 @@ contributions and discuss related work.
 
 \subsection{Representation in Biology}
 
-\todovk{I don't like this paragraph.. I don't know what to do.}
 Biological systems appear to function successfully with greatly restricted
 representation classes. For example, one natural restriction is that concept
 classes ought to be bounded.
@@ -111,7 +108,7 @@ regulated by a set of proteins called \emph{transcription factors}.
 These transcription factors increase or decrease a gene's expression by binding
 to regions of DNA close to the gene. 
 Thus, physical limitations demand that only a small number of transcription
-factors may regulate a single gene; \todoea{most genes have L-U binding sites.}
+factors may regulate a single gene; \eanote{most genes have L-U binding sites.}
 
 The number of transcription factors varies from hundreds in a bacterium to
 thousands in a human cell.
@@ -124,25 +121,20 @@ catalyzes a metabolic reaction involving the sugar.
 Alternatively, it may be another transcription factor that regulate other genes
 -- we view this as intermediate computation -- and so on in a cascading
 fashion, to yield some desired response.
+
 While transcription networks often include feed-back loops, here for simplicity
 we focus on systems that are directed acyclic graphs, and the resulting
 computation can be viewed as a circuit.
-
-Another feature of transcription networks is that the time required for
-sufficient quantities of protein to be produced is of the same magnitude as
-cell-division time. Thus, these circuits are by necessity
-shallow.\footnote{Other kinds of networks, such as signaling networks, work by
-changing shapes of proteins. The fact that these transformations are rapid may
-allow for much larger depth.
+These circuits are by necessity shallow due to another physical constraint: the
+time required for sufficient quantities of protein to be produced is of the same
+magnitude as cell-division time.\footnote{Other kinds of networks, such as
+signaling networks, work by changing shapes of proteins. The fact that these
+transformations are rapid may allow for much larger depth.
 Note that fast conformational changes govern how transcription factors directly
 process information from the environment in order to regulate gene expression.
 In our example, a sugar molecule binds to a transcription factor and changes
 its shape in a way that alters its ability to bind to DNA.}
 \todoea{Numbers regarding depth.}
-Of course, any such function can depend only on a
-constant number of all possible variables. Thus, we consider the class of
-functions restricted so that each function depends only on a constant number of
-variables.
 
 \subsection{Our Contributions}
 
