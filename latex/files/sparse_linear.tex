@@ -72,11 +72,12 @@ with probability at least $1/24$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
 this. \end{claim}
 %%
 \begin{claim} \label{claim:banana} When $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$,
-then with probability at least \vknote{FILL THIS}, 
-there exists a mutation that decreases the $\lerror$ by at least \vknote{FILL
-THIS}. In particular, an ``adjusting'' type mutation achieves this. \end{claim}
+then with probability at least $\ltwonorm{f^S - w}/(2 \Delta |S| B)$, there
+exists a mutation that decreases the $\lerror$ by at least $3\ltwonorm{f^S -
+w}^2/(4|S|^2 \Delta^2)$. In particular, an ``adjusting'' type mutation achieves
+this. \end{claim}
 %%
-\begin{claim} \label{claim:cantelope} When $\ltwonorm{w - f^S} \leq \epsilon$, but
+\begin{claim} \label{claim:cantaloupe} When $\ltwonorm{w - f^S} \leq \epsilon$, but
 $\sparseset{f} \not\subseteq S$, then with probability at least \vknote{FILL
 THIS}, there exists a mutation that decreases
 $\lerror$ by at least \vknote{FILLTHIS}. \end{claim}
@@ -126,7 +127,7 @@ $r^S = f^S - w$ denote the residual within the space spanned by $S$. Then
 consider, 
 \begin{align*}
 \ip{r^S}{r^S} &= \sum_{i \in S} r^S_i \ip{e^i}{r^S}
-\intertext{Here, $e_i$ is the unit vector representing the linear function $x
+\intertext{Here, $e^i$ is the unit vector representing the linear function $x
 \mapsto e^i \cdot x = x_i$. Therefore, there must exist $i$ for which the
 following is true,}
 r^S_i\ip{e^i}{r^S} &\geq \frac{\ip{r^S}{r^S}}{|S|}
@@ -135,45 +136,68 @@ $|r^S_i| \leq \sqrt{\ip{r^S}{r^S}/\Delta^2} = \ltwonorm{r^S}{\Delta}$ to
 conclude that,}
 |\ip{e^i}{r^S}| &\geq \frac{\ltwonorm{r^S}}{|S| \Delta}
 \end{align*}
-Let $\beta = \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}^2}$. 
-\end{proof}
-
-
-
-This establishes Claim A above. Next, we establish Claim B. By
-Lemma~\ref{lem:large_coeff}, there must be some $i$ for which, $(w_i -
-(w^*_S)_i)\ip{e_i}{w - w^*_S} \geq \ltwonorm{w - w^*_S}^2/|S|$. Note that
-$\lznorm{w - w^*_S} \leq |S|$. Next, let $\beta = \ip{e_i}{w
-- w^*_S}/\ltwonorm{e_i}^2$. Consider any $w^\prime \in R$ satisfying: (i)
-$w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in [w_i + \beta/2, w_i +
-3\beta/2]$. Assuming that $w^\prime$ is a valid mutation, \ie $|w^\prime_i|
-\leq B$, we know that the probability of some such $w^\prime$ being the output
-by the mutator is at least $\beta/(12KB)$. Then for any such $w^\prime$, we have
+Let $\beta = \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}^2}$. Then, suppose $w^\prime =
+w + \gamma e^i$ for $\gamma \in [\beta - |\beta|/2, \beta +  |\beta|/2]$. We
+then have,
 \begin{align*}
-\ltwonorm{w^*_S - w^\prime}^2 &= \ltwonorm{w^*S - w - \gamma e_i}^2
-\intertext{Here, $\gamma \in [\beta/2, 3\beta/2]$}
-&= \ltwonorm{w^*_S - w}^2 - 2 \gamma \ip{e_i}{w^*_S - w} + \gamma^2
-\ltwonorm{e_i}^2
-&= \ltwonorm{w^*_S - w}^2 - (2 \gamma \beta - \gamma^2) \ltwonorm{e_i}^2
-\leq \ltwonorm{w^*_S - w}^2 - (3/4)\beta^2
-\intertext{Using Lemma~\ref{lemma:not-very-large}, the definition of $\beta$ and
-the condition that $(w_i - (w^*_S)_i) \ip{e_i}{w^*_S - w} \geq \ltwonorm{w^*_S -
-w}^2/K$, we get that}
-\ltwonorm{w^*_S - w^\prime}^2 &\leq \ltwonorm{w^*_S - w}^2 - \frac{\Delta^2
-\ltwonorm{w^*S - w}^2}{K^2}
+\ltwonorm{f^S - (w + \gamma e^i)}^2 &= \ltwonorm{w - f^S}^2 - 2 \gamma \ip{f^S -
+w}{e^i} + \gamma^2 \ltwonorm{e^i}^2
+\intertext{Note that $f^S - w = r^S$ and that $\gamma$ and $\ip{e^i}{r^S}$ and
+$\gamma$ have the same sign. This combined with (\ref{eqn:andora}) above and the fact
+that $\ltwonorm{e^i} \leq 1$, gives,}
+\ltwonorm{f^s - (w + \gamma e^i)}^2 &\leq \ltwonorm{w - f^S}^s - (2
+|\gamma||\beta| + \gamma^2) \ltwonorm{e^i}^2
+\intertext{Finally, note that for $|\gamma| \in [|\beta|/2, 3|\beta|/2]$, $- 2
+|\gamma| |\beta| + |\beta|^2 \leq - 3 |\beta|^2/4$, hence the
+above equation yields}
+\ltwonorm{f^S - (w + \gamma e^i)}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{3}{4}
+\beta^2 \ltwonorm{e^i}^2 \leq \ltwonorm{w - f^S}^2 - \frac{3}{4}
+\frac{\ltwonorm{f^s - w}^2}{|S|^2 \Delta^2}
 \end{align*}
 
-Thus, as long as $\ltwonorm{w^*S - w}^2 \geq \epsilon$, we know that either a
-mutated representation obtained by \emph{scaling} or by \emph{adjusting} is
-always strictly beneficial by margin $\frac{\epsilon \Delta^2}{K^2}$. Now, if
-$\sparseset{w^*} \subseteq S$, then $w^* = w^*_S$ and evolution has succeeded.
-Next, we make the simple observation that as long as $S$ is missing at least one
-element from $\sparseset(w^*)$, $\ltwonorm{w^* - w^*_S} \geq u \Delta^2$. In
-order to show establish Claim C, we show that by adding some variable from
-$\sparseset(w^*) \setminus S$ and deleting some variable from $S$, we decrease
-$\lerror$. Note that, if $|S| < K$ and we don't need to delete a variable, then
-the situation is even better. So we only consider the case when $|S| = K$. 
+Note that the a suitable mutation $w^\prime = w + \gamma e^i$ is obtained with
+probability at least $|\beta|/(2B)$. This, however relies on the fact that $w_i
++ \gamma \in [-B, B]$. This can be ensured by choosing that the parameter $B$
+suitably. Note that that $\ltwonorm{w} \leq 2 \ltwonorm{f^S} \leq 2
+\ltwonorm{f}$ (the last part is because $f^S$ is a projection of $f$ onto a
+lower dimensional space). Thus, by Lemma~\ref{lemma:amsterdam} (part 1), $w_i
+\leq 2 \ltwonorm{f} / \Delta$. Also, by $|\beta| =
+|\ip{e^i}{r^S}|/\ltwonorm{e^i}^2 \leq \ltwonorm{r^S}/\ltwonorm{e^i} \leq 3
+\ltwonorm{f}/\Delta$. Thus, if $B > 10 \ltwonorm{f}/ \Delta$, the mutation will
+be a feasible one. Note that the maximum value of $\ltwonorm{f}$ for $f \in
+\lin^k_{l, u}$ is $ku$. Thus, this condition is satisfied for the choice of
+$\beta$ and the condition is satisfied. This completes the proof of
+Claim~\ref{claim:banana}.
+\end{proof}
 
+\begin{proof}[Proof of Claim~\ref{claim:cantaloupe}] Finally, we show that if
+$\ltwonorm{f^S - w}$ is very small, but $\NZ(f) \not\subseteq S$, then it must
+be the case that a ``swapping'' or ``adding'' mutation is beneficial. We focus
+on the swapping case, \ie when $|S| = K$; the adding step is a special case of
+this. First, we observe that if there exists $i \in \NZ(f)$ such that $i \not\in
+S$, then by using Lemma~\ref{lemma:amsterdam} (part 1), it must be the case that
+$\ltwonorm{f - w}^2 \geq f_i^2 \Delta^2 \geq l^2 \Delta^2$.
+
+Also, Lemma~\ref{lemma:amsterdam} (part 2) implies that there exists $i \in S$,
+such that $w^2_i \leq \ltwonorm{w}^2/(K \Delta^2)$. Finally, consider the
+following:
+\begin{align*}
+\ip{f - w}{f - w} &=  \sum_{i \in \NZ(f) \setminus S} (f_i - w_i) \ip{e^i}{f -
+w} + \sum_{i \in S} (f_i - w_i) \ip{e^i}{f - w}
+\intertext{Note that, for all $i \in S$, $\ip{e^i}{f - f^S} = 0$, since $f^S$ is
+the projection of $f$ on to the space spanned by the variables in $S$. Hence,
+$\ip{e^i}{f - w} = \ip{e^i}{f^S - w} \leq \ltwonorm{f^S - w}$. Using this we
+get, }
+\ip{f - w}{f - w} &\leq \sum_{i \ in \NZ(f) \setminus S} (f_i - w_i) \ip{e^i}{f
+- w} + K \ltwonorm{f - w} \sum_{i \in S} |f^i - w^i| 
+\intertext{Now, even by a very crude estimate, $|f^i - w^i| \leq 2 B$, and hence
+by the condition in the statement of Claim~\ref{claim:cantaloupe} together with
+the observation that $\ltwonorm{f - w}^2 \geq l^2 \Delta^2$, we have that,}
+\frac{1}{2}\ip{f - w}{f - w} &\leq \sum_{i \in \NZ(f) \setminus S} (f_i - w_i)
+\ip{e^i}{f - w}
+\end{align*}
+
+\end{proof}
 Here, we assume that $\ltwonorm{w^*_S - w}^2 \leq \epsilon$ (because otherwise
 we konw that a beneficial mutation already exists with non-negligible
 probability). Using Lemma~\ref{lemma:at-least-one-small}, we know that there
@@ -186,7 +210,7 @@ the following:
 \intertext{Since $\ltwonorm{w^*S - w} \leq \sqrt{\epsilon}$ and $\ltwonorm{w^* -
 w} \leq 3 \ltwonorm{w^*}$, we get that for $\epsilon$ small enough,}
 \ltwonorm{w^* - w}^2 &\leq 2 \ip{w^* - w^*_S}{w^* - w}
-\intertext{Next, we observe that $\ip{w^* - w^*_S}{e_i} = 0$ for every $i \in
+\intertext{Next, we observe that $\ip{w^* - w^*_S}{e^i} = 0$ for every $i \in
 S$, since by definition of $w^*_S$ is the projection of $w^*$ in the space
 spanned by the variables in the set $S$. Thus, it must be the case that there
 exists some $j \in \sparseset(w^*) \setminus S$, such that}
