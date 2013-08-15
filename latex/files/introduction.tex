@@ -130,14 +130,12 @@ computation can be viewed as a circuit.
 
 Another feature of transcription networks is that the time required for
 sufficient quantities of protein to be produced is of the same magnitude as
-cell-division time. Thus, these circuits are by necessity shallow.
-A natural restriction one may place on the representation used by
-evolution is that it must be the description of a constant-depth circuit with
-constant fan-in gates.\footnote{Other kinds of networks, such
-as signaling networks, work by changing shapes of proteins. The fact that these
-transformations are rapid may allow for much larger depth.
-Fast conformational changes govern how transcription factors directly process 
-information from the environment in order to regulate gene expression.
+cell-division time. Thus, these circuits are by necessity
+shallow.\footnote{Other kinds of networks, such as signaling networks, work by
+changing shapes of proteins. The fact that these transformations are rapid may
+allow for much larger depth.
+Note that fast conformational changes govern how transcription factors directly
+process information from the environment in order to regulate gene expression.
 In our example, a sugar molecule binds to a transcription factor and changes
 its shape in a way that alters its ability to bind to DNA.}
 \todoea{Numbers regarding depth.}
@@ -157,20 +155,20 @@ function that can be represented by such a circuit can depend only on a constant
 number of input variables.
 
 Second, we show that the class of sparse linear functions, those that depend
-only on a constant number of variables, can be evolved using sparse linear
-functions, under a large class of smooth distributions, when the performance is
+only on a constant number of variables, under a large class of smooth
+distributions, can be evolved when the performance is
 measured using squared error. The number of variables used by the
 representations is larger than the number of variables in the \emph{ideal
 function} and depends on the \emph{smoothness} parameter of the distribution.
 Note that a linear function is represented by a weighted arithmetic circuit with
-only one addition gate (alternatively a depth two circuit, with a layer of
+only one addition gate (alternatively a depth-two circuit, with a layer of
 multiplication gates and some constant inputs). There is also a natural
 trade-off between depth and fan-in. For the precise statement, see
 Theorem~\ref{thm:sparse-linear} in Section~\ref{sec:sparse-linear}.
 
-Valiant also proposed a stronger selection mechanism, when natural selection
-aggressively selects the (almost) best mutation, than merely a beneficial one --
-called evolution by optimisation.  Under stronger conditions on the
+Valiant also proposed a stronger selection mechanism -- when natural selection
+aggressively selects the (almost) best mutation, rather than merely a beneficial
+one -- called evolution by optimisation.  Under stronger conditions on the
 distribution, we show that under evolution by optimisation sparse linear
 functions can be evolved by representations with the same sparsity. This
 algorithm however requires to be initialised, \ie the evolutionary process
@@ -180,14 +178,14 @@ begins with the $0$ function.
 
 The question of proper vs. improper learning has been studied in computational
 learning theory. While a separation between the two kinds is known, unless $\NP
-\neq \RP$, most intersting PAC-learnable classes can be learned using thresholds
+\neq \RP$, most interesting PAC-learnable classes can be learned using thresholds
 of low-degree polynomials.\footnote{For example, the class of $k$-CNF, $k$-term
 DNF, decision lists, low-rank decision trees, can all be represented as PTFs.}
 In the context of evolvability, strong negative results are known for
 distribution-independent evolvability for boolean functions, \eg even the class
 of conjunctions is not evolvable. However, it is interesting to study whether
-under restricted classes of distributions, whether evolution is possible using
-simple restriction classes. Currently, even under (biased) product algorithms,
+under restricted classes of distributions, evolution is possible for simple,
+restricted concept classes. Currently, even under (biased) product algorithms,
 no evolutionary mechanism is known for the class of disjunctions, except via
 Feldman's general reduction from CSQ algorithms. The class of smooth(ed)
 distributions may also be a natural starting place for evolvability of simple
@@ -201,21 +199,23 @@ equivalent to finding the sparsest solution to a system of linear equations
 (assuming there is no noise in the data). In general this problem is $\NP$-hard
 and the approximation factor depends on the norm of the pseudo-inverse of the
 matrix\cite{Natarjan:1995}. Thus, some assumption on the distribution seems
-necessary. Recovering sparsest solutions is the subject of the body of work
-called compressed sensing. The work in this area is too vast to list here;
-Donoho et al.~\cite{Donoho:} have a great survey. The evolution based on
-optimisation algorithm (Section~\ref{sec:}) is essentially the greedy matching
-of Donoho and Troepp, cast in the language of evolvability. Finally, we note
-that under the distributional assumption made in the paper, the problem of
-sparse linear regression is easy given access to data points. The focus here is
-showing that evolutionary mechanisms, without access to data can also succeed,
-in a manner that at all times the function computed is also a sparse linear
-function.
+necessary. Compressed sensing studies the problem of recovering a sparse or
+the sparsest solution to underdetermined linear systems.
+This area is too vast to review here; Bruckstein
+\emph{et al.}~\cite{Donoho:2009-sparse} have a great survey. The evolution based
+on optimisation algorithm (Section~\ref{sec:}) is essentially the greedy
+orthogonal matching pursuit algorithm of Tropp~\cite{Tropp:2004-greed} and
+Donoho \emph{et al.}~\cite{Donoho:2006-recovery}, cast in the language of
+evolvability. Finally, we note that under the distributional assumption made in
+the paper, the problem of sparse linear regression is easy, given access to data
+points. The focus here is showing that evolutionary mechanisms, without access
+to data can also succeed, in a manner that at all times the function computed is
+also a sparse linear function.
 
 \subsubsection*{Organization}
 
-In section~\ref{sec:model}, we describe Valiant's evolution model, and describe
+In Section~\ref{sec:model}, we describe Valiant's evolution model, and describe
 the concept classes and class of distributions considered in this paper.
 Section~\ref{sec:sparse-algs} contains the evolutionary mechanisms for sparse
 linear functions. We conclude in Section~\ref{sec:discussion} with some
-discusssion and directions for future work.
+discussion and directions for future work.
