@@ -1,20 +1,81 @@
-We define a mutator that, under strong enough selection,
-minimizes $\lerr_D(w, w^*)$ in a greedy fashion with respect to $\sparseset(w)$.
-For $w \in R$, define the mutated representation $w^\prime$, output by the mutator as:
+In this section, we present a different evolutionary mechanism for evolving
+sparse linear functions. This algorithm essentially is an adaptation of the
+greedy algorithm, commonly known as orthogonal matching pursuit (OMP), in the
+signal processing literature (see ~\cite{Donoho:2006-recovery,
+Tropp:2004-greed}). We require three assumptions to prove that this mechanism
+succeeds, which are considerably stronger than the assumptions used earlier.
+%%
 \begin{enumerate}
-\item With probability $1/2$ do nothing, set $w^\prime = w$.
-\item (Scaling) With probability $1/4 - \lambda/2$, choose $\gamma \in [-1, 1]$
-uniformly at random and let $w^\prime = \gamma w$.
-\item (Adjusting) With probability $1/4 - \lambda/2$, do the following.
-Let $S_w = \{ i~|~ w_i \neq 0\}$. Pick $i \in S_w$ uniformly at random.
-Let $w^\prime$ denote the mutated representation, where
-$w^\prime_j = w_j$ for $j \neq i$, $w^\prime_i \in [-B, B]$ uniformly at random.
-\item (Adding) With the remaining probability $\lambda$, do the following.
-If $|S_w| < K$, choose $i \in [n] \setminus S_w$ uniformly at random.
-Let $w^\prime$ be the mutated representation, where $w_j^\prime = w_j$ for
-$j \neq i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$.
-Otherwise, if $|S_w| = K$, do nothing, set $w^\prime = w$.
+%
+\item For any two variables, $x_i$ and $x_j$, the correlation coefficient,
+$\corr(x_i, x_j) \leq \frac{1}{2k}$, where $k$ is the sparsity of the target.
+%
+\item The selection rule is based on \emph{optimisation}, \ie nature selects the
+(almost) best mutation from the candidate pool. 
+%
+\item Evolution is allowed \emph{initialization}; the starting representation
+corresponds to the $0$ vector.
+%
 \end{enumerate}
+
+Nevertheless, the algorithm is appealing for its simplicity and also the fact
+that it is a \emph{proper} evolutionary mechanism -- it never uses a
+representation that is not a $k$-sparse linear function. 
+
+Let $C^k_{0, u}$ be the concpet class from which the \emph{ideal function} is
+chosen.\footnote{Here, we no longer need the fact that each coefficient in the
+target linear function has magnitude at least $l$.} Let $R = \{w ~|~
+\sparsity(w) \leq k, w_i \in [-B, B] \}$. Now, define the action of the mutator
+as follows (we will define the parameters $\lambda$ and $m$ later \vknote{FILL
+THIS}): For $w \in R$, 
+\begin{enumerate}
+%%
+\item (Adding a new variable) With probability $\lambda$ do the following:
+Recall $\NZ(w)$ denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose
+$i \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that,
+$w^\prime_j = w_i$ for $j \neq i$ and $w^\prime_i \in [-B, B]$ uniformly at
+random. If $\NZ(w)= k$, let $w^\prime = w$. Then the multiset $\Neigh(w,
+\epsilon)$ is populated by $m$ independent draws from the procedure just
+described.
+%
+\item With probability $1 - \lambda$ do the following:
+%
+\begin{enumerate}
+\item (Scaling) With probability $1/2$, choose $\gamma \in [-1, 1]$ uniformly at
+random and let $w^\prime = \gamma w$.
+%
+\item (Adjusting) With probability $1/2$, do the following.  Pick $i \in \NZ(w)$
+uniformly at random.  Let $w^\prime$ be such that $w^\prime_j = w_j$ for $j \neq
+i$, $w^\prime_i \in [-B, B]$ uniformly at random.
+\end{enumerate}
+Then, the multiset $\Neigh(w, \epsilon)$ is populated by $m$ independent draws
+from the procedure just described.
+\end{enumerate}
+
+One thing to note in the above definition is that the mutations produced by the
+mutator at any given time are correlated -- \ie they are all of the kind that
+add a new variable, or the kind that just manipulate existing variables, but
+never mixed together. At a high-level we prove the success of this mechanism as
+follows, 
+\begin{enumerate}
+\item Using mutations of type ``scaling'' or ``adjusting'', a representation
+that is close to the \emph{best} in the space is evolved.
+\item When the representation is (close to) the best possible using current
+variables, one of the variables that are actually present in the \emph{ideal
+function}, result in the greatest reduction of expected loss. Thus, selection
+based on optimisation would always add a variable in $\NZ(f)$. By tuning
+$\lambda$ appropriately, it is ensured that candidate mutations that add new
+variables are never chosen until evolution has had time to approach the
+\emph{best} representation using existing variables.
+\end{enumerate}
+
+To complete the proof we establish the following claims.
+\begin{claim} \label{claim:date} If $\ltwonorm{f^S - w} \leq $\vknote{FILL
+THIS}, then if $S \neq \NZ(f)$, there exists $i \in \NZ(f) \setminus S$, such
+that 
+
+\end{claim}
+
 
 We present a selection framework that results in greedy progress in the sense
 that, with high probability, $\lerr_D(w, w^*_S)$ is minimized for fixed $|S|$
