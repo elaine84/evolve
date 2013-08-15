@@ -77,91 +77,74 @@ contributions and discuss related work.
 
 \todovk{I don't like this paragraph.. I don't know what to do.}
 Biological systems appear to function successfully with greatly restricted
-representation classes. For example, \emph{Escherichia coli} is a single-celled
+representation classes. For example, one natural restriction is that concept
+classes ought to be bounded.
+P. Valiant argues that since selection can only act on polynomially many
+offspring per generation, evolution can only reasonably approximate bounded
+(real) numbers in polynomial time~\cite{Valiant:2012-real}.
+We study additional restrictions motivated by physical constraints on
+genes and proteins within a cell.
+
+Consider \emph{Escherichia coli}, a single-celled
 bacterium that has thrived for millions of years in the digestive systems of
 animal hosts; its responses to the environment -- which is dynamic and very
-high-dimensional -- are encoded in about 4,000 genes~\cite{biology}. Notably,
-sparsity is a ubiquitous property in networks of interacting genes and proteins
-that respond to the environment and regulate cellular function.  Biological
-systems can be constrained in ways that correspond to other suitable
-restrictions on the class of representations -- for example, cite Paul and give
-an argument for bounded quantities (discrete, finite numbers of molecules).
+high-dimensional -- are specified in about 4,000 genes~\cite{biology}.
+As in other organisms, these genes encode proteins that interact with the
+environment, with each other and with genetic material to regulate cellular
+function (Figure~\ref{}).
+At any particular moment, each protein can physically interact with only
+a small number of other molecules -- other proteins, DNA or other molecules,
+\eg sugars or toxins.
+Consequently, a ubiquitous property of these interaction networks is sparsity
+\eanote{that something something\dots}
 
 We focus on transcription networks, which are a specific class of networks of
 interacting genes and proteins. For an accessible and mathematical introduction to
 transcription networks and other biological circuits, see (Alon~\cite{alon});
-below we present a simplified account that motivates this work. A protein is
-encoded in DNA as a gene, that when transcribed produces mRNA that is translated
-into protein (Figure~\ref{}).
+below we present a simplified account that motivates this work.
 
 \todoea{Figure: transcription and a simple network.}
 
-In a transcription network, a gene's expression, which can be thought of as the
-\vknote{quantity of (rate at which)} resultant the protein is produced, may be
-regulated by a set of proteins called \emph{transcription factors} (TFs). Some
-TFs are always present in the cell and represent a \emph{snapshot} of the
-environment. For example, when sugar molecules are present in the environment,
-some transcription factors may get activated. These activated transcription
-factors, may regulate the production of another protein. Sometimes, the produced
-protein may itself be a transcription factor (which we view as intermediate
-computation); and at other times a desired output, such as a catalytic enzyme.
-While, biological systems indeed to include feed-back loop, here for simplicity
+In a transcription network, a gene's expression, which is the
+quantity of (rate at which) resultant the protein is produced, may be
+regulated by a set of proteins called \emph{transcription factors}.
+These transcription factors increase or decrease a gene's expression by binding
+to regions of DNA close to the gene. 
+Thus, physical limitations demand that only a small number of transcription
+factors may regulate a single gene; \todoea{most genes have L-U binding sites.}
+
+The number of transcription factors varies from hundreds in a bacterium to
+thousands in a human cell.
+Some transcription factors are always present in the cell and can be thought of
+as representing a \emph{snapshot} of the environment.
+For example, when sugar molecules are present in the environment, this may cause
+specific transcription factors to increase the production of another protein.
+The produced protein may itself be an ``end'' output, such as an enzyme that
+catalyzes a metabolic reaction involving the sugar.
+Alternatively, it may be another transcription factor that regulate other genes
+-- we view this as intermediate computation -- and so on in a cascading
+fashion, to yield some desired response.
+While transcription networks often include feed-back loops, here for simplicity
 we focus on systems that are directed acyclic graphs, and the resulting
 computation can be viewed as a circuit.
 
-\vknote{ I added some of these to the prvious paragraph.
-The protein encoded by a gene may itself be a TF that regulates other genes, or
-some other ``output'' of interest, such as an enzyme that catalyzes a metabolic
-reaction.  In this discussion, we focus on feed-forward transcription networks
-without loops, i.e., networks that can be represented as directed acyclic
-graphs.  In general, transcription networks can have cycles, e.g., a
-feed-forward loop with output that inhibits or further activates an upstream
-component.
-
-TFs represent information about the environment,
-for example by changing shape when bound to by a certain small molecule.
-A TF regulates a gene's expression by binding to a region of DNA close to the
-gene; the shape of a TF affects its ability to bind,
-which in turn can have a positive or negative effect on gene production.
-The binding of TFs to DNA introduces physical limits on how many TFs may affect
-a particular gene's expression.
-}
-
-\todoea{Most genes have L-U binding sites.}
-The number of transcription factors may very from hundreds in a bacteirum to
-thousands in a human cell. The way transcription factors affect production of a
-protein is by physically binding to a region of the DNA, close to where the
-protein description is encoded. Thus, physical limitations demand that only a
-small number of TFs may regulate a single gene. A second feature, of
-transcription networks is that the time required for sufficient quantities of
-protein to be produced is of the same magnitude as cell-division time. Thus,
-these circuits are by necessity shallow.\footnote{Other kinds of networks, such
-as signalling networks, work by changing shapes of proteins. The fact that these
-transformations are rapid may allow for much larger depth.}
-\todoea{Numbers regarding depth.}
-\todovk{I don't understand your other two biological notes.}
-
-
-\vknote{I incoroporated most of these things. So somethings can be safely
-deleted in the next iteration.
-An important property of a transcription network is its depth, i.e.,
-the number of steps before a desired output is produced. In transcription
-networks, in order for protein production to keep up with cell division,
-it must occur on a time scale of the same order of magnitude. Hence, the
-number of steps, before the desired output is produced is typically very small.
-
-
-Thus, a natural restriction one may place on the representation used by
+Another feature of transcription networks is that the time required for
+sufficient quantities of protein to be produced is of the same magnitude as
+cell-division time. Thus, these circuits are by necessity shallow.
+A natural restriction one may place on the representation used by
 evolution is that it must be the description of a constant-depth circuit with
-constant fan-in gates. Of course, any such function can depend only on a
+constant fan-in gates.\footnote{Other kinds of networks, such
+as signaling networks, work by changing shapes of proteins. The fact that these
+transformations are rapid may allow for much larger depth.
+Fast conformational changes govern how transcription factors directly process 
+information from the environment in order to regulate gene expression.
+In our example, a sugar molecule binds to a transcription factor and changes
+its shape in a way that alters its ability to bind to DNA.}
+\todoea{Numbers regarding depth.}
+Of course, any such function can depend only on a
 constant number of all possible variables. Thus, we consider the class of
 functions restricted so that each function depends only on a constant number of
 variables.
-}
-
-%Other important constraints on transcription networks arise from the fact that
-%a dividing cell must replicate its DNA and essentially double its protein
-%levels, including the replication machinery...
 
 \subsection{Our Contributions}
 
