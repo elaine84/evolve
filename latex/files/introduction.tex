@@ -1,68 +1,77 @@
-Darwin's theory of evolution through natural selection has been central to the
-study of evolution.
-Valiant (2006) introduced a model of evolution to address the question of
-complexity that may arise through Darwinian mechanisms. In this model, an
-organism is an entity that computes a function of its environment. There is a
-hypothetical \emph{ideal function} indicating the best behaviour in every
-possible environment. The performance of the organism is measured by how close
-the function it computes is to the ideal. Mutations may alter the function an
-organism computes. The performance (fitness) forms the basis of natural
-selection. The resources allowed are the most generous while remaining feasible,
-the mutation mechanism may be any efficient randomised Turing machine, and the
-function represented by the organism may be arbitrary as long as it may be
-computable by an efficient Turing machine.
+Darwin's theory of evolution through natural selection has been a cornerstone of
+biology for over a century and half. Yet, a quantitative theory of complexity
+that could arise through Darwinian mechanisms remained virtually unexplored.  To
+address this question, Valiant (2006) introduced a computational model of
+evolution. In his model, an organism is an entity that computes a function of
+its environment.  There is a (possibly hypothetical) \emph{ideal function}
+indicating the best behaviour in every possible environment. The performance of
+the organism is measured by how close the function it computes is to the ideal.
+Mutations may alter the function computed by an organism and the performance
+(fitness) measure forms the basis of natural selection. The resources allowed
+are the most generous while remaining feasible; the mutation mechanism may be
+any efficient randomised Turing machine, and the function represented by the
+organism may be arbitrary as long as it is computable by an efficient Turing
+machine.
 
 Formulated this way, the question of evolvability can be asked in the language
-of computational learning theory. For what classes of functions, $C$, can one
-expect to find an evolutionary mechanism that gets arbitrarily close to the
+of computational learning theory. For what classes of ideal functions, $C$, can
+one expect to find an evolutionary mechanism that gets arbitrarily close to the
 ideal, within feasible computational resources? Darwinian selection is
 restrictive in the sense that the only feedback received is aggregate over life
 experiences. Valiant observed that any feasible evolutionary mechanism could be
-simulated in the statistical query framework of Kearns~\cite{Kearns:1994}. In a
-remarkable result, Feldman showed that in fact evolvable concept classes are
-exactly captured by a restriction of Kearns's model, where the learning algorithm
-is only allowed to make \emph{performance queries}, \ie, it produces a hypothesis
-and then makes a query that returns the (approximate) loss of that hypothesis under the
+simulated in the statistical query framework of Kearns~\cite{Kearns:1998}. In a
+remarkable result, Feldman~\cite{Feldman:2008-evolvability} showed that in fact
+evolvable concept classes are exactly captured by a restriction of Kearns'
+model, where the learning algorithm is only allowed to make \emph{performance
+queries}, \ie it produces a hypothesis and then makes a query to an oracle that
+returns the (approximate) performance of that hypothesis under the
 distribution.\footnote{Feldman calls these queries correlational statistical
 queries, because when working with Boolean functions with range $\{-1, 1\}$, the
 performance of any hypothesis is its correlation with the ideal function.} P.
-Valiant studied the evolvability of real-valued functions. He showed that
-whenever the corresponding weak optimisation problem, \ie, approximately
+Valiant studied the evolvability of real-valued functions, and showed that
+whenever the corresponding weak optimisation problem, \ie approximately
 minimising the expected loss, can be solved by a using a weak-evaluation oracle,
 such an algorithm can be converted into an evolutionary
 mechanism~\cite{Valiant:2012-real}. This implies that a large of class of
 functions -- low degree real polynomials -- can be evolved with respect to any
 convex loss function.
 
-Direct evolutionary mechanisms \dots \eanote{Summarize what these are and
-what they achieve -- I don't totally understand what ``direct'' means.}
-Valiant~\cite{Valiant:2009-evolvability} showed that the class of
-disjunctions is evolvable using a simple set of mutations under the uniform
-distribution. Kanade, Valiant and Vaughan proposed a simple mechanism for
-evolving homogeneous linear separators under radially symmetric
-distributions~\cite{KVV:2010-drift}.  Feldman considered a model where the
-ideal function is boolean but the representation is real-valued, allowing for
-more detailed feedback. He presents an algorithm for evolving large margin
-linear separators for a large class of loss functions~\cite{Feldman:2011-LTF}.
-P.  Valiant also showed that with very simple mutations, the class of low-degree
-polynomials can be evolved with respect to the squared loss~\cite{Valiant:2012-real}.
+%%
+\eat{
+Direct evolutionary mechanisms \dots \eanote{Summarize what these are and what
+they achieve -- I don't totally understand what ``direct'' means.} }
+%%
+On the other hand, direct evolutionary mechanism, not invoking the general
+reduction of Feldman and P. Valiant, have been proposed for certain classes in
+restricted settings. Valiant~\cite{Valiant:2009-evolvability} showed that the
+class of disjunctions is evolvable using a simple set of mutations under the
+uniform distribution. Kanade, Valiant and Vaughan proposed a simple mechanism
+for evolving homogeneous linear separators under radially symmetric
+distributions~\cite{KVV:2010-drift}.  Feldman considered a model where the ideal
+function is boolean but the representation can be real-valued, allowing for more
+detailed feedback. He presents an algorithm for evolving large margin linear
+separators for a large class of convex loss functions~\cite{Feldman:2011-LTF}.
+P. Valiant also showed that with very simple mutations, the class of low-degree
+polynomials can be evolved with respect to the squared
+loss~\cite{Valiant:2012-real}.
 
 \todovk{I'd like this paragraph re-worded.}
 \todoea{I think much of this paragraph could be deleted.}
+
+
+
 Modeling mutations as the outputs of a Turing machine offers appealing
 generality that captures a fundamental notion of the evolvable that is not
-specific to life on Earth, \eg, requiring that creatures use sequences of DNA
-to represent their hypotheses.
-At the same time, the more direct algorithms are appealing because \dots
-\eanote{Because of their ``naturalness''?}
-However, it is difficult to define what constraints ``naturalness'' might place
-on mutations.  Our current understanding of biological mutations and the
-relationship between genotype -- the representation of a hypothesis --
-and phenotype -- its corresponding functional output -- is incredibly limited.
+specific to life on Earth, \eg, requiring that creatures use sequences of DNA to
+represent their hypotheses.  At the same time, the more direct algorithms are
+appealing because \dots \eanote{Because of their ``naturalness''?} However, it
+is difficult to define what constraints ``naturalness'' might place on
+mutations.  Our current understanding of biological mutations and the
+relationship between genotype -- the representation of a hypothesis -- and
+phenotype -- its corresponding functional output -- is incredibly limited.
 Thus, Valiant~\cite{Valiant:2013-PAC} argued that a temptation to define
 \emph{naturalness} should be resisted, \eanote{while observing that natural
 systems are constrained?}
-
 In this work, we suggest that the other general aspect in Valiant's model, 
 \eanote{What is the first general aspect?} representations being arbitrary
 polynomial-time computable functions, may indeed benefit from a closer study of
@@ -73,78 +82,80 @@ contributions and discuss related work.
 
 \subsection{Representation in Biology}
 
-Biological systems appear to function successfully with greatly restricted
-representation classes. For example, one natural restriction is that concept
-classes ought to be bounded.
-P. Valiant argues that since selection can only act on polynomially many
-offspring per generation, evolution can only reasonably approximate bounded
-(real) numbers in polynomial time~\cite{Valiant:2012-real}.
-We study additional restrictions motivated by physical constraints on
-genes and proteins within a cell.
-
-Consider \emph{Escherichia coli}, a single-celled
-bacterium that has thrived for millions of years in the digestive systems of
-animal hosts; its responses to the environment -- which is dynamic and very
-high-dimensional -- are specified in about 4,000 genes~\cite{biology}.
-As in other organisms, these genes encode proteins that interact with the
-environment, with each other and with genetic material to regulate cellular
-function (Figure~\ref{}).
-At any particular moment, each protein can physically interact with only
-a small number of other molecules -- other proteins, DNA or other molecules,
-\eg sugars or toxins.
+\vknote{ \emph{We should talk about this a bit more. I don't know whether it's
+worth talking about bounded functions. But may be you'll point me to the
+write-up from Paul's paper. Ok - this part of biology, I'm not comfortable
+handling. Let's talk more. Concluding interactions from sparsity may be a bit
+trickier. To be fair, that's also the case with transcription networks we'll
+talk about below, but probably less so.} Biological systems appear to function
+successfully with greatly restricted representation classes. For example, one
+natural restriction is that concept classes ought to be bounded. P. Valiant
+argues that since selection can only act on polynomially many offspring per
+generation, evolution can only reasonably approximate bounded (real) numbers in
+polynomial time~\cite{Valiant:2012-real}.  We study additional restrictions
+motivated by physical constraints on genes and proteins within a cell.  Consider
+\emph{Escherichia coli}, a single-celled bacterium that has thrived for millions
+of years in the digestive systems of animal hosts; its responses to the
+environment -- which is dynamic and very high-dimensional -- are specified in
+about 4,000 genes~\cite{biology}. As in other organisms, these genes encode
+proteins that interact with the environment, with each other and with genetic
+material to regulate cellular function (Figure~\ref{}). At any particular
+moment, each protein can physically interact with only a small number of other
+molecules -- other proteins, DNA or other molecules, \eg sugars or toxins.
 Consequently, a ubiquitous property of these interaction networks is sparsity
-\eanote{that something something\dots}
+\eanote{that something something\dots} }
 
 We focus on transcription networks, which are a specific class of networks of
-interacting genes and proteins. For an accessible and mathematical introduction to
-transcription networks and other biological circuits, see (Alon~\cite{alon});
-below we present a simplified account that motivates this work.
+interacting genes and proteins, involved in the production of new protein. For
+an accessible and mathematical introduction to transcription networks and other
+biological circuits, see~\cite{alon}; below we present a simplified account that
+motivates this work.
 
 \todoea{Figure: transcription and a simple network.}
 
-In a transcription network, a gene's expression, which is the
-quantity of (rate at which) resultant the protein is produced, may be
-regulated by a set of proteins called \emph{transcription factors}.
-These transcription factors increase or decrease a gene's expression by binding
-to regions of DNA close to the gene. 
-Thus, physical limitations demand that only a small number of transcription
-factors may regulate a single gene; \eanote{most genes have L-U binding sites.}
+In a transcription network, a gene's expression, which is the quantity of (rate
+at which) resultant the protein is produced, may be regulated by a set of
+proteins called \emph{transcription factors}.  These transcription factors
+increase or decrease a gene's expression by binding to regions of DNA close to
+the gene.  Thus, physical limitations demand that only a small number of
+transcription factors may regulate a single gene; \eanote{most genes have L-U
+binding sites.}
 
 The number of transcription factors varies from hundreds in a bacterium to
-thousands in a human cell.
-Some transcription factors are always present in the cell and can be thought of
-as representing a \emph{snapshot} of the environment.
+thousands in a human cell.  Some transcription factors are always present in the
+cell and can be thought of as representing a \emph{snapshot} of the environment.
 For example, when sugar molecules are present in the environment, this may cause
 specific transcription factors to increase the production of another protein.
 The produced protein may itself be an ``end'' output, such as an enzyme that
-catalyzes a metabolic reaction involving the sugar.
-Alternatively, it may be another transcription factor that regulate other genes
--- we view this as intermediate computation -- and so on in a cascading
-fashion, to yield some desired response.
+catalyzes a metabolic reaction involving the sugar.  Alternatively, it may be
+another transcription factor that regulate other genes -- we view this as
+intermediate computation -- and so on in a cascading fashion, to yield some
+desired response.
 
 While transcription networks often include feed-back loops, here for simplicity
 we focus on systems that are directed acyclic graphs, and the resulting
-computation can be viewed as a circuit.
-These circuits are by necessity shallow due to another physical constraint: the
-time required for sufficient quantities of protein to be produced is of the same
-magnitude as cell-division time.\footnote{Other kinds of networks, such as
-signaling networks, work by changing shapes of proteins. The fact that these
-transformations are rapid may allow for much larger depth.
-Note that fast conformational changes govern how transcription factors directly
-process information from the environment in order to regulate gene expression.
-In our example, a sugar molecule binds to a transcription factor and changes
-its shape in a way that alters its ability to bind to DNA.}
-\todoea{Numbers regarding depth.}
+computation can be viewed as a circuit.  These circuits are by necessity shallow
+due to another physical constraint: the time required for sufficient quantities
+of protein to be produced is of the same magnitude as cell-division
+time.\footnote{Other kinds of networks, such as signaling networks, work by
+changing shapes of proteins. The fact that these transformations are rapid may
+allow for much larger depth.  Note that fast conformational changes govern how
+transcription factors directly process information from the environment in order
+to regulate gene expression.  In our example, a sugar molecule binds to a
+transcription factor and changes its shape in a way that alters its ability to
+bind to DNA.} \todoea{Numbers regarding depth.}
 
 \subsection{Our Contributions}
 
 First, our contribution is conceptual. We believe the study of evolvability from
 a computational standpoint will benefit by understanding the representation
-complexity of the organism. Motivated by the previous discussion, in the case of
-transcription networks, one may insist that the representation be a
-constant depth and fan-in (boolean or arithmetic) circuit. Of course, any
-function that can be represented by such a circuit can depend only on a constant
-number of input variables.
+complexity required to evolve a certain concept class. Motivated by the previous
+discussion, in the case of transcription networks, it appears essential that the
+representation used be a constant depth and fan-in (boolean or arithmetic)
+circuit.  Of course, any function that can be represented by such a circuit can
+depend only on a constant number of input variables. Thus, if we restrict
+functions in a given class to depend only on a constant number of variables,
+when can evolution succeed?
 
 Second, we show that the class of sparse linear functions, those that depend
 only on a constant number of variables, under a large class of smooth
