@@ -169,11 +169,11 @@ $\ltwonorm{w} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}$ (the last part is
 because $f^S$ is a projection of $f$ onto a lower dimensional space). Thus, by
 Lemma~\ref{lemma:amsterdam} (part 1), $w_i \leq 2 \ltwonorm{f} / \Delta$. Also,
 $|\beta| = |\ip{e^i}{r^S}|/\ltwonorm{e^i}^2 \leq \ltwonorm{r^S}/\ltwonorm{e^i}
-\leq 3 \ltwonorm{f}/\Delta$. Thus, if $B > 10 \ltwonorm{f}/ \Delta$, the
+= \ltwonorm{f^S - w}/\E[x_i^2] \leq 3 \ltwonorm{f}/\Delta$.
+Thus, if $B > 13 \ltwonorm{f}/ (2\Delta)$, then $|w_i + \gamma| < B$ and the
 mutation will be a valid one. Note that the maximum value of $\ltwonorm{f}$ for
 $f \in \lin^k_{l, u}$ is $ku$. Thus, our choice of $B = 10 ku / \Delta$ is
-sufficient to ensure that the required mutation is a valid one.  This completes
-the proof of Claim~\ref{claim:banana}.
+sufficient.  This completes the proof of Claim~\ref{claim:banana}.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:cantaloupe}] Finally, we show that if
