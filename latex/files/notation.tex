@@ -293,7 +293,7 @@ independent. First, we observe that $\E[x_i^2] = \E[(\tilde{x}_i + \eta_i)^2]
 \intertext{Using the fact that $x = \tilde{x} + \eta$, we get}
 &= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
 &= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
-\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
+2\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
 \eta_i\right) \right] + \sum_{i=1}^n w_i^2 \E[\eta_i^2] \\
 &\geq \sum_{i = 1}^n w_i^2 \Delta^2  \\
 &= \sum_{i \in \NZ(w)} w_i^2 \Delta^2
