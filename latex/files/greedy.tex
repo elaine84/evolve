@@ -110,8 +110,7 @@ We will establish our claim by proving the following claims.
 \begin{enumerate}
 \item[Claim A] If $\ltwonorm{w} \ge 2 \ltwonorm{w^*_S}$, then for $M \ge 1$,
 with probability at least $1/16 - \lambda/8 \ge $ \eanote{something} the mutator outputs
-a mutation that reduces $\lerror$ by at least $\ltwonorm{w - w^*_S}^2 / 8$.
-\eanote{I think this 1/8 is correct and applies in the above section.}
+a mutation that reduces $\lerror$ by at least $\ltwonorm{w - w^*_S}^2 / 12$.
 \item[Claim B] If $\ltwonorm{w} \le 2 \ltwonorm{w^*_S}$ and
 $\ltwonorm{w - w^*_S} \ge \alpha$, then with probability at least $\alpha$,
 there exists a mutation that decreases the $\lerror$ by at least $\alpha$.
@@ -131,7 +130,7 @@ for each of the generated mutants $\gamma w$ with $\gamma \in [1/2, 3/4]$,
 we obtain
 
 \[
-\ltwonorm{\gamma w - w^*_S}^2 \le \ltwonorm{w - w^*_S}^2 - \frac{1}{8}\ltwonorm{w - w^*_S}^2.
+\ltwonorm{\gamma w - w^*_S}^2 \le \ltwonorm{w - w^*_S}^2 - \frac{1}{12}\ltwonorm{w - w^*_S}^2.
 \]
 
 For Claim B, \dots

@@ -67,7 +67,7 @@ claims.
 %%
 \begin{claim} \label{claim:apple} If $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, then
 with probability at least $1/12$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
-\ltwonorm{w - f^S}^2/8$. In particular, a ``scaling'' type mutation achieves
+\ltwonorm{w - f^S}^2/12$. In particular, a ``scaling'' type mutation achieves
 this. \end{claim}
 %%
 \begin{claim} \label{claim:banana} When $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$,
@@ -112,10 +112,9 @@ f^S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
 \gamma^2 \geq 3/16$ and that by the triangle inequality, $\ltwonorm{w} \geq
 (2/3)\ltwonorm{w - f^S}$ when $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, we obtain}
 %
-\ltwonorm{\gamma w - f^S}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{1}{8}
+\ltwonorm{\gamma w - f^S}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{1}{12}
 \ltwonorm{w - f^S}^2
 \end{align*}
-% I get 3/16 * 2/3 = 1/8
 We note that $\loss_{f, D}(w^\prime) = \ltwonorm{f - f^S}^2 + \ltwonorm{f^S -
 \gamma w}^2$ and $\loss_{f, D}(w) = \ltwonorm{f - f^S}^2 + \ltwonorm{f^S -
 w}^2$.  An appropriate value of $\gamma$ is chosen with probability at least $1/4$,
