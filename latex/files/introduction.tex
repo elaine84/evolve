@@ -40,7 +40,8 @@ convex loss function.
 Direct evolutionary mechanisms \dots \eanote{Summarize what these are and what
 they achieve -- I don't totally understand what ``direct'' means.} }
 %%
-On the other hand, direct evolutionary mechanism, not invoking the general
+
+Direct evolutionary mechanisms, not invoking the general
 reduction of Feldman and P. Valiant, have been proposed for certain classes in
 restricted settings. Valiant~\cite{Valiant:2009-evolvability} showed that the
 class of disjunctions is evolvable using a simple set of mutations under the
@@ -54,16 +55,16 @@ P. Valiant also showed that with very simple mutations, the class of low-degree
 polynomials can be evolved with respect to the squared
 loss~\cite{Valiant:2012-real}.
 
-The more direct algorithms are somewhat appealing due to their simplicity of the
+The more direct algorithms are somewhat appealing due to the simplicity of their
 mutations.  However, a meaningful definition of \emph{naturalness} of mutations
 would be hard to make. Indeed, Valiant argues that a temptation to make such a
-definition should be resisted~\cite{Valiant:2013-PAC}. However, another
+definition should be resisted~\cite{Valiant:2013-PAC}. Another
 desirable property of some of these more direct algorithms is that the
 representations used are functions of low complexity. Feldman's general
 reduction from statistical query algorithms may use arbitrarily complex
 representations (polynomial-sized circuits) depending on the specific algorithm
 used. ``Chemical computers'' of organisms may be slow, and hence, using
-representations that have low-complexity beneficial. We first describe a
+representations that have low-complexity are attractive. We first describe a
 particular class of biological circuits, \emph{transcription networks}, that
 motivate our study. We then frame the question in the language of computational
 learning theory, summarize our contributions and discuss related work.
@@ -114,9 +115,9 @@ Consequently, a ubiquitous property of these interaction networks is sparsity
 \eanote{that something something\dots} }
 }
 Biological systems appear to function successfully with greatly restricted
-representation classes. The nature of circuits found in biological system may
-vary, but some aspects such as \emph{sparsity} are common~\vknote{Citation
-required?}.  We focus on transcription networks, which are a specific class of
+representation classes. The nature of circuits found in biological systems may
+vary, but some aspects -- such as \emph{sparsity} -- are common~\vknote{[citation]}.
+We focus on transcription networks, which are a specific class of
 networks of interacting genes and proteins, involved in the production of new
 protein. For an accessible and mathematical introduction to transcription
 networks and other biological circuits, see~\cite{alon}; below we present a
@@ -125,7 +126,7 @@ simplified account that motivates this work.
 \todoea{Figure: transcription and a simple network.}
 
 In a transcription network, a gene's expression, which is the quantity of the
-resultant the protein is produced, may be regulated by a set of proteins called
+corresponding protein produced, may be regulated by a set of proteins called
 \emph{transcription factors}.\footnote{In reality, this is a dynamical system
 and the rate of production also plays a role.} These transcription factors
 may increase or decrease a gene's expression by binding to regions of DNA close to
@@ -137,13 +138,14 @@ therein. See pg. 16 Chap 2.}
 The number of transcription factors varies from hundreds in a bacterium to
 thousands in a human cell. Some transcription factors are always present in the
 cell and can be thought of as representing a \emph{snapshot} of the environment.
-For example, presence of sugar molecules in the environment may cause specific
+For example, the presence of sugar molecules in the environment may cause specific
 transcription factors to be \emph{activated}, enabling them to regulate
-production of other proteins.  The produced protein could be an
+the production of other proteins.  One of these proteins could be an
 \emph{end-product}, such as an enzyme that catalyzes a metabolic reaction
-involving the sugar. Alternatively, it may be another transcription factor that
+involving the sugar. Alternatively, the transcription factor could regulate
+another transcription factor that itself
 regulates other genes -- we view this as intermediate computation -- and may
-participate in further ``computation'' to produce the end-result.
+participate in further ``computation'' to produce the desired end-result.
 
 While transcription networks may include feed-back loops, here for simplicity we
 focus on systems that are directed acyclic graphs, and the resulting computation
@@ -151,7 +153,7 @@ can be viewed as a circuit. These circuits are by necessity shallow due to
 another physical constraint: the time required for sufficient quantities of
 protein to be produced is of the same magnitude as cell-division
 time.\footnote{Other kinds of networks, such as signaling networks, work by
-changing shapes of proteins. The fact that these transformations are rapid may
+changing the shapes of proteins. The fact that these transformations are rapid may
 allow for much larger depth. Note that fast conformational changes govern how
 transcription factors directly process information from the environment in order
 to regulate gene expression.  In our example, a sugar molecule binds to a
@@ -160,13 +162,13 @@ bind to DNA.} \todoea{Numbers regarding depth.}
 
 \subsection{Our Contributions}
 
-First, our contribution is conceptual. We believe the study of evolvability from
+First, our contribution is conceptual. We believe that the study of evolvability from
 a computational standpoint will benefit by understanding the representation
 complexity required to evolve a certain concept class. Motivated by the previous
 discussion, in the case of transcription networks, it appears essential that the
 representation used be a constant depth and fan-in (boolean or arithmetic)
 circuit. Of course, any function that can be represented by such a circuit can
-depend only on a constant number of input variables. But we can ask the
+depend only on a constant number of input variables. We ask the
 question, when we restrict attention to functions in a given class that depend
 only on a constant number of variables, when can evolution succeed?
 
@@ -177,8 +179,8 @@ when the performance is measured using squared error. The number of variables
 used by the representations is larger than the number of variables in the
 \emph{ideal function} and depends on the \emph{smoothness} parameter of the
 distribution.  Note that a linear function is represented by a weighted
-arithmetic circuit with only one addition gate (alternatively a depth-two
-circuit, with a layer of multiplication gates and some constant inputs). There
+arithmetic circuit with only one addition gate (alternatively, by a depth-two
+circuit with a layer of multiplication gates and some constant inputs). There
 is also a natural trade-off to be made between between depth and fan-in. For the
 precise statement, see Theorem~\ref{thm:sparse-linear} in
 Section~\ref{sec:sparse-linear}.
@@ -186,9 +188,9 @@ Section~\ref{sec:sparse-linear}.
 Valiant also proposed a stronger selection mechanism -- when natural selection
 aggressively selects the (almost) best mutation, rather than merely a beneficial
 one -- called evolution by optimisation.  Under stronger conditions on the
-distribution, we show that under evolution by optimisation sparse linear
+distribution, we show that under evolution by optimisation, sparse linear
 functions can be evolved by representations with the same sparsity. This
-algorithm however requires to be initialised, \ie the evolutionary process
+algorithm however requires initialisation, \ie the evolutionary process
 begins with the $0$ function. The precise statement appears as Theorem~\ref{thm:
 } in Section~\ref{sec:greedy}.
 
@@ -210,7 +212,7 @@ except via Feldman's general reduction from CSQ algorithms. The class of
 smooth(ed) distributions may also be a natural starting place for studying
 evolvability of simple concept classes. In this context, Valiant's disjunction
 algorithm under the uniform distribution~\ref{Valiant:2010-evolvability}, Kanade
-et al.'s algorithm for homogeneous halfspaces under radially symmetric
+et al.'s algorithm for homogeneous half-spaces under radially symmetric
 distributions, and P. Valiant's algorithm for linear (polynomial) functions
 using squared loss, are \emph{proper} evolutionary mechanisms, \ie the
 representation used is from the same class as the ideal function. In case of the
@@ -221,10 +223,10 @@ representations that depend only on a constant number of variables.
 %\vknote{Talk here about how earlier algorithms can be viewed in this way.}
 
 Learning sparse linear functions is a problem that has been studied under
-various names in several fields\vknote{Here, cite surveys from signal
+various names in several fields~\vknote{Here, cite surveys from signal
 processing, OR, compressed sensing, optimisation, machine learning}. Learning
 the sparsest linear function is equivalent to finding the sparsest solution to a
-system of linear equations (assuming there is no noise in the data). In general
+system of linear equations (assuming there is no noise in the data). In general,
 this problem is $\NP$-hard and the approximation factor depends on the norm of
 the pseudo-inverse of the matrix\cite{Natarjan:1995}. Thus, some assumption on
 the distribution seems necessary. Compressed sensing studies the problem of
