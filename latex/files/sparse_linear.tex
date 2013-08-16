@@ -77,7 +77,7 @@ exists a mutation that decreases the expected loss by at least $3
 mutation achieves this. \end{claim}
 %%
 \begin{claim} \label{claim:cantaloupe} When $\ltwonorm{f^S - w} \leq
-l^2\Delta^2/(2KB)$, but $\sparseset(f) \not\subseteq S$, then with probability
+l^2\Delta^2/(4KB)$, but $\sparseset(f) \not\subseteq S$, then with probability
 at least $\Delta \ltwonorm{f - w}/(6KBnk)$, there exists a mutation that
 decreases the expected loss by at least $\Delta^2 \ltwonorm{f-w}^2/(16k^2)$.
 \end{claim}
@@ -142,27 +142,27 @@ Let $\beta = \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}^2}$ and suppose $w^\prime =
 w + \gamma e^i$ for $\gamma \in [\beta - |\beta|/2, \beta +  |\beta|/2]$. We
 then have
 \begin{align*}
-\ltwonorm{f^S - (w + \gamma e^i)}^2 &= \ltwonorm{w - f^S}^2 - 2 \gamma \ip{f^S -
+\ltwonorm{f^S - (w + \gamma e^i)}^2 &= \ltwonorm{f^S - w}^2 - 2 \gamma \ip{f^S -
 w}{e^i} + \gamma^2 \ltwonorm{e^i}^2
 %
 \intertext{Recall that $f^S - w = r^S$ and note that $\ip{e^i}{r^S}$ and
 $\gamma$ have the same sign. This, combined with the above equation, gives}
 %
-\ltwonorm{f^s - (w + \gamma e^i)}^2 &= \ltwonorm{w - f^S}^2 - (2
+\ltwonorm{f^S - (w + \gamma e^i)}^2 &= \ltwonorm{f^S - w}^2 - (2
 |\gamma||\beta| - \gamma^2) \ltwonorm{e^i}^2
 \intertext{Finally, note that for $|\gamma| \in [|\beta|/2, 3|\beta|/2]$, $- 2
 |\gamma| |\beta| + \gamma^2 \leq - 3 |\beta|^2/4$, hence, the
 above equation and the fact that $\ltwonorm{e^i} \leq 1$ together yield}
-\ltwonorm{f^S - (w + \gamma e^i)}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{3}{4}
-\beta^2 \ltwonorm{e^i}^2 \leq \ltwonorm{w - f^S}^2 - \frac{3}{4}
-\frac{\ltwonorm{f^s - w}^2 \Delta^2}{|S|^2}
+\ltwonorm{f^S - (w + \gamma e^i)}^2 &\leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
+\beta^2 \ltwonorm{e^i}^2 \leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
+\frac{\ltwonorm{f^S - w}^2 \Delta^2}{|S|^2}
 \end{align*}
 
 Note that a suitable mutation $w^\prime = w + \gamma e^i$ is obtained with
 probability at least $|\beta|/(6KB)$ ($1/3$ for choosing the right type of
 mutation, $1/K$ for the correct choice of variable, and $|\beta|/(2B)$ for the
 choosing the correct value of $w_i$).  Also note that
-$|\beta| \ge \Delta \ltwonorm{f^S - w} / |S| \ge \Delta \ltwonorm{f^S - w} / K$.
+$|\beta| \geq \Delta \ltwonorm{f^S - w} / |S| \geq \Delta \ltwonorm{f^S - w} / K$.
 For this to be a valid mutation, we also need to verify the fact that $w_i + \gamma
 \in [-B, B]$, which is ensured by our choice of $B$. To see this, note that
 $\ltwonorm{w} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}$ (the last part is
@@ -182,8 +182,8 @@ be the case that a ``swapping'' or ``adding'' mutation is beneficial. We focus
 on the swapping case, \ie when $|S| = K$; the adding step is a special case of
 this. First, we observe that if there exists $i \in \NZ(f)$ such that $i \not\in
 S$, then by using Lemma~\ref{lemma:amsterdam} (part 1), it must be the case that
-$\ltwonorm{f - w}^2 \geq f_i^2 \Delta^2 \geq l^2 \Delta^2$. Let $r = f - w$
-denote the residual. Then, consider the following:
+$\ltwonorm{f - w}^2 \geq (f_i - w_i)^2 \Delta^2 = f_i^2 \Delta^2 \geq l^2 \Delta^2$.
+Let $r = f - w$ denote the residual. Then, consider the following:
 %%
 \begin{align}
 %
@@ -196,19 +196,20 @@ $r^S = f^S - w$, the residual within the space spanned by $S$, then $r = f - f^S
 + r^S$. Thus, we have $\ip{e^i}{r} = \ip{e^i}{r^S} \leq \ltwonorm{r^S}$. Using
 this we get, }
 %
-\ip{r}{r} &\leq \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r} + K
+\ip{r}{r} &\leq \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r} +
 \ltwonorm{r^S} \sum_{i \in S} |r_i|  \nonumber
 %%
 \intertext{Now, even by a very crude estimate, $|r_i| = |f_i - w_i| \leq 2 B$,
 and hence by the condition in the statement of Claim~\ref{claim:cantaloupe},
-that $\ltwonorm{r^S} =\ltwonorm{f^S - w} \leq l^2\Delta^2/(2KW)$ together with
-the observation that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 \geq l^2 \Delta^2$, we
-have that,}
+that $\ltwonorm{r^S} =\ltwonorm{f^S - w} \leq l^2\Delta^2/(4KB)$, together with
+the previous observation that $\ip{r}{r} = \ltwonorm{r}^2 =
+\ltwonorm{f - w}^2 \geq l^2 \Delta^2$, we have that}
 %%
 \frac{1}{2}\ip{r}{r} &\leq \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r}
 \nonumber
 %
-\intertext{We now appeal to Lemma~\ref{lemma:amsterdam} (part 1), which shows
+\intertext{\eanote{Checked this far.}
+We now appeal to Lemma~\ref{lemma:amsterdam} (part 1), which shows
 that $|r_i| \leq \sqrt{\ip{f - w}{f - w}/\Delta^2} = \ltwonorm{r} / \Delta$, and
 conclude that there exists an $i$ for which}
 %
