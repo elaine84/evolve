@@ -1,6 +1,6 @@
 In this section, we present a different evolutionary mechanism for evolving
-sparse linear functions. This algorithm essentially is an adaptation of the
-greedy algorithm, commonly known as orthogonal matching pursuit (OMP), in the
+sparse linear functions. This algorithm essentially is an adaptation of a
+greedy algorithm commonly known as orthogonal matching pursuit (OMP) in the
 signal processing literature (see ~\cite{Donoho:2006-recovery,
 Tropp:2004-greed}). We require three assumptions to prove that this mechanism
 succeeds, which are considerably stronger than the assumptions used earlier.
@@ -13,16 +13,16 @@ $\corr(x_i, x_j) \leq \frac{1}{2k}$, where $k$ is the sparsity of the target.
 \item The selection rule is based on \emph{optimisation}, \ie nature selects the
 (almost) best mutation from the candidate pool. 
 %
-\item Evolution is allowed \emph{initialization}; the starting representation
+\item Evolution is allowed \emph{initialisation}; the starting representation
 corresponds to the $0$ vector.
 %
 \end{enumerate}
 
-Nevertheless, the algorithm is appealing for its simplicity and also the fact
+Nevertheless, the algorithm is appealing for its simplicity and also for the fact
 that it is a \emph{proper} evolutionary mechanism -- it never uses a
 representation that is not a $k$-sparse linear function. 
 
-Let $C^k_{0, u}$ be the concpet class from which the \emph{ideal function} is
+Let $C^k_{0, u}$ be the concept class from which the \emph{ideal function} is
 chosen.\footnote{Here, we no longer need the fact that each coefficient in the
 target linear function has magnitude at least $l$.} Let $R = \{w ~|~
 \sparsity(w) \leq k, w_i \in [-B, B] \}$. Now, define the action of the mutator
@@ -30,11 +30,11 @@ as follows (we will define the parameters $\lambda$ and $m$ later \vknote{FILL
 THIS}): For $w \in R$, 
 \begin{enumerate}
 %%
-\item (Adding a new variable) With probability $\lambda$ do the following:
+\item (Adding) With probability $\lambda$ do the following:
 Recall $\NZ(w)$ denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose
-$i \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that,
+$i \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that
 $w^\prime_j = w_i$ for $j \neq i$ and $w^\prime_i \in [-B, B]$ uniformly at
-random. If $\NZ(w)= k$, let $w^\prime = w$. Then the multiset $\Neigh(w,
+random. If $\NZ(w)= k$, let $w^\prime = w$. Then, the multiset $\Neigh(w,
 \epsilon)$ is populated by $m$ independent draws from the procedure just
 described.
 %
@@ -53,16 +53,16 @@ from the procedure just described.
 \end{enumerate}
 
 One thing to note in the above definition is that the mutations produced by the
-mutator at any given time are correlated -- \ie they are all of the kind that
-add a new variable, or the kind that just manipulate existing variables, but
-never mixed together. At a high-level we prove the success of this mechanism as
-follows, 
+mutator at any given time are correlated -- \ie they are all either of the kind that
+add a new variable, or all of the kind that just manipulate existing variables.
+At a high-level, we prove the success of this mechanism as follows,
 \begin{enumerate}
-\item Using mutations of type ``scaling'' or ``adjusting'', a representation
+\item Using mutations of type ``scaling'' or ``adjusting,'' a representation
 that is close to the \emph{best} in the space is evolved.
 \item When the representation is (close to) the best possible using current
-variables, one of the variables that are actually present in the \emph{ideal
-function}, result in the greatest reduction of expected loss. Thus, selection
+variables, adding one of the variables that is present in the \emph{ideal
+function}, but not in the current representation,
+results in the greatest reduction of expected loss. Thus, selection
 based on optimisation would always add a variable in $\NZ(f)$. By tuning
 $\lambda$ appropriately, it is ensured that candidate mutations that add new
 variables are never chosen until evolution has had time to approach the
@@ -75,30 +75,6 @@ THIS}, then if $S \neq \NZ(f)$, there exists $i \in \NZ(f) \setminus S$, such
 that 
 
 \end{claim}
-
-
-We present a selection framework that results in greedy progress in the sense
-that, with high probability, $\lerr_D(w, w^*_S)$ is minimized for fixed $|S|$
-before an adding step increments $|S|$.
-Specifically, selection initializes $w = 0$ so that $\sparseset(w) = \emptyset$,
-then greedily identifies $\sparseset(w^*)$ such that
-$\sparseset(w) \subseteq \sparseset(w^\prime) \subseteq \sparseset(w^*)$
-throughout the selection process.
-This is inspired by and can be thought of as a robust version of a
-greedy algorithm known in the signal processing literature as
-orthogonal matching pursuit (OMP)~\cite{Tropp:2004-greed,Donoho:2006-recovery}.
-For an excellent review of related algorithms and issues from the perspective
-of compressed sensing, see~\cite{Donoho:2009-sparse}.
-
-\begin{enumerate}
-\item (Initialization) Selection initializes $w = 0$, so $\sparseset(w) = \emptyset$.
-\item (Main iteration)
-	\begin{enumerate}
-	\item Choose one class of mutations at random according to their probabilities.
-	\item Generate $M > 2B(n - K) / \delta$ \eanote{(+ extra?)} mutants uniformly at random within that class.
-	\item Set $w^\prime$ to the winner.
-	\end{enumerate}
-\end{enumerate}
 
 In the ensuing discussion, we will prove that for any target function
 $w^* \in C^k_{l,u}$, if $w \in R$ is such that
