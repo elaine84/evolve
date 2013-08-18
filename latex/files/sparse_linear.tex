@@ -208,9 +208,8 @@ the previous observation that $\ip{r}{r} = \ltwonorm{r}^2 =
 \frac{1}{2}\ip{r}{r} &\leq \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r}
 \nonumber
 %
-\intertext{\eanote{Checked this far.}
-We now appeal to Lemma~\ref{lemma:amsterdam} (part 1), which shows
-that $|r_i| \leq \sqrt{\ip{f - w}{f - w}/\Delta^2} = \ltwonorm{r} / \Delta$, and
+\intertext{We now appeal to Lemma~\ref{lemma:amsterdam} (part 1), which shows
+that $|r_i| \leq \ltwonorm{r} / \Delta$, and
 conclude that there exists an $i$ for which}
 %
 |\ip{e^i}{r}| &\geq \frac{\ltwonorm{r} \Delta}{2 k} \nonumber
@@ -226,8 +225,8 @@ w_{i^\prime} e^{i^\prime}$ for $\gamma \in [\beta - |\beta|/2, \beta +
 + \gamma e^i)}^2 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} +
 w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \label{eqn:artichoke}
 %%
-\intertext{First, we deal with the first term in the above expression and then
-bound the latter two.}
+\intertext{We bound the first term on the right hand side of the above expression and then
+the latter two.}
 %
 \ltwonorm{f - (w + \gamma e^i)}^2 &= \ltwonorm{r}^2 - 2 \gamma \ip{r}{e^i} +
 \gamma^2 \ltwonorm{e^i}^2 \nonumber \\
@@ -246,16 +245,16 @@ $f - w = f - f^S + r^S$ and that $\ip{f - f^S}{e^{i^\prime}} = 0$
 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
   \ltwonorm{e^{i^\prime}}^2 &\leq 2 |w_{i^\prime}| |\ip{r^S + \gamma
   e^i}{e^{i^\prime}}| + w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \nonumber
-\intertext{Using the fact that $\ltwonorm{r^S} \leq \gamma$, $|w_i|< \gamma$
-(which we'll show below), $|\ip{e^i}{e^{i^\prime}}| \leq 1$ and
-$\ltwonorm{e^{i^\prime}} \leq 1$, we get,}
+\intertext{Using the fact that $\ltwonorm{r^S} \leq \gamma$, $|w_{i^\prime}|< \gamma$
+\eanote{(which we will show below)}, $|\ip{e^i}{e^{i^\prime}}| \leq 1$ and
+$\ltwonorm{e^{i^\prime}} \leq 1$, we obtain}
 %%
 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
-  \ltwonorm{e^{i^\prime}}^2 &\leq 6 |w_i||\gamma| \label{eqn:cabbage}
+  \ltwonorm{e^{i^\prime}}^2 &\leq 6 |w_{i^\prime}||\gamma| \label{eqn:cabbage}
 %%
-\intertext{Recall that $|w_i| \leq \ltwonorm{w}/\sqrt{K}$. Also $\ltwonorm{w}
+\intertext{Recall that $|w_{i^\prime}| \leq \ltwonorm{w}/\sqrt{K}$. Also $\ltwonorm{w}
 \leq \ltwonorm{f^S} + \ltwonorm{r^S} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}
-\leq 2uk$. (Here we've used the fact that $\ltwonorm{r^S}$ is small) Combining,
+\leq 2uk$, where we have used the fact that $\ltwonorm{r^S}$ is small. Combining
 (\ref{eqn:artichoke}), (\ref{eqn:broccoli}),  (\ref{eqn:cabbage}), the fact that
 $|w_i| \leq 2uk/\sqrt{K}$ and $|\gamma| \leq 3 |\beta|/2$, we get}
 %%
@@ -263,8 +262,9 @@ $|w_i| \leq 2uk/\sqrt{K}$ and $|\gamma| \leq 3 |\beta|/2$, we get}
 \ltwonorm{r}^2 - \frac{3}{4} \beta^2 + 18 |\beta|uk/\sqrt{K} \nonumber
 %%
 \end{align}
+\eanote{Checked this far.}
 Finally, we note that when $K > 5184 (k/\Delta)^4 (u/l)^2$, the above
-equation ensures that error drops by at least $\beta^2/4$.  The probability of
+equation ensures that the expected loss drops by at least $\beta^2/4$.  The probability of
 choosing a swapping operations is $1/3$, of subsequently choosing the correct
 pair is at least $1/(nK)$, and subsequently choosing the correct value of $w_i$
 is at least $|\beta|/(2B)$. A simple calculation proves the statement of the
