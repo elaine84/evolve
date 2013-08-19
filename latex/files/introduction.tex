@@ -57,9 +57,8 @@ loss~\cite{Valiant:2012-real}.
 
 The more direct algorithms are somewhat appealing due to the simplicity of their
 mutations.  However, a meaningful definition of \emph{naturalness} of mutations
-would be hard to make. Indeed, Valiant argues that a temptation to make such a
-definition should be resisted~\cite{Valiant:2013-PAC}. Another
-desirable property of some of these more direct algorithms is that the
+would be hard to make.
+Another desirable property of some of these more direct algorithms is that the
 representations used are functions of low complexity. Feldman's general
 reduction from statistical query algorithms may use arbitrarily complex
 representations (polynomial-sized circuits) depending on the specific algorithm
@@ -118,44 +117,53 @@ Biological systems appear to function successfully with greatly restricted
 representation classes. The nature of circuits found in biological systems may
 vary, but some aspects -- such as \emph{sparsity} -- are common.
 Specifically, the interacting components in many biological circuits are
-sparsely connected.
-\eanote{Fix language node/edge/connection/gate/circuit/network.}
-A ``small-world'' model, where a few ``hub'' nodes have many edges but
-most nodes have few edges, has been used to describe both
-neural networks~\cite{Watts:1998} and
-networks of chemical reactions in the cell~\cite{Wagner:2001,Barabasi:2000}.
-\emph{Modularity} is invoked as an important property for understanding the
-function and evolution of biological networks:
+sparsely connected. Biological circuits are often represented as networks or
+graphs, where the vertices correspond to entities such as neurons or molecules
+and the edges to connections or interactions between pairs of entities.
+For example, both neural networks~\cite{Watts:1998} and
+networks of metabolic reactions in the cell~\cite{Wagner:2001,Barabasi:2000}
+have been described by ``small-world'' models,
+where a few ``hub'' nodes have many edges but most nodes have few edges
+(and consequently, the corresponding graphs have small diameter).
+An associated property observed in biological networks is \emph{modularity}:
 a larger network of interacting entities is composed of smaller modules of
-functionally related entities~\cite{Hartwell:1999}.
-%~\cite{Schrodinger:1944,Kauffman:1969,
+(functionally related) entities~\cite{Hartwell:1999}.
 %It has been shown that in networks of interacting proteins, ``hub'' nodes
 %tend not to be connected to each other but rather to low-degree
 %nodes~\cite{Maslov:2002} and further that there exist smaller modules with many
-%internal connections but few connections to the larger network~\cite{Mirny:2003}.
-We focus on transcription networks, which are a specific class of
-networks of interacting genes and proteins, involved in the production of new
+%internal connections but few connections to the larger
+%network~\cite{Mirny:2003}.
+%functional localization arises through
+%molecular specificity~\cite{Schrodinger:1944,Kauffman:1969},
+%spatial localization, or temporal localization
+Both the ``small-world'' description and modularity of biological networks are
+consistent with the more general theme of sparsity.
+
+We focus on transcription networks, which are a specific class of networks of
+interacting genes and proteins that are involved in the production of new
 protein. For an accessible and mathematical introduction to transcription
 networks and other biological circuits, see~\cite{Alon:2006}; below we present a
 simplified account that motivates this work.
-
 \todoea{Figure: transcription and a simple network.}
-
 In a transcription network, a gene's expression, which is the quantity of the
 corresponding protein produced, may be regulated by a set of proteins called
 \emph{transcription factors}.\footnote{In reality, this is a dynamical system
 and the rate of production also plays a role.} These transcription factors
-may increase or decrease a gene's expression by binding to regions of DNA close to
-the gene. Thus, physical limitations demand that only a small number of
-transcription factors may regulate a single gene; in higher organisms this
-number may very from $0-12$~\vknote{Citations: Alon's book and references
-therein. See pg. 16 Chap 2.}
+may increase or decrease a gene's expression by binding to regions of DNA close
+to the gene. Thus, physical limitations demand that only a small number of
+transcription factors may regulate a single gene.  For example, Balaji \etal
+studied a yeast transcription network of 157 transcription factors regulating
+4410 genes; they observed this network to have 12,873 interactions (edges) where
+each gene was regulated on average by about 2.9 transcription factors; the
+distribution of in-degrees was well-described by an exponential fit with only
+about 45 genes having an in-degree of 15 or greater~\cite{Balaji:2006}.
+%$0-12$~\vknote{Citations: Alon's book and references therein. See pg. 16 Chap 2.}
 
 The number of transcription factors varies from hundreds in a bacterium to
 thousands in a human cell. Some transcription factors are always present in the
 cell and can be thought of as representing a \emph{snapshot} of the environment.
-For example, the presence of sugar molecules in the environment may cause specific
-transcription factors to be \emph{activated}, enabling them to regulate
+For example, the presence of sugar molecules in the environment may cause
+specific transcription factors to be \emph{activated}, enabling them to regulate
 the production of other proteins.  One of these proteins could be an
 \emph{end-product}, such as an enzyme that catalyzes a metabolic reaction
 involving the sugar. Alternatively, the transcription factor could regulate
