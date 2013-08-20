@@ -254,8 +254,15 @@ representations that depend only on a constant number of variables.
 %\vknote{Talk here about how earlier algorithms can be viewed in this way.}
 
 Learning sparse linear functions is a problem that has been studied under
-various names in several fields~\vknote{Here, cite surveys from signal
-processing, OR, compressed sensing, optimisation, machine learning}. Learning
+various names in several fields for many applications, \eg, recovering
+sparse solutions to (underdetermined) linear systems of
+equations~\cite{Donoho:2009-sparse} or recovering sparse representations
+with a redundant dictionary~\cite{Mallat:2008,Elad:2010}, compressive sampling
+or compressed sensing for sparse signal reconstruction~\cite{Candes:2008},
+optimization with regularization or sparsity-inducing penalties in machine
+learning~\cite{Bach:2012}, and sparse coding for learning an overcomplete
+basis~\cite{Olshausen:1997} or for denoising in image and video
+processing~\cite{Elad:2010}. Learning
 the sparsest linear function is equivalent to finding the sparsest solution to a
 system of linear equations (assuming there is no noise in the data). In general,
 this problem is $\NP$-hard and the approximation factor depends on the norm of
