@@ -1,8 +1,9 @@
 Darwin's theory of evolution through natural selection has been a cornerstone of
 biology for over a century and half. Yet, a quantitative theory of complexity
 that could arise through Darwinian mechanisms remained virtually unexplored.  To
-address this question, Valiant (2006) introduced a computational model of
-evolution. In his model, an organism is an entity that computes a function of
+address this question, Valiant introduced a computational model of
+evolution~\cite{Valiant:2009-evolvability}.
+In his model, an organism is an entity that computes a function of
 its environment.  There is a (possibly hypothetical) \emph{ideal function}
 indicating the best behaviour in every possible environment. The performance of
 the organism is measured by how close the function it computes is to the ideal.
@@ -62,7 +63,7 @@ Another desirable property of some of these more direct algorithms is that the
 representations used are functions of low complexity. Feldman's general
 reduction from statistical query algorithms may use arbitrarily complex
 representations (polynomial-sized circuits) depending on the specific algorithm
-used. ``Chemical computers'' of organisms may be slow, and hence, using
+used. The ``chemical computers'' of organisms may be slow, and hence,
 representations that have low-complexity are attractive. We first describe a
 particular class of biological circuits, \emph{transcription networks}, that
 motivate our study. We then frame the question in the language of computational
@@ -151,9 +152,9 @@ corresponding protein produced, may be regulated by a set of proteins called
 and the rate of production also plays a role.} These transcription factors
 may increase or decrease a gene's expression by binding to regions of DNA close
 to the gene. Thus, physical limitations demand that only a small number of
-transcription factors may regulate a single gene.  For example, Balaji \etal
-studied a yeast transcription network of 157 transcription factors regulating
-4410 genes; they observed this network to have 12,873 interactions (edges) where
+transcription factors may regulate a single gene.  For example, Balaji
+\etal~studied a yeast transcription network of 157 transcription factors regulating 
+4,410 genes; they observed this network to have 12,873 interactions (edges) where
 each gene was regulated on average by about 2.9 transcription factors; the
 distribution of in-degrees was well-described by an exponential fit with only
 about 45 genes having an in-degree of 15 or greater~\cite{Balaji:2006}.
@@ -182,7 +183,12 @@ allow for much larger depth. Note that fast conformational changes govern how
 transcription factors directly process information from the environment in order
 to regulate gene expression.  In our example, a sugar molecule binds to a
 transcription factor and changes its shape in a way that alters its ability to
-bind to DNA.} \todoea{Numbers regarding depth.}
+bind to DNA.}
+For example, Luscombe \etal~measured the shortest path length (in number of
+intermediate nodes) between transcription factors and regulated genes
+corresponding to leaves in a yeast transcription network; in the static network,
+the mean such path length was 4.7 and the longest path involved 12 intermediate
+transcription factors~\cite{Luscombe:2004}.
 
 \subsection{Our Contributions}
 
@@ -235,10 +241,11 @@ algorithms, no evolutionary mechanism is known for the class of disjunctions,
 except via Feldman's general reduction from CSQ algorithms. The class of
 smooth(ed) distributions may also be a natural starting place for studying
 evolvability of simple concept classes. In this context, Valiant's disjunction
-algorithm under the uniform distribution~\ref{Valiant:2010-evolvability}, Kanade
-et al.'s algorithm for homogeneous half-spaces under radially symmetric
-distributions, and P. Valiant's algorithm for linear (polynomial) functions
-using squared loss, are \emph{proper} evolutionary mechanisms, \ie the
+algorithm under the uniform distribution~\cite{Valiant:2009-evolvability},
+Kanade et al.'s algorithm for homogeneous half-spaces under radially symmetric
+distributions~\cite{KVV:2010-drift}, and P. Valiant's algorithm for linear
+(polynomial) functions using squared loss~\cite{Valiant:2012-real},
+are \emph{proper} evolutionary mechanisms, \ie the
 representation used is from the same class as the ideal function. In case of the
 first two, it is straightforward to show that if the target depends only on a
 constant number of variables, the evolutionary mechanism also succeeds using
@@ -252,7 +259,7 @@ processing, OR, compressed sensing, optimisation, machine learning}. Learning
 the sparsest linear function is equivalent to finding the sparsest solution to a
 system of linear equations (assuming there is no noise in the data). In general,
 this problem is $\NP$-hard and the approximation factor depends on the norm of
-the pseudo-inverse of the matrix\cite{Natarjan:1995}. Thus, some assumption on
+the pseudo-inverse of the matrix~\cite{Natarajan:1995}. Thus, some assumption on
 the distribution seems necessary. Compressed sensing studies the problem of
 recovering a sparse or the sparsest solution to underdetermined linear systems.
 This area is too vast to review here; Bruckstein \emph{et
