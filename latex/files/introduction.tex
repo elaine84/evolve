@@ -1,7 +1,7 @@
 Darwin's theory of evolution through natural selection has been a cornerstone of
 biology for over a century and half. Yet, a quantitative theory of complexity
-that could arise through Darwinian mechanisms remained virtually unexplored.  To
-address this question, Valiant introduced a computational model of
+that could arise through Darwinian mechanisms has remained virtually unexplored.
+To address this question, Valiant introduced a computational model of
 evolution~\cite{Valiant:2009-evolvability}.
 In his model, an organism is an entity that computes a function of
 its environment.  There is a (possibly hypothetical) \emph{ideal function}
@@ -21,8 +21,8 @@ ideal, within feasible computational resources? Darwinian selection is
 restrictive in the sense that the only feedback received is aggregate over life
 experiences. Valiant observed that any feasible evolutionary mechanism could be
 simulated in the statistical query framework of Kearns~\cite{Kearns:1998}. In a
-remarkable result, Feldman~\cite{Feldman:2008-evolvability} showed that in fact
-evolvable concept classes are exactly captured by a restriction of Kearns'
+remarkable result, Feldman~\cite{Feldman:2008-evolvability} showed that in fact,
+evolvable concept classes are exactly captured by a restriction of Kearns's
 model, where the learning algorithm is only allowed to make \emph{performance
 queries}, \ie it produces a hypothesis and then makes a query to an oracle that
 returns the (approximate) performance of that hypothesis under the
@@ -31,7 +31,7 @@ queries, because when working with Boolean functions with range $\{-1, 1\}$, the
 performance of any hypothesis is its correlation with the ideal function.} P.
 Valiant studied the evolvability of real-valued functions, and showed that
 whenever the corresponding weak optimisation problem, \ie approximately
-minimising the expected loss, can be solved by a using a weak-evaluation oracle,
+minimising the expected loss, can be solved by using a weak-evaluation oracle,
 such an algorithm can be converted into an evolutionary
 mechanism~\cite{Valiant:2012-real}. This implies that a large of class of
 functions -- low degree real polynomials -- can be evolved with respect to any
@@ -154,10 +154,10 @@ may increase or decrease a gene's expression by binding to regions of DNA close
 to the gene. Thus, physical limitations demand that only a small number of
 transcription factors may regulate a single gene.  For example, Balaji
 \etal~studied a yeast transcription network of 157 transcription factors regulating 
-4,410 genes; they observed this network to have 12,873 interactions (edges) where
-each gene was regulated on average by about 2.9 transcription factors; the
-distribution of in-degrees was well-described by an exponential fit with only
-about 45 genes having an in-degree of 15 or greater~\cite{Balaji:2006}.
+4,410 genes. They observed this network to have 12,873 interactions (edges) where
+each gene was regulated on average by about 2.9 transcription factors, the
+distribution of in-degrees was well-described by an exponential fit, and only
+about 45 genes had an in-degree of 15 or greater~\cite{Balaji:2006}.
 %$0-12$~\vknote{Citations: Alon's book and references therein. See pg. 16 Chap 2.}
 
 The number of transcription factors varies from hundreds in a bacterium to
@@ -172,7 +172,7 @@ another transcription factor that itself
 regulates other genes -- we view this as intermediate computation -- and may
 participate in further ``computation'' to produce the desired end-result.
 
-While transcription networks may include feed-back loops, here for simplicity we
+While transcription networks may include cycles (loops), here for simplicity we
 focus on systems that are directed acyclic graphs, and the resulting computation
 can be viewed as a circuit. These circuits are by necessity shallow due to
 another physical constraint: the time required for sufficient quantities of
@@ -186,9 +186,9 @@ transcription factor and changes its shape in a way that alters its ability to
 bind to DNA.}
 For example, Luscombe \etal~measured the shortest path length (in number of
 intermediate nodes) between transcription factors and regulated genes
-corresponding to leaves in a yeast transcription network; in the static network,
-the mean such path length was 4.7 and the longest path involved 12 intermediate
-transcription factors~\cite{Luscombe:2004}.
+corresponding to terminal nodes (leaves) in a yeast transcription network. In
+the static network, the mean such path length was 4.7 and the longest path
+involved 12 intermediate transcription factors~\cite{Luscombe:2004}.
 
 \subsection{Our Contributions}
 
@@ -211,7 +211,7 @@ used by the representations is larger than the number of variables in the
 distribution.  Note that a linear function is represented by a weighted
 arithmetic circuit with only one addition gate (alternatively, by a depth-two
 circuit with a layer of multiplication gates and some constant inputs). There
-is also a natural trade-off to be made between between depth and fan-in. For the
+is also a natural trade-off to be made between depth and fan-in. For the
 precise statement, see Theorem~\ref{thm:sparse-linear} in
 Section~\ref{sec:sparse-linear}.
 
