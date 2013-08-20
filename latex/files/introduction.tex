@@ -149,7 +149,14 @@ simplified account that motivates this work.
 In a transcription network, a gene's expression, which is the quantity of the
 corresponding protein produced, may be regulated by a set of proteins called
 \emph{transcription factors}.\footnote{In reality, this is a dynamical system
-and the rate of production also plays a role.} These transcription factors
+and the rate of production also plays a role.  Genes are \emph{transcribed} to
+produce mRNA, which is then \emph{translated} into sequences of amino acids
+that ultimately fold into proteins.  This two-step process need not be linear:
+a gene (mRNA transcript) can be transcribed (translated) multiple times,
+not only in series but also in parallel fashion.  For the purposes of this
+discussion, we ignore \emph{epigenetic} effects, \ie, molecular modifications to 
+DNA that do not change its sequence but alter gene expression, \eg, binding of
+repressor proteins to silencer regions of DNA.} These transcription factors
 may increase or decrease a gene's expression by binding to regions of DNA close
 to the gene. Thus, physical limitations demand that only a small number of
 transcription factors may regulate a single gene.  For example, Balaji
