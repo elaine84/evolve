@@ -1,23 +1,45 @@
-In this Section, we describe two algorithms for evolving sparse linear
+In this section, we describe two algorithms for evolving sparse linear
 functions. The first evolves the class $\lin^k_{l, u}$ under the class of
 $\Delta$-smooth bounded distributions, using the selection rule $\bnsel$. The
 second algorithm evolves the class $\lin^k_{0, u}$ under more restricted
-distributions, using the selection rule $\optsel$.
+distributions, using the selection rule $\optsel$. We first define the notation
+used in the rest of this section.\smallskip \\
 
+\noindent{\bf Notation}: $D$ denotes the target distribution over $X =
+\reals^n$, $f$ denotes the target (ideal) function. The inner product
+$\ip{\cdot}{\cdot}$ and $2$-norm $\ltwonorm{\cdot}$ of funcitons are with
+respect to the distribution $D$. For $S \subseteq [n]$, $f^S$ denotes the best
+linear approximation of $f$ using the variables in the set $S$; formally,
+%%
+\begin{align}
+f^S = \underset{w \in \reals^n~:~ w_i = 0 ~\vee~i \in S}\argmin \ltwonorm{f -
+w}^2 \label{eqn:artichoke}
+\end{align}
+%%
+Finally, recall that for $w \in \reals^n$, $\NZ(w) = \{i ~|~ w_i \neq 0 \}$ and
+$\sparsity(w) = |\NZ(w)|$. A vector $w$ represents a linear function, $x \mapsto
+w \cdot x$. The vector $e^i$ has $1$ in co-ordinate $i$ and $0$ elsewhere and
+corresponds to the linear function $x \mapsto x_i$. Thus, in this notation,
+$\corr(x_i, x_j) = \ip{e^i}{e^j}/(\ltwonorm{e^i}\ltwonorm{e^j})$. The accuracy
+parameter is denoted by $\epsilon$. $[n]$ denotes the set $\{1, \ldots, n\}$.
+
+\subsection{Evolving Sparse Linear Functions using $\bnsel$}
+\label{sec:sparse_linear}
 
 We present a simple algorithm that evolves the class of sparse linear functions,
-$\lin^k_{l, u}$.  The representation class also consists of sparse linear
-functions, but with a greater number of non-zero entries than the \emph{ideal
-function}. We also assume that a linear function is represented by $w \in
-\reals^n$, where each $w_i$ is a real number. (Handling the issues of finite
-precision is standard and is avoided in favour of simplicity.) Define the
-parameters $K = 32(k^2/\Delta^4)(u/l)$ and $B = 10 uk /\Delta$. Formally, the
+$\lin^k_{l, u}$, with respect to $\Delta$-smooth bounded distributions (see
+Section~\ref{sec:notation-class}). The representation class also consists of sparse
+linear functions, but with a greater number of non-zero entries than the
+\emph{ideal function}.  We also assume that a linear function is represented by
+$w \in \reals^n$, where each $w_i$ is a real number. (Handling the issues of
+finite precision is standard and is avoided in favour of simplicity.) Define the
+parameters $K = 32(k^2/\Delta^4)(u/l)^2$ and $B = 10 uk /\Delta$. Formally, the
 representation class is
 \[ 
-R = \{ w ~|~ \lznorm{w} \leq K, w_i \in [-B, B] \}
+R = \{ w ~|~ \sparsity(w) \leq K, w_i \in [-B, B] \}
 \]
 The important point to note is that the parameters $K$ and $B$ do not depend on
-$n$, the number of variables.
+$n$, the total number of variables.
 
 Next, we define the mutator. Recall that the mutator is a randomized algorithm
 that takes as input an element $r \in R$, the accuracy parameter $\epsilon$,
@@ -43,34 +65,44 @@ Then, choose $i_2 \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$
 be the mutated representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$.
 Set $w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime$ uniformly from the range
 $[-B, B]$. Observe that in this case, $\sparsity(w^\prime) = \sparsity(w) = K$
-with probability $1$, and that $w^\prime \in R$.
+with probability $1$, and hence $w^\prime \in R$.
 \item (Adding) If $|\NZ(w)| < K$, choose $i \in [n] \setminus \NZ(w)$ uniformly
 at random. Let $w^\prime$ be the mutated representation, where $w_j^\prime =
 w_j$ for $j \neq i$, $w^\prime_i$ is chosen uniformly in $[-B, B]$. 
 \end{enumerate}
 \end{enumerate}
 
-In the ensuing discussion, we fix the following notation: $f \in C^k_{l, u}$ is
-the target linear function, $D$ is the underlying distribution and is a
-$\Delta$-smooth bounded distribution (see Section~\ref{sec:notation-class}). Recall
-that for linear functions, $w, w^\prime$, we have the inner product
-$\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$, which also
-defines the norm $\ltwonorm{w} = \sqrt{\ip{w}{w}}$.  We will show that for any
-$w \in R$, if $\loss_{f, D}(w) = \ltwonorm{f - w}^2 > \epsilon$, with non-negligible
-(inverse polynomial) probability, the above procedure produces a mutation
-$w^\prime$, such that $\loss_{f, D}(w^\prime) = \ltwonorm{f - w^\prime} \leq
-\loss_{f, D}(w) - b$, for some inverse polynomial $b$.
-
-To simplify notation, let $S = \NZ(w)$. Let $f^S$ denote best approximation to
-$f$ using variables in the set $S$. Formally, 
+Recall that $f \in \lin^k_{l, u}$ denotes the target (ideal) function, $D$ is
+the underlying distribution that is $\Delta$-smooth and bounded (see
+Section~\ref{sec:notation-class}). Since we are working with the squared loss
+metric, $\ell(y^\prime, y) = (y^\prime - y)^2$, the expected loss for any $w \in
+R$ is given by $\loss_{f, D}(w) = \ltwonorm{f - w}^2 = \ip{f - w}{f - w}$.  We
+will show that for any $w \in R$, if $\ltwonorm{f - w}^2 > \epsilon$, with
+non-negligible (inverse polynomial) probability, the above procedure produces a
+mutation $w^\prime$, that decreases the expected loss by at least some inverse
+polynomial amount. Thus, by setting the size of the neighbourhood, $m$, large
+enough, we can guarantee that with high probability there will always exist a
+beneficial mutation.
 %
-\[ 
-f^S = \underset{w \in R ~:~ w_i = 0 ~\vee~ i \in S} \argmin \ltwonorm{f- w}^2 
-\]
+%such that $\loss_{f, D}(w^\prime) = \ltwonorm{f - w^\prime}
+%\leq \loss_{f, D}(w) - b$, for some inverse polynomial $b$.
 
-Let $w^\prime$ denote a random mutation produced as a result of the procedure
-described above.  We will establish the desired result by proving the following
-claims.
+To simplify notation, let $S = \NZ(w)$. Recall that $f^S$ denote best
+approximation to $f$ using variables in the set $S$; thus, $\ltwonorm{f - w}^2 =
+\ltwonorm{f - f^S}^2 + \ltwonorm{f^S - w}^2$. At a high level, the argument for
+proving the success of an evolutionary mechanism is as follows: If
+$\ltwonorm{f^S - w}^2$ is large, then a mutation of the type ``scaling'' or
+``adjusting'' will get $w$ closer to $f^S$, reducing the expected loss. (The
+role of ``scaling'' mutations is primarily to ensure that the representations
+remain bounded.) If $\ltwonorm{f^S - w}^2$ is small and $S \neq \NZ(f)$, there
+must be a variable in $\NZ(f) \setminus S$, that when added to $w$ (possibly by
+swapping), reduces the expected loss. Thus, as long as the representation is far
+from the evolutionary target, a \emph{beneficial} mutation is produced with high
+probability.
+
+More formally, let $w^\prime$ denote a random mutation produced as a result of
+the procedure described above.  We will establish the desired result by proving
+the following claims.
 %%
 \begin{claim} \label{claim:apple} If $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, then
 with probability at least $1/12$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
@@ -84,208 +116,85 @@ exists a mutation that decreases the expected loss by at least $3
 mutation achieves this. \end{claim}
 %%
 \begin{claim} \label{claim:cantaloupe} When $\ltwonorm{f^S - w} \leq
-l^2\Delta^2/(4KB)$, but $\sparseset(f) \not\subseteq S$, then with probability
+l^2\Delta^2/(4KB)$, but $\NZ(f) \not\subseteq S$, then with probability
 at least $\Delta \ltwonorm{f - w}/(6KBnk)$, there exists a mutation that
 decreases the expected loss by at least $\Delta^2 \ltwonorm{f-w}^2/(16k^2)$.
 \end{claim}
 
-Finally, note that when $\NZ(f) \subseteq S$, then $f^S = f$. Thus, in this case
+Note that when $\NZ(f) \subseteq S$, then $f^S = f$. Thus, in this case
 when $\loss_{f, D}(w) = \ltwonorm{f^S - w}^2 \leq \epsilon$, the evolutionary
 algorithm has succeeded. \medskip 
 
-\vknote{I think we'll eventually structure this by saying -- the proofs of the
-claim are in Appendix Hugh. Then, we'll have a short proof showing that if the
-Claims are true, evolution indeed succeeds.}
-
-\begin{proof}[Proof of Claim \ref{claim:apple}]: We show that in this case, a ``scaling''
-mutation achieves the desired result. Restricted to the direction $w$, the best
-approximation to $f^S$ is $\frac{\ip{w}{f^S}}{\ltwonorm{w}^2}w$. We have that
-%%
-\[
-\left\Vert \frac{\ip{w}{f^S}}{\ltwonorm{w}^2} w \right\Vert \leq
-\ltwonorm{f^S} \leq \frac{\ltwonorm{w}}{2}
-\]
-%%
-Hence, if $\ip{w}{f^S} > 0$, for $\gamma \in [1/4, 3/4]$ (and similarly if
-$\ip{w}{f^S} < 0$ for $\gamma \in [-3/4, -1/4]$ ), we have that
-%%
-\begin{align*}
-\ltwonorm{\gamma w - f^S}^2 &= \ltwonorm{w- f^S}^2 - 2 (1 - \gamma) \ip{w -
-f^S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
-&\leq \ltwonorm{w - f^S}^2 - (1 - \gamma) \ltwonorm{w}^2 + (1 - \gamma)^2
-\ltwonorm{w}^2 \\
-&= \ltwonorm{w - f^S}^2 - (\gamma - \gamma^2) \ltwonorm{w}^2
-\intertext{Finally, by observing that for $\gamma \in [1/4, 3/4]$, $\gamma -
-\gamma^2 \geq 3/16$ and that by the triangle inequality, $\ltwonorm{w} \geq
-(2/3)\ltwonorm{w - f^S}$ when $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, we obtain}
-%
-\ltwonorm{\gamma w - f^S}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{1}{12}
-\ltwonorm{w - f^S}^2
-\end{align*}
-We note that $\loss_{f, D}(w^\prime) = \ltwonorm{f - f^S}^2 + \ltwonorm{f^S -
-\gamma w}^2$ and $\loss_{f, D}(w) = \ltwonorm{f - f^S}^2 + \ltwonorm{f^S -
-w}^2$.  An appropriate value of $\gamma$ is chosen with probability at least $1/4$,
-and combined with the probability of choosing a scaling mutation we get the
-desired result.
-\end{proof}
-
-\begin{proof}[Proof of Claim~\ref{claim:banana}] Here, we appeal to a mutation
-that adjusts the relative weights of the variables within the set $S = \NZ(w)$.
-Consider the vector $f^S - w$, and note that $\NZ(f^S -w ) \subseteq S$. Let
-$r^S = f^S - w$ denote the residual, which lies in the space spanned by $S$.
-Now consider
-\begin{align*}
-\ltwonorm{r_S}^2 = \ip{r^S}{r^S} &= \sum_{i \in S} r^S_i \ip{e^i}{r^S}
-\intertext{Here, $e^i$ is the unit vector representing the linear function $x
-\mapsto e^i \cdot x = x_i$. Therefore, there must exist an $i$ for which the
-following is true:}
-r^S_i\ip{e^i}{r^S} &\geq \frac{\ltwonorm{r^S}^2}{|S|}
-\intertext{We appeal to Lemma~\ref{lemma:amsterdam} (part 1), which implies that
-$|r^S_i| \leq \sqrt{\ip{r^S}{r^S}/\Delta^2} = \ltwonorm{r^S}/{\Delta}$, to
-conclude that}
-|\ip{e^i}{r^S}| &\geq \frac{\ltwonorm{r^S} \Delta}{|S|}
-\end{align*}
-Let $\beta = \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}^2}$ and suppose $w^\prime =
-w + \gamma e^i$ for $\gamma \in [\beta - |\beta|/2, \beta +  |\beta|/2]$. We
-then have
-\begin{align*}
-\ltwonorm{f^S - (w + \gamma e^i)}^2 &= \ltwonorm{f^S - w}^2 - 2 \gamma \ip{f^S -
-w}{e^i} + \gamma^2 \ltwonorm{e^i}^2
-%
-\intertext{Recall that $f^S - w = r^S$ and note that $\ip{e^i}{r^S}$ and
-$\gamma$ have the same sign. This, combined with the above equation, gives}
-%
-\ltwonorm{f^S - (w + \gamma e^i)}^2 &= \ltwonorm{f^S - w}^2 - (2
-|\gamma||\beta| - \gamma^2) \ltwonorm{e^i}^2
-\intertext{Finally, note that for $|\gamma| \in [|\beta|/2, 3|\beta|/2]$, $- 2
-|\gamma| |\beta| + \gamma^2 \leq - 3 |\beta|^2/4$, hence, the
-above equation and the fact that $\ltwonorm{e^i} \leq 1$ together yield}
-\ltwonorm{f^S - (w + \gamma e^i)}^2 &\leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
-\beta^2 \ltwonorm{e^i}^2 \leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
-\frac{\ltwonorm{f^S - w}^2 \Delta^2}{|S|^2}
-\end{align*}
-
-Note that a suitable mutation $w^\prime = w + \gamma e^i$ is obtained with
-probability at least $|\beta|/(6KB)$ ($1/3$ for choosing the right type of
-mutation, $1/K$ for the correct choice of variable, and $|\beta|/(2B)$ for the
-choosing the correct value of $w_i$).  Also note that
-$|\beta| \geq \Delta \ltwonorm{f^S - w} / |S| \geq \Delta \ltwonorm{f^S - w} / K$.
-For this to be a valid mutation, we also need to verify the fact that $w_i + \gamma
-\in [-B, B]$, which is ensured by our choice of $B$. To see this, note that
-$\ltwonorm{w} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}$ (the last part is
-because $f^S$ is a projection of $f$ onto a lower dimensional space). Thus, by
-Lemma~\ref{lemma:amsterdam} (part 1), $w_i \leq 2 \ltwonorm{f} / \Delta$. Also,
-$|\beta| = |\ip{e^i}{r^S}|/\ltwonorm{e^i}^2 \leq \ltwonorm{r^S}/\ltwonorm{e^i}
-= \ltwonorm{f^S - w}/\E[x_i^2] \leq 3 \ltwonorm{f}/\Delta$.
-Thus, if $B > 13 \ltwonorm{f}/ (2\Delta)$, then $|w_i + \gamma| < B$ and the
-mutation will be a valid one. Note that the maximum value of $\ltwonorm{f}$ for
-$f \in \lin^k_{l, u}$ is $ku$. Thus, our choice of $B = 10 ku / \Delta$ is
-sufficient.  This completes the proof of Claim~\ref{claim:banana}.
-\end{proof}
-
-\begin{proof}[Proof of Claim~\ref{claim:cantaloupe}] Finally, we show that if
-$\ltwonorm{f^S - w}$ is very small, but $\NZ(f) \not\subseteq S$, then it must
-be the case that a ``swapping'' or ``adding'' mutation is beneficial. We focus
-on the swapping case, \ie when $|S| = K$; the adding step is a special case of
-this. First, we observe that if there exists $i \in \NZ(f)$ such that $i \not\in
-S$, then by using Lemma~\ref{lemma:amsterdam} (part 1), it must be the case that
-$\ltwonorm{f - w}^2 \geq (f_i - w_i)^2 \Delta^2 = f_i^2 \Delta^2 \geq l^2 \Delta^2$.
-Let $r = f - w$ denote the residual. Then, consider the following:
-%%
-\begin{align}
-%
-\ip{r}{r} &=  \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r} + \sum_{i \in S} r_i
-\ip{e^i}{r} \nonumber
-%
-\intertext{Note that for all $i \in S$, $\ip{e^i}{f - f^S} = 0$, since $f^S$ is
-the projection of $f$ onto the space spanned by the variables in $S$. Hence, if
-$r^S = f^S - w$, the residual within the space spanned by $S$, then $r = f - f^S
-+ r^S$. Thus, we have $\ip{e^i}{r} = \ip{e^i}{r^S} \leq \ltwonorm{r^S}$. Using
-this we get, }
-%
-\ip{r}{r} &\leq \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r} +
-\ltwonorm{r^S} \sum_{i \in S} |r_i|  \nonumber
-%%
-\intertext{Now, even by a very crude estimate, $|r_i| = |f_i - w_i| \leq 2 B$,
-and hence by the condition in the statement of Claim~\ref{claim:cantaloupe},
-that $\ltwonorm{r^S} =\ltwonorm{f^S - w} \leq l^2\Delta^2/(4KB)$, together with
-the previous observation that $\ip{r}{r} = \ltwonorm{r}^2 =
-\ltwonorm{f - w}^2 \geq l^2 \Delta^2$, we have that}
-%%
-\frac{1}{2}\ip{r}{r} &\leq \sum_{i \in \NZ(f) \setminus S} r_i \ip{e^i}{r}
-\nonumber
-%
-\intertext{We now appeal to Lemma~\ref{lemma:amsterdam} (part 1), which shows
-that $|r_i| \leq \ltwonorm{r} / \Delta$, and
-conclude that there exists an $i$ for which}
-%
-|\ip{e^i}{r}| &\geq \frac{\ltwonorm{r} \Delta}{2 k} \nonumber
-%
-\intertext{The crucial observation is that $|\NZ(f)| \leq k < K$. Let $\beta =
-\frac{\ip{r}{e^i}}{\ltwonorm{e^i}^2}$. Finally, Lemma~\ref{lemma:amsterdam}
-(part 2) implies that there exists an $i^\prime$ for which $w_{i^\prime}^2 \leq
-\ltwonorm{w}^2/K$. We consider the mutation, $w^\prime = w + \gamma e^i -
-w_{i^\prime} e^{i^\prime}$ for $\gamma \in [\beta - |\beta|/2, \beta +
-|\beta|/2]$. Then, we have}
-%%
-\ltwonorm{f - (w + \gamma e^i - w_{i^\prime} e^{i^\prime})}^2 &= \ltwonorm{f - (w
-+ \gamma e^i)}^2 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} +
-w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \label{eqn:artichoke}
-%%
-\intertext{We bound the first term on the right hand side of the above expression and then
-the latter two.}
-%
-\ltwonorm{f - (w + \gamma e^i)}^2 &= \ltwonorm{r}^2 - 2 \gamma \ip{r}{e^i} +
-\gamma^2 \ltwonorm{e^i}^2 \nonumber \\
-&= \ltwonorm{r}^2 - (2 \gamma \beta  - \gamma^2) \ltwonorm{e^i}^2 \nonumber
-%
-\intertext{As in the proof of Claim~\ref{claim:banana}, for $|\gamma| \in
-[|\beta|/2, 3|\beta|/2]$, we have that $- 2 \gamma \beta + \gamma^2 \leq -
-3 \beta^2/4$. Hence,}
-\ltwonorm{f - (w + \gamma e^i)}^2 &\leq \ltwonorm{r}^2 - \frac{3}{4} \beta^2
-\label{eqn:broccoli}
-%%
-\intertext{To bound the remaining two terms in (\ref{eqn:artichoke}), recall that
-$f - w = f - f^S + r^S$ and that $\ip{f - f^S}{e^{i^\prime}} = 0$
-(since $i^\prime \in S$). Thus, we get that}
-%%
-- 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
-  \ltwonorm{e^{i^\prime}}^2 &\leq 2 |w_{i^\prime}| |\ip{r^S + \gamma
-  e^i}{e^{i^\prime}}| + w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \nonumber
-\intertext{Using the fact that $\ltwonorm{r^S} \leq \gamma$, $|w_{i^\prime}|< \gamma$
-\eanote{(which we will show below)}, $|\ip{e^i}{e^{i^\prime}}| \leq 1$ and
-$\ltwonorm{e^{i^\prime}} \leq 1$, we obtain}
-%%
-- 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
-  \ltwonorm{e^{i^\prime}}^2 &\leq 6 |w_{i^\prime}||\gamma| \label{eqn:cabbage}
-%%
-\intertext{Recall that $|w_{i^\prime}| \leq \ltwonorm{w}/\sqrt{K}$. Also $\ltwonorm{w}
-\leq \ltwonorm{f^S} + \ltwonorm{r^S} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}
-\leq 2uk$, where we have used the fact that $\ltwonorm{r^S}$ is small. Combining
-(\ref{eqn:artichoke}), (\ref{eqn:broccoli}),  (\ref{eqn:cabbage}), the fact that
-$|w_i| \leq 2uk/\sqrt{K}$ and $|\gamma| \leq 3 |\beta|/2$, we get}
-%%
-\ltwonorm{f - (w + \gamma e^i - w_{i^\prime} e^{i^\prime})}^2 &\leq
-\ltwonorm{r}^2 - \frac{3}{4} \beta^2 + 18 |\beta|uk/\sqrt{K} \nonumber
-%%
-\end{align}
-\eanote{Checked this far.}
-Finally, we note that when $K > 5184 (k/\Delta)^4 (u/l)^2$, the above
-equation ensures that the expected loss drops by at least $\beta^2/4$.  The probability of
-choosing a swapping operations is $1/3$, of subsequently choosing the correct
-pair is at least $1/(nK)$, and subsequently choosing the correct value of $w_i$
-is at least $|\beta|/(2B)$. A simple calculation proves the statement of the
-claim.
-\end{proof}
+The proofs of the above Claims are provided in
+Appendix~\ref{app:proofs-sparse-linear}. We now prove our main result using the
+above claims.
+% \vknote{I think we'll eventually structure this by saying -- the proofs of the
+% claim are in Appendix Hugh. Then, we'll have a short proof showing that if the
+% Claims are true, evolution indeed succeeds.}
+% 
 
 \begin{theorem} Let $\Dists$ be the class of $\Delta$-smooth bounded
-distributions. Then the class $\lin^k_{l, u}$ is evolvable using the
-representation class $\lin^K_{0, B}$, where $K = O((k/\Delta)^4 (u/l)^2)$ and $B
-= O(uk/\Delta)$. \label{thm:sparse_linear} \end{theorem}
+distributions as defined in Section~\ref{sec:notation-classes}. Then the class
+$\lin^k_{l, u}$ is evolvable using the representation class $\lin^K_{0, B}$,
+where $K = O((k/\Delta)^4 (u/l)^2)$ and $B = O(uk/\Delta)$, using the mutation
+algorithm described in this section, the selection rule $\bnsel$.
+Furthermore, the following are true:
+\begin{enumerate}
+\item The number of generations required is $O()$ and is independent of $n$.
+\item The size polynomial $s$, depends polylogarithmically on $n$, and
+polynomially on the remaining parameters.
+\end{enumerate}
+\label{thm:sparse_linear} \end{theorem}
 \begin{proof}
-The mutator is as defined above. We need to define the value $m$ that determines
-the number of mutations chosen to populate the multiset $\Neigh(w, \epsilon)$.
+The mutator is as described in this section. Let $p = \min\{1/12,
+l^2\Delta^3/(24K^3B^2), \sqrt{\epsilon}/(6KBnk)\}$. And let $\alpha =
+\sqrt{\epsilon} \min\{(l^4 \Delta^4)/(192 K^2B^2), (3 l^4 \Delta^6)/(64K^4B^2),
+(\epsilon\Delta^2)/(16k^2)\}$ Now, by Claims~\ref{claim:apple},
+\ref{claim:banana} and \ref{claim:cantaloupe}, if $\ltwonorm{f - w}^2 \geq
+\epsilon$, then the mutator outputs a mutation that decreases the squared loss
+by $\alpha$ with probability at least $p$.
 
+Recall that for $w \in R$, $\sum_{i} w_i^2 \leq KB^2$. By assumption it is the
+case that for any $x$ in the support of $D$, $\sum_{i} x_i^2 \leq G^2$. Clearly,
+since $B > u$ and $K > k$, $f \in R$. Thus, $\ell(f(x), w(x)) \leq 4KB^2G^2$ for
+$w \in R$ and $x$ in the support of $D$. Let $g = 20 KB^2G^2/\alpha$, $m =
+(1/p)\ln(2g/\epsilon)$, $t = 3\alpha/5$  and $s = (800 KB^2G^2/\alpha^2)
+\ln(4mg/\epsilon)$. Here $s$ is the size function and $t$ is the tolerance
+function.
 
+By our choice of $s$, for a fixed representation $w \in R$, if $\hat{\loss}_{f,
+D}(w) = (1/s) \sum_{i = 1}^s \ell(w(x^i), f(x^i))$, then the probability that
+$|\loss_{f, D}(w) - \hat{\loss}_{f, D}(w)| \geq \alpha/5$ is at most
+$\epsilon/(2mg)$. Thus, we imagine that the evolution algorithm runs for $g$
+generations using the mutator defined and $\bnsel$ as the selection rule. Then,
+for each representation $w$ in the neighbourhood, $\Neigh(r, \epsilon)$ (of size
+$m$), for $g$ generations we assume that $|\loss_{f, D}(w) - \hat{\loss}_{f,
+D}(w)| \leq \alpha/5$, except with probability $\epsilon/2$ (by a straighforward
+union bound). Similarly, by a union bound, each neighbourhood for $g$ generation
+contains a mutation that decreases expected loss by at least $\alpha$, except
+with probability $\epsilon/2$. Allowing a failure probability of $\epsilon$, we
+consider the event that no failure occurs. 
+
+This implies that for $t = \alpha/3$, for $g$ generations, there always exists
+some $w^\prime$ in the neighbourhood of the current representation $w$, such
+that $\hat{\loss}_{f, D}(w^\prime) \leq \hat{\loss}_{f, D}(w) - t$. Thus, a
+beneficial mutation always exists and will be picked. Also, since $t = 3
+\alpha/5$, if $w^\prime$ is such that $\hat{\loss}_{f, D}(w^\prime) \leq
+\hat{\loss}_{f, D}(w) - t$, it must be the case that $\loss_{f, D}(w^\prime) \leq
+\loss_{f, D}(w) - \alpha/5$. Thus, the expected loss decreases by at least
+$\alpha/5$ each generation. Since $4KB^2G^2$ is an upper bound on the expected
+loss, it must be the case that evolution succeeds in $g = 20 KB^2G^2/\alpha$
+generations.
+
+The statement of the theorem now follows immediately. To notice the dependence
+on $n$, notice that $p$ is inverse polynomial in $n$, and hence $s$ has
+polylogarithmic dependence on $n$. $g$ has no dependence on $n$.
 \end{proof}
 
+\begin{remark} We note that the same evolutionary process works when evolving
+the class $\lin^k_{0, u}$, as long as the sparsity of the representation class
+$K$, is allowed polynomial dependence on $1/\epsilon$, the accuracy parameter.
+This is consistent with the notion of attribute-efficiency, where the goal is
+that the information complexity should be polylogarithmic in the number of
+attributes.
+\end{remark}
