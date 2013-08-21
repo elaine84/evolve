@@ -140,12 +140,37 @@ a larger network of interacting entities is composed of smaller modules of
 Both the ``small-world'' description and modularity of biological networks are
 consistent with the more general theme of sparsity.
 
+\begin{figure}[ht]
+\centering
+\subfigure[~]{
+\includegraphics[width=0.5\textwidth]{figs/biology}
+\label{fig:biology}
+}
+%\hspace{0.2in}
+\subfigure[~]{
+\includegraphics[width=0.45\textwidth]{figs/network}
+\label{fig:network}
+}
+\caption{(a)~Schematic of transcription (top) and translation (bottom).
+Here, a transcription factor (TF) binds to DNA close to a gene in a way that
+increases gene expression by encouraging RNA polymerase (RNAp) to transcribe
+the gene and so produce mRNA.  The mRNA is then translated by ribosomes to
+produce sequences of amino acid that ultimately fold into proteins.
+Due to physical limitations, only a small number of transcription factors can
+directly regulate any gene. Note that a transcription factor's action can also
+decrease gene expression. For a more complete picture, \eg see~\cite{Alon:2006}.
+(b)~Topology of the transcription network of respiration and redox reactions in
+yeast. $X \rightarrow Y$ represents that transcription factor $X$ regulates the
+expression of $Y$. Note that this real network has cycles.
+Adapted from~\cite{Murray:2011}.}
+\end{figure}
+
 We focus on transcription networks, which are a specific class of networks of
 interacting genes and proteins that are involved in the production of new
 protein. For an accessible and mathematical introduction to transcription
-networks and other biological circuits, see~\cite{Alon:2006}; below we present a
-simplified account that motivates this work.
-\todoea{Figure: transcription and a simple network.}
+networks and other biological circuits, see~\cite{Alon:2006};
+below and in Figure~\ref{fig:biology},
+we present a simplified account that motivates this work.
 In a transcription network, a gene's expression, which is the quantity of the
 corresponding protein produced, may be regulated by a set of proteins called
 \emph{transcription factors}.\footnote{In reality, this is a dynamical system
@@ -197,6 +222,7 @@ intermediate nodes) between transcription factors and regulated genes
 corresponding to terminal nodes (leaves) in a yeast transcription network. In
 the static network, the mean such path length was 4.7 and the longest path
 involved 12 intermediate transcription factors~\cite{Luscombe:2004}.
+We illustrate a small, real transcription network in Figure~\ref{fig:network}.
 
 \subsection{Our Contributions}
 
