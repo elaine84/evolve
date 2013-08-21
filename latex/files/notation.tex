@@ -1,7 +1,7 @@
 We first provide an overview of the evolvability framework of
-Valiant~\cite{Valiant:2009-evolvability}. The description here differs
-slightly from Valiant's original formulation and includes some subsequent
-extensions (for details the reader is referred to
+Valiant~\cite{Valiant:2009-evolvability}. The description here differs slightly
+from Valiant's original formulation and includes some subsequent extensions (for
+more details the reader is referred to
 \cite{Valiant:2009-evolvability,Feldman:2008-evolvability,
 Feldman:2009-robustness, Valiant:2012-real, Kanade:2012-thesis}).
 
@@ -25,15 +25,16 @@ function $r : X \rightarrow Y$, \ie there is an efficient Turing Machine that
 given the description string $\langle r \rangle$ and $x \in X$, outputs $r(x)$.  
 
 In this work, our focus is characterizing different evolutionary mechanisms
-based on the complexity of representations used. The notion is similar in spirit
-to the \emph{proper} vs. \emph{improper} learning question in computational
-learning theory. The complexity of a representation is measured by the function
-it computes.  Let $H : X \rightarrow Y$ be a class of functions. Let $R
-\subseteq \{0, 1\}^*$.  We say that $R$ \emph{represents} $H$, if there is a map
-$\sigma : R \rightarrow H$ and there exists an \emph{efficient} Turing machine
-that given input $r \in R$ and $x \in X$, outputs $(\sigma(r))(x)$. Henceforth,
-by abuse of notation we will use $r$ to denote both the representation and the
-function it computes.
+based on the complexity of representations used. 
+% The notion is similar in spirit to the \emph{proper} vs. \emph{improper}
+% learning question in computational learning theory. 
+The complexity of a representation is measured by the function it computes.  Let
+$H : X \rightarrow Y$ be a class of functions. For $R \subseteq \{0, 1\}^*$,  we
+say that $R$ \emph{represents} $H$, if there is a map, $\sigma : R \rightarrow
+H$, and if there exists an \emph{efficient} Turing machine that given input $r
+\in R$ and $x \in X$, outputs $(\sigma(r))(x)$. Henceforth, by abuse of notation
+we will use $r$ to denote both the representation and the function it computes,
+$\sigma(r)$. 
 
 \subsubsection*{Evolutionary Algorithms}
 
@@ -48,21 +49,21 @@ such that $\loss_{f, D}(r^*) < \epsilon$. In the following discussion, we use
 the notation: $f$ the ideal function, $\epsilon$ the target accuracy, $D$ the
 target distribution over $X$ and $\loss_{f, D}(g)$ the expected loss function.  \medskip \\
 %
-\noindent{\bf Mutator}: A mutator, $\Mut$, for a class of representations $R$,
-is a polynomial-time randomised Turing machine that takes as input a
-representation $r \in R$ and accuracy parameter $\epsilon$ and outputs a
-multiset $\Neigh(r, \epsilon) \subseteq R$. \medskip \\
+\noindent{\bf Mutator}: A mutator, $\Mut$, for a set of representations $R$, is
+a polynomial-time randomised Turing machine that takes as input a representation
+$r \in R$ and accuracy parameter $\epsilon$ and outputs a multiset $\Neigh(r,
+\epsilon) \subseteq R$. \medskip \\
 %
 \noindent{\bf Selection}: (Natural) Selection is based on the empirical performance
 of each representation. Let $s : R \times [0, 1] \rightarrow \naturals$ be a
-sample size function. First, the mutation algorithm, $\Mut(r, \epsilon)$ is run
-to produce multiset $\Neigh(r, \epsilon)$. Then, an i.i.d. sample $\langle x_i
+sample size function. First, the mutation algorithm, $\Mut(r, \epsilon)$, is run
+to produce multiset $\Neigh(r, \epsilon)$. Then, an i.i.d. sample $\langle x^i
 \rangle_{i=1}^s$ is drawn from the distribution $D$ over $X$, where $s = s(r,
 \epsilon)$.  Denote the empirical performance of each $r^\prime \in \Neigh(r,
 \epsilon) \cup \{r \}$ as
 %
-\[ \hat{\loss}_{f, D}(r^\prime) = \frac{1}{s}\sum_{i=1}^s \ell(r^\prime(x_i),
-f(x_i)) \]
+\[ \hat{\loss}_{f, D}(r^\prime) = \frac{1}{s}\sum_{i=1}^s \ell(r^\prime(x^i),
+f(x^i)) \]
 %
 Finally, let $t : R \times [0, 1] \rightarrow \reals$ be a tolerance function.
 Two possible selection mechanisms are considered.
@@ -77,7 +78,9 @@ denote the set of beneficial mutations and let
 \[ \Neut = \{r^\prime \in \Neigh(r, \epsilon) ~|~ |\hat{\loss}_{f, D}(r^\prime) -
 \hat{\loss}_{f, D}(r)| <  t(r, \epsilon) \} \]
 %
-denote the neutral mutations, with respect to tolerance function $t$. Selection
+denote the neutral mutations, with respect to tolerance function $t$. Both
+$\Bene$ and $\Neut$ are treated as multisets (the multiplicity of any
+representation is the same as that in $\Neigh(r, \epsilon)$). Selection
 operates as follows: if $\Bene \neq \emptyset$, $r^\prime$ is randomly selected
 from $\Bene$ as the surviving creature at the next generation.  If $\Bene =
 \emptyset$ and $\Neut \neq\emptyset$, then $r^\prime$ is selected randomly from
@@ -85,24 +88,26 @@ $\Neut$ as the surviving creature at the next generation.  Otherwise, $\bot$ is
 produced signifying failure of evolution.
 %
 \item {\bf Selection based on optimisation} ($\optsel$): Let $\widehat{\opt} =
-\displaystyle\min_{r^\prime \in \Neigh(r, \epsilon)} \hat{\loss}_{f, D}(r^\prime)$.
-If $\widehat{\opt} < \hat{\loss}_{f, D}(r) + t(r, \epsilon)$, then $\bot$ is produced
-signifying failure of evolution.  Otherwise, let $\best = \{ r^\prime \in
-\Neigh(r, \epsilon) ~|~ \hat{\loss}_{f, D}(r^\prime) \leq \widehat{\opt} + t(r, \epsilon) \}$,
-and then $r^\prime$ is chosen from $\best$ randomly as the surviving creature at the
-next generation. Thus, while the selection rule $\bnsel$ only chose some
-beneficial mutation, $\optsel$ aggressively picks the (almost) best mutation
-from the available pool.
+\displaystyle\min_{r^\prime \in \Neigh(r, \epsilon)} \hat{\loss}_{f,
+D}(r^\prime)$.  If $\widehat{\opt} < \hat{\loss}_{f, D}(r) + t(r, \epsilon)$,
+then $\bot$ is produced signifying failure of evolution.  Otherwise, consider
+the multiset, $\best = \{ r^\prime \in \Neigh(r, \epsilon) ~|~ \hat{\loss}_{f,
+D}(r^\prime) \leq \widehat{\opt} + t(r, \epsilon) \}$, and then $r^\prime$ is
+chosen from $\best$ randomly as the surviving creature at the next generation.
+Thus, while the selection rule $\bnsel$ only chose some beneficial mutation,
+$\optsel$ aggressively picks the (almost) best mutation from the available pool.
 \end{enumerate}
 
 We denote by $r^\prime \leftarrow \Sel[R, \Mut, s, t](r, \epsilon)$ the fact
-that $r^\prime$ results from one mutation and selection operation on the
-representation $r$ and accuracy parameter $\epsilon$. Here, $\Sel$ may be one of
-the two selection rules described above. For $\Sel$ to be feasible we require
-that the size function $s$ is polynomially (in $n$ and $1/\epsilon$) bounded and
-that there exists polynomials $p_1(n, 1/\epsilon)$ and $p_2(n, 1/\epsilon)$
-such that $1/p_1(n, 1/\epsilon) \leq t(r, \epsilon) \leq 1/p_2(n, 1/\epsilon)$ for
-every $r \in R$ and $\epsilon > 0$. \medskip \\
+that $r^\prime$ is the surviving creature in the next generation after one
+mutation and selection operation on the representation $r$ and accuracy
+parameter $\epsilon$. Here, $\Sel$ may be one of the two selection rules
+described above. For $\Sel$ to be feasible we require that the size function $s$
+is polynomially (in $n$ and $1/\epsilon$) bounded and that the inverse of the tolerance
+function $t$ is polynomially sandwiched, \ie there exists polynomials $p_1(n,
+1/\epsilon)$ and $p_2(n, 1/\epsilon)$ such that $1/p_1(n, 1/\epsilon) \leq t(r,
+\epsilon) \leq 1/p_2(n, 1/\epsilon)$ for every $r \in R$ and $\epsilon > 0$.
+\medskip \\
 %
 \noindent {\bf Evolutionary Algorithm}: An evolutionary algorithm $\evalg$ is a
 tuple $(R, \Mut, s, t, \Sel)$. When $\evalg$ is run starting from $r_0 \in R$
@@ -116,90 +121,35 @@ $g$ is the smallest index for which the expected loss $\loss_{f, D}(r_g) \leq
 
 \begin{definition}[Evolvability \cite{Valiant:2009-evolvability}] We say that a
 concept class $C$ is evolvable under a class of distributions $\Dists$ using a
-representation class $R$ if there exists an evolutionary algorithm $\evalg =
-(R, \Mut, s, t, \Sel)$, such that for every $D \in \Dists$, every $f \in C$,
-every $\epsilon > 0$, and every $r_0 \in R$, with probability at least $1 -
-\epsilon$, $\evalg$ run starting from $r_0$ with respect to $f, D, \ell, \epsilon$,
-produces $r_g$ for which $\loss_{f, D}(r_g) < \epsilon$. Furthermore, $g$ is
-bounded by a polynomial in $n, 1/\epsilon$.  \end{definition}
+representation class $H$, if there exists a representation scheme $R \subseteq
+\{0, 1\}^*$, such that $R$ represents $H$, and there exists an evolutionary
+algorithm $\evalg = (R, \Mut, s, t, \Sel)$, such that for every $D \in \Dists$,
+every $f \in C$, every $\epsilon > 0$, and every $r_0 \in R$, with probability
+at least $1 - \epsilon$, $\evalg$ run starting from $r_0$ with respect to $f, D,
+\ell, \epsilon$, produces $r_g$ for which $\loss_{f, D}(r_g) < \epsilon$.
+Furthermore, the number of generations required for evolution to succeed, $g$,
+should be bounded by a polynomial in $n, 1/\epsilon$.
+\end{definition}
 
 The definition presented above varies slightly from the definition of Valiant,
-in the sense that we explicitly focus on the class of representations $R$ used
+in the sense that we explicitly focus on the complexity of representations used
 by the evolutionary algorithm. As discussed in the introduction, we focus on
 concept classes where each function depends on \emph{few} (constant) input
-variables\footnote{These functions have been referred to as juntas in the theory
-literature. We avoid using this nomenclature as we restrict our attention to
-specific functional forms, such as linear functions, with $k$ relevant
-variables.}. 
+variables.\footnote{These functions have been referred to as juntas in the
+theory literature. We avoid using this nomenclature as we restrict our attention
+to specific functional forms, such as linear functions, with $k$ relevant
+variables.} 
 
-% \subsubsection{Strictly Beneficial Neighbourhoods}
-% 
-% Kanade, Valiant and Vaughan defined the notion of strictly beneficial
-% neighbourhood mutators~\cite{KVV:2010-drift}. At a high-level, these are
-% mutation algorithms that guarantee that at least one of the mutations produced
-% will be (noticeably) better than the current representation. It follows easily
-% that if such a mutator exists for some concept class $C$, then the class $C$ is
-% evolvable~\cite{KVV:2010-drift}. Formally, we define:
-% 
-% \begin{definition}[Strictly Beneficial Neighbourhood Mutator] For a concept
-% class $C$, class of distributions $\Dists$, and some polynomial $b(n,
-% 1/\epsilon)$, we say that a mutator $\Mut$ is a $b$-strictly beneficial
-% neighbourhood mutator for representation class $R$ (w.r.t. $C$ and $\Dists$), if
-% for every $r \in R$, $f \in C$, $D \in \Dists$ and $\epsilon > 0$, if
-% $\Neigh(r, \epsilon)$ is the output produced by running the mutator $\Mut$ with
-% $r$ and $\epsilon$ as inputs, then with probability $1$, there exists $r^\prime
-% \in \Neigh(r, \epsilon)$ such that $\loss_{f, D}(r^\prime) < \loss_{f, D}(r) -
-% 1/b(n, 1/\epsilon)$. We call $b$ a benefit polynomial. \end{definition}
-% 
-% The purpose of defining strictly beneficial neighbourhood mutators is that
-% together with concentration bounds relating empirical loss to the true expected
-% loss, the existence of such mutators implies evolvability of the corresponding
-% class. Let $R$ be a class of representations, $C$ a concept class, $\Dists$ a
-% class of distributions and $\ell : Y \times Y \rightarrow \reals^+$ a loss
-% function such that for every $f \in C$, $D \in \Dists$ and $r \in R$, the
-% expected loss $\loss_{f, D}(r)$ is bounded and furthermore if $x_1, \ldots, x_s$
-% are i.i.d. samples drawn from $D$, the following is true:
-% %
-% \begin{align}
-% \Pr\left[ \left|\frac{1}{s} \sum_{i=1}^s \ell(r(x_i), f(x_i)) - \loss_{f,
-% D}(r)\right| \geq \tau \right] \leq \exp( -c_1 s^{c_2} \tau^{c_3}),
-% \label{eqn:concentration-bound}
-% \end{align}
-% %
-% for absolute constants $c_1, c_2, c_3 > 0$. In such a case, we say that the loss
-% function with respect to $C$, $R$, $\Dists$ is bounded has exponential
-% concentration.\footnote{Actually, since the definition of evolvability allows
-% for resources inverse polynomial in the failure probability, much weaker
-% concentration results, such as arising from Chebychev's inequality, also
-% suffice. Thus the fact that $\E_{f, D}[\ell(r(x), f(x))^2]$ suffices.
-% \eanote{Something missing in the last sentence.}}
-% 
-% \begin{theorem}[Theorem 8~\cite{KVV:2010-drift}] \label{thm:benefit2evolve}
-% Let $C$ be a concept class, $\Dists$ a class of distributions. For a class of
-% representations $R$, loss function $\ell$, if there exists a strictly
-% beneficial neighbourhood mutator with benefit polynomial $b$, then $C$ is
-% evolvable under distributions from $\Dists$, with respect to loss function
-% $\ell$, using the representation class $R$ and selection rule $\bnsel$.
-% \end{theorem}
-% 
-% Kanade, Valiant and Vaughan essentially provide the proof of the above Theorem;
-% they also show that such an algorithm is robust to some modest (inverse
-% polynomial) drift in the target function~\cite{KVV:2010-drift}.
-% Also, the resulting evolutionary algorithm is
-% monotone, \ie each subsequent representation has lower expected loss than the
-% previous. For the results in this paper, we will show the existence of strictly
-% beneficial neighbourhood mutators and appeal to
-% Theorem~\ref{thm:benefit2evolve}. 
-
-\begin{remark} Valiant~\cite{Valiant:2009-evolvability} showed that selection
-using optimisation was not more powerful than selection using beneficial and
-neutral mutations alone. This equivalence holds if one allows arbitrary
-representation classes. It is not necessary that such an equivalence hold when
-the representation class is restricted. In particular, the proof of equivalence
-requires memory, \ie part of the representation stores historical
-information and does not necessarily contribute to the function being computed.
-We discuss this issue a bit further in Section~\ref{sec:sparse-linear-greedy}.
-\end{remark}
+%% Consider adding this comment later in Section 3.1
+% \begin{remark} Valiant~\cite{Valiant:2009-evolvability} showed that selection
+% using optimisation was not more powerful than selection using beneficial and
+% neutral mutations alone. This equivalence holds if one allows arbitrary
+% representation classes. It is not necessary that such an equivalence hold when
+% the representation class is restricted. In particular, the proof of equivalence
+% requires memory, \ie part of the representation stores historical
+% information and does not necessarily contribute to the function being computed.
+% We discuss this issue a bit further in Section~\ref{sec:sparse-linear-greedy}.
+% \end{remark}
 
 \subsection{Sparse Linear Functions} 
 \label{sec:notation-class}
@@ -215,60 +165,64 @@ For any $0 < l < u$ and integer $k$, define the class of linear functions:
 w_i = 0 \mbox{ or } l \leq |w_i| \leq u \}
 \]
 Thus, $\lin^k_{l, u}$ is the class of sparse linear functions, where the
-``influence'' of each variable is upper and lower bounded\footnote{We do not use
-the word ``influence'' in the precise technical sense here}.
+``influence'' of each variable is upper and lower bounded.\footnote{We do not
+use the word ``influence'' in the precise technical sense here.}
 
 Let $D$ be a distribution over $\reals^n$. For $w, w^\prime$, define the inner
-product $\ip{w}{w^\prime}_D = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$,
-where $w \cdot x = \sum_{i = 1}^n w_i x_i$ denotes the standard dot product
-in $\reals^n$. In the rest of this paper, we use $\ltwonorm{w}_D$ to denote
-$\sqrt{\ip{w}{w}_D}$. To avoid confusion, whenever necessary, we
-will refer to the quantity $\sqrt{\sum_{i} w_i^2}$ explicitly if we mean the standard
-Euclidean norm. When the distribution $D$ is clear from context we will drop
-the subscript.
+product $\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$,
+where $w \cdot x = \sum_{i = 1}^n w_i x_i$ denotes the standard dot product in
+$\reals^n$. In this paper, we use $\ltwonorm{w}$ to denote $\sqrt{\ip{w}{w}}$
+(and not $\sqrt{\sum_{i} w_i^2}$). To avoid confusion, whenever necessary, we
+will refer to the quantity $\sqrt{\sum_{i} w_i^2}$ explicitly if we mean the
+standard Euclidean norm. 
+%
+%When the distribution $D$ is clear from context we will drop the subscript.
+%
 
 \subsubsection*{Smooth Bounded Distributions}
 
 In this paper, we consider the class of smooth bounded distributions over
 $\reals^n$. The concept of smoothed analysis of algorithms was introduced by
-Spielman and Teng~\cite{ST:2001} and recently has been used in learning
+Spielman and Teng~\cite{ST:2004} and recently the idea has been used in learning
 theory~\cite{KST:2009,KKM:2013}.  Let $\tilde{D}$ be an arbitrary bounded
-distribution on $\reals^n$ satisfying $\E_{\tilde{x} \sim \tilde{D}}[x]=0$ and,
-for all $i$, $\E[\tilde{x}_i^2] \leq 1 - \Delta^2$.  Let
-$U^n_{\sqrt{3}\Delta}$ denote the uniform distribution over $[-\sqrt{3} \Delta,
-\sqrt{3}\Delta]$, then $D = \tilde{D}* U^n_{\sqrt{3} \Delta}$, the
-convolution of $\tilde{D}$ and $U^n_{\sqrt{3}\Delta}$, is a smooth
-distribution.\footnote{We could perform convolution with a spherical
-Gaussian distribution, however, this would make the resulting distribution
-unbounded. All results in this paper hold if we work with sub-Gaussian
-distributions and convolve using a spherical Gaussian distribution with variance
-$\Delta^2$. However, we would be required to use Chebychev's inequality
-rather than Hoeffding's bound to show that the empirical estimate is close to
-the expected loss with high probability.} Alternatively, one may view drawing
-samples from $D$ as follows: pick $x \sim \tilde{D}$, draw $\eta \in [-\sqrt{3}
-\Delta, \sqrt{3} \Delta]^n$ uniformly at random, and output $x + \eta$. We call
-such a distribution a $\Delta$-smooth bounded distribution. Note that $\E_{x
-\sim D} = 0$ and $\E[x_i^2] \leq 1$.
+distribution on $\reals^n$ satisfying $\E_{\tilde{x} \sim
+\tilde{D}}[\tilde{x}]=0$ and, for all $i$, $\E[\tilde{x}_i^2] \leq 1 -
+\Delta^2$.  Let $U^n_{\sqrt{3}\Delta}$ denote the uniform distribution over
+$[-\sqrt{3} \Delta, \sqrt{3}\Delta]$, then $D = \tilde{D}* U^n_{\sqrt{3}
+\Delta}$, the convolution of $\tilde{D}$ and $U^n_{\sqrt{3}\Delta}$, is a smooth
+distribution.\footnote{We could perform convolution with a spherical Gaussian
+distribution, however, this would make the resulting distribution unbounded. All
+results in this paper hold if we work with sub-Gaussian distributions and
+convolve using a spherical Gaussian distribution with variance $\Delta^2$.
+However, we would be required to use Chebychev's inequality rather than
+Hoeffding's bound to show that the empirical estimate is close to the expected
+loss with high probability.} Alternatively, one may view drawing points from $D$
+as follows: pick $\tilde{x} \sim \tilde{D}$, draw $\eta \in [-\sqrt{3} \Delta,
+\sqrt{3} \Delta]^n$ uniformly at random, and output $x = \tilde{x} + \eta$. We
+call such a distribution a $\Delta$-smooth bounded distribution. Note that
+$\E_{x \sim D} = 0$ and $\E[x_i^2] \leq 1$.
 
 We say a linear function represented by $w \in \reals^n$ is $W$-bounded if
-$\sum_{i=1}^n w_i^2 \leq W^2$. Let $w(x) = w \cdot x$. Suppose $f, w$ are
-$W$-bounded linear functions and that $D$ is a $\Delta$-smooth bounded
-distribution, such that for every $x$ in the support of $D$, $\sum_{i=1}^n x_i^2
-\leq B^2$. We consider the squared loss for scalars $y, y^\prime$,
-$\ell(y^\prime, y) = (y^\prime - y)^2$.
-Then, for any $x$ in the support of $D$, $\ell(f(x), w(x)) \leq 4 W^2B^2$. Thus,
-standard Hoeffding bounds imply that for the squared loss, the class of
-$\Delta$-smooth $B$-bounded distributions, and $W$-bounded linear functions, if
-\eanote{Something is missing:} $s \geq $, then
+$\sum_{i=1}^n w_i^2 \leq W^2$. We use the notation $w(x) = w \cdot x$. Suppose
+$f, w$ are $W$-bounded linear functions and that $D$ is a $\Delta$-smooth
+bounded distribution, such that for every $x$ in the support of $D$,
+$\sum_{i=1}^n x_i^2 \leq G^2$. We consider the squared loss function, where for
+scalars $y, y^\prime$, $\ell(y^\prime, y) = (y^\prime - y)^2$.  Then, for any
+$x$ in the support of $D$, $\ell(f(x), w(x)) \leq 4 W^2B^2$. Thus, standard
+Hoeffding bounds imply that when $\ell$ is the squared loss function, for the class of $\Delta$-smooth
+$G$-bounded distributions, and $W$-bounded linear functions, if $\langle x^i
+\rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
+%%
 \[ 
-\Pr\left[\left| \frac{1}{s} \sum_{i=1}^s \ell(w(x_i), f(x_i)) - \L_{f, D}(w) \right|
-\geq \tau \right] \leq \exp\left( -\frac{2 s \tau^2}{64(WB)^2}\right)
+\Pr\left[\left| \frac{1}{s} \sum_{i=1}^s \ell(w(x^i), f(x^i)) - \loss_{f, D}(w)
+\right| \geq \tau \right] \leq 2 \exp\left( -\frac{2 s \tau^2}{64(WB)^2}\right)
 \]
+%%
 
-\eanote{Minor:  $w(x_i)$ doesn't seem explicitly defined.}
+%\eanote{Minor:  $w(x_i)$ doesn't seem explicitly defined.}
 
-Finally, for linear functions $w : x \mapsto w \cdot x$, let $\NZ(w) = \{ i ~|~
-w_i \neq 0 \}$ denote the non-zero variables in $w$ and $\lznorm{w} =
+Finally, for linear functions $w$ ($x \mapsto w \cdot x$), let $\NZ(w) = \{ i
+~|~ w_i \neq 0 \}$ denote the non-zero variables in $w$ and $\lznorm{w} =
 |\NZ(w)|$. Then, we have the following Lemma.
 
 \begin{lemma} \label{lemma:amsterdam} Let $D$ be a $\Delta$-smooth bounded
@@ -289,16 +243,17 @@ independent. First, we observe that $\E[x_i^2] = \E[(\tilde{x}_i + \eta_i)^2]
 \geq \E[\eta_i^2] = \Delta^2$. Now, consider the following:
 %%
 \begin{align*}
-\ip{w}{w} &= \E\left[\left(\sum_{i=1}^n w_i x_i\right)^2\right] 
-\intertext{Using the fact that $x = \tilde{x} + \eta$, we get \eanote{Clarify.}}
+\ip{w}{w} &= \E\left[\left(\sum_{i=1}^n w_i x_i\right)^2\right] \\
+%\intertext{Using the fact that $x = \tilde{x} + \eta$, we get} %\eanote{Clarify.}}
 &= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
 &= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
 2\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
-\eta_i\right) \right] + \sum_{i=1}^n w_i^2 \E[\eta_i^2] \\
-&\geq \sum_{i = 1}^n w_i^2 \Delta^2  \\
+\eta_i\right) \right] + \E\left[\left(\sum_{i=1}^n w_i \eta_i\right)^2\right] \\
+&\geq \sum_{i=1}^n w_i^2 \E[\eta_i^2] \mbox{~~~~~~~Since $\eta_i$ are all independent}
+\\
+&\geq \sum_{i = 1}^n w_i^2 \Delta^2  \mbox{~~~~~~~~~~Since $\E[\eta_i^2] = \Delta^2$ by
+definition} \\
 &= \sum_{i \in \NZ(w)} w_i^2 \Delta^2
 \end{align*}
 The conclusions of the Lemma follow easily by looking at the above expression.
 \end{proof}
-
-
