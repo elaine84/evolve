@@ -26,10 +26,10 @@ algorithm is only allowed to make \emph{performance queries}, \ie it produces a
 hypothesis and then makes a query to an oracle that returns the (approximate)
 performance of that hypothesis under the
 distribution~\cite{Feldman:2008-evolvability}.\footnote{Feldman calls these
-queries correlational statistical queries, because when working with Boolean
+queries correlational statistical queries, because when working with boolean
 functions with range $\{-1, 1\}$, the performance of any hypothesis is its
 correlation with the ideal function.} P.  Valiant studied the evolvability of
-real-valued functions, and showed that whenever the corresponding weak
+real-valued functions and showed that whenever the corresponding weak
 optimisation problem, \ie approximately minimising the expected loss, can be
 solved by using a weak-evaluation oracle, such an algorithm can be converted
 into an evolutionary mechanism~\cite{Valiant:2012-real}. This implies that a
@@ -51,7 +51,7 @@ evolved with respect to the squared loss~\cite{Valiant:2012-real}.
 
 The more direct algorithms are somewhat appealing due to the simplicity of their
 mutations.  However, a meaningful definition of \emph{naturalness} of mutations
-would be hard to make.
+is currently difficult to make.
 Another desirable property of some of these more direct algorithms is that the
 representations used are functions of low complexity. Feldman's general
 reduction from statistical query algorithms may use arbitrarily complex
@@ -64,8 +64,6 @@ learning theory, summarize our contributions and discuss related work.
 
 \subsection{Representation in Biology}
 
-\todovk{If you don't mind too much, I like citations at the end of the sentence
-rather than in between.}
 Biological systems appear to function successfully with greatly restricted
 representation classes. The nature of circuits found in biological systems may
 vary, but some aspects -- such as \emph{sparsity} -- are common.  Specifically,
@@ -98,9 +96,9 @@ Here, a transcription factor (TF) binds to DNA close to a gene in a way that
 increases gene expression by encouraging RNA polymerase (RNAp) to transcribe
 the gene and so produce mRNA.  The mRNA is then translated by ribosomes to
 produce sequences of amino acid that ultimately fold into proteins.
-Due to physical limitations, only a small number of transcription factors can
+Only a small number of transcription factors
 directly regulate any gene. Note that a transcription factor's action can also
-decrease gene expression. For a more complete picture, \eg see~\cite{Alon:2006}.
+decrease gene expression. For a more complete picture, see \eg~\cite{Alon:2006}.
 (b)~Topology of the transcription network of respiration and redox reactions in
 yeast. $X \rightarrow Y$ represents that transcription factor $X$ regulates the
 expression of $Y$. Note that this real network has cycles.
@@ -112,21 +110,22 @@ interacting genes and proteins that are involved in the production of new
 protein. Alon provides an accessible and mathematical introduction to
 transcription networks and other biological circuits~\cite{Alon:2006}; below and
 in Figure~\ref{fig:biology}, we present a simplified account that motivates this
-work.  In a transcription network, a gene's expression, which is the quantity of
-the corresponding protein produced, may be regulated by a set of proteins called
-\emph{transcription factors}.\footnote{In reality, this is a dynamical system
-and the rate of production also plays a role.  Genes are \emph{transcribed} to
-produce mRNA, which is then \emph{translated} into sequences of amino acids that
-ultimately fold into proteins.  This process need not be linear: a gene (mRNA
+work. Genes are \emph{transcribed} to produce mRNA, which is then
+\emph{translated} into sequences of amino acids that ultimately fold into
+proteins.\footnote{In reality, this is a dynamical system where the rates of
+production are important. Note that this process need not be linear: a gene (mRNA
 transcript) can be transcribed (translated) multiple times, not only in series
-but also in parallel fashion.  For the purposes of this discussion, we ignore
+but also in parallel fashion.  We also ignore
 other \emph{epigenetic} effects, \ie molecular modifications to DNA that do not
 change its sequence but alter gene expression,~\eg addition of methyl groups to
-nucleotides in a way that physically blocks transcription.~\eanote{Does this
-need a textbook citation?}} These transcription factors may increase or decrease
-a gene's expression by binding to regions of DNA close to the gene. Thus,
-physical limitations demand that only a small number of transcription factors
-may regulate a single gene.  For example, Balaji~\etal studied a yeast
+nucleotides in a way that physically blocks transcription.}
+In a transcription network, a gene's transcription may be regulated by a set of
+proteins called \emph{transcription factors}.
+These transcription factors may increase or decrease a gene's transcription by
+binding to regions of DNA that are typically close to the gene.
+Importantly, only a small number of transcription factors
+regulate any single gene, and so transcription networks are sparsely connected.
+For example, Balaji~\etal studied a yeast
 transcription network of 157 transcription factors regulating 4,410 genes. They
 observed this network to have 12,873 interactions (edges) where each gene was
 regulated on average by about 2.9 transcription factors, the distribution of
@@ -135,7 +134,8 @@ an in-degree of 15 or greater~\cite{Balaji:2006}.
 
 The number of transcription factors varies from hundreds in a bacterium to
 thousands in a human cell. Some transcription factors are always present in the
-cell and can be thought of as representing a \emph{snapshot} of the environment.
+cell and can be thought of as representing a \emph{snapshot} of the
+environment~\cite{Alon:2006}.
 For example, the presence of sugar molecules in the environment may cause
 specific transcription factors to be \emph{activated}, enabling them to regulate
 the production of other proteins.  One of these proteins could be an
@@ -147,8 +147,9 @@ participate in further ``computation'' to produce the desired end-result.
 
 While transcription networks may include cycles (loops), here for simplicity we
 focus on systems that are directed acyclic graphs, and the resulting computation
-can be viewed as a circuit. These circuits are by necessity shallow due to
-another physical constraint: the time required for sufficient quantities of
+can be viewed as a circuit. We illustrate a small, real transcription network in
+Figure~\ref{fig:network}. These circuits are by necessity shallow due to
+a temporal constraint, that the time required for sufficient quantities of
 protein to be produced is of the same magnitude as cell-division
 time.\footnote{Other kinds of networks, such as signaling networks, operate by
 changing the shapes of proteins. The fact that these transformations are rapid
@@ -160,13 +161,12 @@ bind to DNA.} For example, Luscombe~\etal measured the shortest path length (in
 number of intermediate nodes) between transcription factors and regulated genes
 corresponding to terminal nodes (leaves) in a yeast transcription network. In
 the static network, the mean such path length was 4.7 and the longest path
-involved 12 intermediate transcription factors~\cite{Luscombe:2004}.  We
-illustrate a small, real transcription network in Figure~\ref{fig:network}.
+involved 12 intermediate transcription factors~\cite{Luscombe:2004}.
 
 \subsection{Our Contributions}
 
-First, our contribution is conceptual. We believe that the study of evolvability from
-a computational standpoint will benefit by understanding the representation
+First, our contribution is conceptual. We believe that the study of evolvability
+from a computational standpoint will benefit by understanding the representation
 complexity required to evolve a certain concept class. Motivated by the previous
 discussion, in the case of transcription networks, it appears essential that the
 representation used be a constant depth and fan-in (boolean or arithmetic)
@@ -181,18 +181,21 @@ distributions, can be evolved using sparse linear functions as representations,
 when the performance is measured using squared error. The number of variables
 used by the representations is larger than the number of variables in the
 \emph{ideal function} and depends on the \emph{smoothness} parameter of the
-distribution. According to our notion of $\Delta$-smoothness, the density
-function of a smooth(ed) distribution is obtained by convolving an arbitrary
-density with a product measure on $[-\Delta, \Delta]^n$ (alternatively, drawing
-a point from the smooth(ed) distribution is equivalent to drawing a point from
+distribution. According to our notion of $\Delta$-smoothness, defined in
+Section~\ref{sec:notation-class}, the density function of a smooth distribution
+is obtained by convolving an arbitrary density with a product measure on
+$[-\sqrt{3}\Delta, \sqrt{3}\Delta]^n$ (alternatively, drawing
+a point from the smooth distribution is equivalent to drawing a point from
 an arbitrary distribution and adding a (noise) vector from a product
 distribution). 
 
 Note that a linear function is represented by a weighted arithmetic circuit with
 only one addition gate (alternatively, by a depth-two circuit with a layer of
 multiplication gates and some constant inputs). There is also a natural
-trade-off to be made between depth and fan-in. Also, the number of generations
-required for evolution to succeed depends polynomially on the sparsity of the
+trade-off to be made between depth and fan-in.
+\todoea{The trade-off sentence could go elsewhere, not under contributions.}
+Also, the number of generations
+required for evolution to succeed depends polynomially on the sparsity $k$ of the
 target linear function, the smoothness parameter of the distribution and the
 inverse of the target accuracy $\epsilon$, but only polylogarithmically on the
 total number of parameters $n$ (the dimension of the input space). Thus, our
@@ -224,20 +227,20 @@ thresholds of low-degree polynomials, and don't seem to require the full
 generality of polynomial-sized circuits.\footnote{For example, the class of
 $k$-CNF, $k$-term DNF, decision lists, low-rank decision trees, can all be
 represented as PTFs.} In the context of evolvability, strong negative results
-are known for distribution-independent evolvability for boolean functions, \eg
+are known for distribution-independent evolvability of boolean functions, \eg
 even the class of conjunctions is not evolvable. However, it is interesting to
 study whether under restricted classes of distributions, evolution is possible
 for simple, restricted concept classes. Currently, even under (biased) product
 distributions, no evolutionary mechanism is known for the class of disjunctions,
 except via Feldman's general reduction from CSQ algorithms. The class of
-smooth(ed) distributions may also be a natural starting place for studying
+smooth distributions may also be a natural starting place for studying
 evolvability of simple concept classes. In this context, Valiant's disjunction
 algorithm under the uniform distribution~\cite{Valiant:2009-evolvability},
 Kanade et al.'s algorithm for homogeneous half-spaces under radially symmetric
 distributions~\cite{KVV:2010-drift}, and P. Valiant's algorithm for linear
 (polynomial) functions using squared loss~\cite{Valiant:2012-real}, are
 \emph{proper} evolutionary mechanisms, \ie the representation used is from the
-same class as the ideal function. In case of the first two, it is
+same class as the ideal function. In the first and second of these, it is
 straightforward to show that if the target depends only on a constant number of
 variables, the evolutionary mechanism also succeeds using representations that
 depend only on a constant number of variables, thus attribute-efficient
@@ -246,33 +249,34 @@ evolution can be achieved.
 Learning sparse linear functions is a problem that has been studied under
 various names in several fields for many applications, \eg, recovering sparse
 solutions to (underdetermined) linear systems of
-equations~\cite{Donoho:2009-sparse} or recovering sparse representations with a
-redundant dictionary~\cite{Mallat:2008,Elad:2010}, compressive sampling or
-compressed sensing for sparse signal reconstruction~\cite{Candes:2008},
+equations~\cite{Donoho:2009-sparse}, or recovering sparse representations with a
+redundant dictionary~\cite{Mallat:2008,Elad:2010}; compressive sampling or
+compressed sensing for sparse signal reconstruction~\cite{Candes:2008};
 optimization with regularization or sparsity-inducing penalties in machine
-learning~\cite{Bach:2012}, and sparse coding for learning an overcomplete
-basis~\cite{Olshausen:1997} or for denoising in image and video
+learning~\cite{Bach:2012}; sparse coding for learning an overcomplete
+basis~\cite{Olshausen:1997}, or for denoising in image and video
 processing~\cite{Elad:2010}. Learning the sparsest linear function is equivalent
 to finding the sparsest solution to a system of linear equations (assuming there
-is no noise in the data). In general, this problem is $\NP$-hard and the
+is no noise in the data). This area is too vast to review here; Bruckstein
+\emph{et al.}~\cite{Donoho:2009-sparse} have an excellent survey.
+In general, this problem is $\NP$-hard and the
 currently best-known approximation factor depends on the norm of the
 pseudo-inverse of the matrix~\cite{Natarajan:1995}. Thus, some assumption on the
-distribution seems necessary. Compressed sensing studies the problem of
-recovering a sparse or the sparsest solution to underdetermined linear systems.
-This area is too vast to review here; Bruckstein \emph{et
-al.}~\cite{Donoho:2009-sparse} have a great survey. The evolution based on
+distribution seems necessary. The evolution based on
 optimisation algorithm (Section~\ref{sec:greedy}) is essentially the greedy
 orthogonal matching pursuit algorithm of Tropp~\cite{Tropp:2004-greed} and
 Donoho \emph{et al.}~\cite{Donoho:2006-recovery}, cast in the language of
-evolvability. 
+evolvability; these algorithms are also known in statistical modeling
+as forward stepwise regression~\cite{Daniel:1999,Hastie:2001}.
 
 Finally, the question of \emph{attribute-efficient} regression in the PAC (or
 SQ) model is a natural one. Here, the goal would be to design a polynomial time
 algorithm for producing an $\epsilon$-accurate linear function, with sample
-complexity that is polynomial in the sparsity $k$ of the target function,
-$1/\epsilon$, and polylogarithmic in $n$, the total number of attributes. Under
+complexity that is polynomial in the sparsity $k$ of the target function and
+the inverse of the target accuracy $\epsilon$,
+and polylogarithmic in $n$, the total number of attributes. Under
 mild boundedness assumptions on the distribution, this can be achieved by
-setting up an $L_1$-regularized optimisation problem. The output classifier, may
+setting up an $L_1$-regularized optimisation problem. The output classifier may
 not be sparse in light of the $\NP$-hardness result mentioned above. We note
 that under the distributional assumption made in the paper, finding the
 \emph{sparsest} linear function that fits the data is also easy in the PAC/SQ
@@ -282,7 +286,7 @@ themselves sparse linear functions at all times.
 
 \subsubsection*{Organization}
 
-In Section~\ref{sec:notation}, we give an overview of Valiant's evolution model,
+In Section~\ref{sec:notation}, we give an overview of Valiant's evolution model
 and describe the concept classes and class of distributions considered in this
 paper.  Section~\ref{sec:sparse_linear} contains the mechanisms for evolving
 sparse linear functions. We conclude in Section~\ref{sec:conclusion} with some
