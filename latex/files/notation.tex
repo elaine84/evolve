@@ -21,7 +21,7 @@ setting.
 \subsubsection*{Representations}
 
 A creature is a string representation that encodes an efficiently computable
-function $r : X \rightarrow Y$, \ie there is an efficient Turing Machine that
+function $r : X \rightarrow Y$, \ie there is an efficient Turing Machine that,
 given the description string $\langle r \rangle$ and $x \in X$, outputs $r(x)$.  
 
 In this work, our focus is characterizing different evolutionary mechanisms
@@ -31,14 +31,14 @@ based on the complexity of representations used.
 The complexity of a representation is measured by the function it computes.  Let
 $H : X \rightarrow Y$ be a class of functions. For $R \subseteq \{0, 1\}^*$,  we
 say that $R$ \emph{represents} $H$, if there is a map, $\sigma : R \rightarrow
-H$, and if there exists an \emph{efficient} Turing machine that given input $r
+H$, and if there exists an \emph{efficient} Turing machine that, given input $r
 \in R$ and $x \in X$, outputs $(\sigma(r))(x)$. Henceforth, by abuse of notation
 we will use $r$ to denote both the representation and the function it computes,
 $\sigma(r)$. 
 
 \subsubsection*{Evolutionary Algorithms}
 
-The performance of a representation $r$ is measured using a loss function, $\ell
+The performance of a representation $r$ is measured using a loss function $\ell
 : Y \times Y \rightarrow \reals^+$, such that $\ell(y, y) = 0$. For a function
 $g : X \rightarrow Y$, define the expected loss with respect to the ideal
 function $f : X \rightarrow Y$, under distribution $D$, as $\loss_{f, D}(g) =
@@ -49,7 +49,7 @@ such that $\loss_{f, D}(r^*) < \epsilon$. In the following discussion, we use
 the notation: $f$ the ideal function, $\epsilon$ the target accuracy, $D$ the
 target distribution over $X$ and $\loss_{f, D}(g)$ the expected loss function.  \medskip \\
 %
-\noindent{\bf Mutator}: A mutator, $\Mut$, for a set of representations $R$, is
+\noindent{\bf Mutator}: A mutator $\Mut(r, \epsilon)$, for a set of representations $R$, is
 a polynomial-time randomised Turing machine that takes as input a representation
 $r \in R$ and accuracy parameter $\epsilon$ and outputs a multiset $\Neigh(r,
 \epsilon) \subseteq R$. \medskip \\
@@ -94,16 +94,18 @@ then $\bot$ is produced signifying failure of evolution.  Otherwise, consider
 the multiset, $\best = \{ r^\prime \in \Neigh(r, \epsilon) ~|~ \hat{\loss}_{f,
 D}(r^\prime) \leq \widehat{\opt} + t(r, \epsilon) \}$, and then $r^\prime$ is
 chosen from $\best$ randomly as the surviving creature at the next generation.
-Thus, while the selection rule $\bnsel$ only chose some beneficial mutation,
-$\optsel$ aggressively picks the (almost) best mutation from the available pool.
 \end{enumerate}
+
+\noindent Thus, while the selection rule $\bnsel$ only choses some beneficial
+(or at least neutral) mutation, $\optsel$ aggressively picks the (almost) best
+mutation from the available pool. \medskip
 
 We denote by $r^\prime \leftarrow \Sel[R, \Mut, s, t](r, \epsilon)$ the fact
 that $r^\prime$ is the surviving creature in the next generation after one
 mutation and selection operation on the representation $r$ and accuracy
 parameter $\epsilon$. Here, $\Sel$ may be one of the two selection rules
 described above. For $\Sel$ to be feasible we require that the size function $s$
-is polynomially (in $n$ and $1/\epsilon$) bounded and that the inverse of the tolerance
+is polynomially bounded (in $n$ and $1/\epsilon$) and that the inverse of the tolerance
 function $t$ is polynomially sandwiched, \ie there exists polynomials $p_1(n,
 1/\epsilon)$ and $p_2(n, 1/\epsilon)$ such that $1/p_1(n, 1/\epsilon) \leq t(r,
 \epsilon) \leq 1/p_2(n, 1/\epsilon)$ for every $r \in R$ and $\epsilon > 0$.
@@ -164,9 +166,10 @@ For any $0 < l < u$ and integer $k$, define the class of linear functions:
 \lin^k_{l, u} = \{ x \mapsto w \cdot x ~|~ \lznorm{w} \leq k, \forall i,
 w_i = 0 \mbox{ or } l \leq |w_i| \leq u \}
 \]
-Thus, $\lin^k_{l, u}$ is the class of sparse linear functions, where the
+Thus, $\lin^k_{l, u}$ is the class of $k$-sparse linear functions, where the
 ``influence'' of each variable is upper and lower bounded.\footnote{We do not
 use the word ``influence'' in the precise technical sense here.}
+\todoea{Why ``influence'' rather than simply magnitude?}
 
 Let $D$ be a distribution over $\reals^n$. For $w, w^\prime$, define the inner
 product $\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$,
@@ -208,14 +211,14 @@ $f, w$ are $W$-bounded linear functions and that $D$ is a $\Delta$-smooth
 bounded distribution, such that for every $x$ in the support of $D$,
 $\sum_{i=1}^n x_i^2 \leq G^2$. We consider the squared loss function, where for
 scalars $y, y^\prime$, $\ell(y^\prime, y) = (y^\prime - y)^2$.  Then, for any
-$x$ in the support of $D$, $\ell(f(x), w(x)) \leq 4 W^2B^2$. Thus, standard
+$x$ in the support of $D$, $\ell(f(x), w(x)) \leq 4 W^2G^2$. Thus, standard
 Hoeffding bounds imply that when $\ell$ is the squared loss function, for the class of $\Delta$-smooth
 $G$-bounded distributions, and $W$-bounded linear functions, if $\langle x^i
 \rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
 %%
 \[ 
 \Pr\left[\left| \frac{1}{s} \sum_{i=1}^s \ell(w(x^i), f(x^i)) - \loss_{f, D}(w)
-\right| \geq \tau \right] \leq 2 \exp\left( -\frac{2 s \tau^2}{64(WB)^2}\right)
+\right| \geq \tau \right] \leq 2 \exp\left( -\frac{2 s \tau^2}{64(WG)^2}\right)
 \]
 %%
 
