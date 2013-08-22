@@ -165,47 +165,57 @@ Now, by Claims~\ref{claim:apple}, \ref{claim:banana} and \ref{claim:cantaloupe},
 if $\ltwonorm{f - w}^2 \geq \epsilon$, then the mutator outputs a mutation that
 decreases the squared loss by $\alpha$ with probability at least $p$.
 
-Recall that for $w \in R$, $\sum_{i} w_i^2 \leq KB^2$. By assumption it is the
-case that for any $x$ in the support of $D$, $\sum_{i} x_i^2 \leq G^2$. Clearly,
-since $B > u$ and $K > k$, $f \in R$. Thus, $\ell(f(x), w(x)) \leq 4KB^2G^2$ for
-$w \in R$ and $x$ in the support of $D$. Let $g = 20 KB^2G^2/\alpha$, $m =
-(1/p)\ln(2g/\epsilon)$, $t = 3\alpha/5$  and $s = (800 KB^2G^2/\alpha^2)
-\ln(4mg/\epsilon)$. Here $s$ is the size function and $t$ is the tolerance
-function.
+Recall that $K = 5184 (k/\Delta)^4 (u/l)^2$ and $B = 10uk/\Delta$.  Now, let $g
+= 20 K G^2 B^2/\alpha$ (recall that $G^2$ is the bound on $\sum_{i} x_i^2$ for
+$x$ in the support of the distribution). We will show that evolution succeeds in
+at most $g$ generations. Note, that $g$ has no dependence on $n$, the number of
+attributes and polynomial dependence on the remaining parameters. Define $m =
+p^{-1} \ln(2g /\epsilon)$, and at each time-step we have that $|\Neigh(w,
+\epsilon)| = m$.  Note that together with the observation above, this implies
+that except with probability $\epsilon/2$, for $1 \leq i \leq g$, if $w^i$ is
+the representation at time-step $i$, $\Neigh(w^i, \epsilon)$ contains a mutation
+that decreases the loss by at least $\alpha$, if $\loss_{f, D}(w^i) \geq
+\epsilon$. 
 
-By our choice of $s$, for a fixed representation $w \in R$, if $\hat{\loss}_{f,
-D}(w) = (1/s) \sum_{i = 1}^s \ell(w(x^i), f(x^i))$, then the probability that
-$|\loss_{f, D}(w) - \hat{\loss}_{f, D}(w)| \geq \alpha/5$ is at most
-$\epsilon/(2mg)$. Thus, we imagine that the evolution algorithm runs for $g$
-generations using the mutator defined and $\bnsel$ as the selection rule. Then,
-for each representation $w$ in the neighbourhood, $\Neigh(r, \epsilon)$ (of size
-$m$), for $g$ generations we assume that $|\loss_{f, D}(w) - \hat{\loss}_{f,
-D}(w)| \leq \alpha/5$, except with probability $\epsilon/2$ (by a straighforward
-union bound). Similarly, by a union bound, each neighbourhood for $g$ generation
-contains a mutation that decreases expected loss by at least $\alpha$, except
-with probability $\epsilon/2$. Allowing a failure probability of $\epsilon$, we
-consider the event that no failure occurs. 
+Now, let $t = 3\alpha / 5$ be the \emph{tolerance function}, set $\tau =
+\alpha/5$ and let $s = (200 KG^2B^2/\alpha^2) \ln(4mg/\epsilon)$ be the
+\emph{size function}. Note that, $\sum_{i} w_i^2 \leq KB^2$ for $w \in R$ (this
+also holds for $f$, since $k < K$ and $u < B$). If $\langle x^i \rangle_{i=1}^s$
+is an i.i.d. sample drawn from $d$, for each $\bar{w}$ of the $mg$
+representations that may be considered in the neighbourhoods for the first $g$
+time-steps, using~(\ref{eqn:concentration})\vknote{FILL THIS}, it holds that
+$|\hat{\loss}_{f, D}(\bar{w}) - \loss_{f, D}(\bar{w})| \leq \tau$ simultaneously
+except with probability $\epsilon/2$ (by a union bound). Thus, allowing for
+failure probability $\epsilon$, we assume that we are in the case when the
+neighbourhood always has a mutation that decreases the expected loss by $\alpha$
+(whenever the expected loss of the current representation is at least
+$\epsilon$) and that all empirical expected losses are $\tau$-close to the true
+expected losses.
 
-This implies that for $t = \alpha/3$, for $g$ generations, there always exists
-some $w^\prime$ in the neighbourhood of the current representation $w$, such
-that $\hat{\loss}_{f, D}(w^\prime) \leq \hat{\loss}_{f, D}(w) - t$. Thus, a
-beneficial mutation always exists and will be picked. Also, since $t = 3
-\alpha/5$, if $w^\prime$ is such that $\hat{\loss}_{f, D}(w^\prime) \leq
-\hat{\loss}_{f, D}(w) - t$, it must be the case that $\loss_{f, D}(w^\prime) \leq
-\loss_{f, D}(w) - \alpha/5$. Thus, the expected loss decreases by at least
-$\alpha/5$ each generation. Since $4KB^2G^2$ is an upper bound on the expected
-loss, it must be the case that evolution succeeds in $g = 20 KB^2G^2/\alpha$
-generations.
+Now let $w$ be the representation at some generation such that $\loss_{f, D}(w)
+\geq \epsilon$, let $w^\prime \in \Neigh(w, \epsilon)$ such that $\loss_{f,
+D}(w^\prime) \leq \loss_{f, D}(w) - \alpha$. Then, it is the case that
+$\hat{\loss}_{f, D}(w^\prime) \leq \hat{\loss}_{f, D}(w) - 3\alpha/5$ (when
+$\tau = \alpha/5$). Hence, for tolerance function $t = 3 \alpha/5$, for the
+selection rule using $\bnsel$, $w^\prime \in \Bene$. Consequently $\Bene \neq
+\emptyset$. Hence, the representation at the next generation is chosen from
+$\Bene$. Let $\tilde{w}$ be the chosen representation. It must be the case that
+$\hat{\loss}_{f, D}(\tilde{w}) \leq \hat{\loss}_{f, D}(w) - t$. Thus, we have
+$\loss_{f, D}(\tilde{w}) \leq \loss_{f, D}(w) - \alpha/5$. Hence, the expected
+loss decreases at least by $\alpha/5$.
 
-The statement of the theorem now follows immediately.
-Notice that $p$ is inverse polynomial in $n$, and hence $s$ has
-polylogarithmic dependence on $n$. $g$ has no dependence on $n$.
+Note that at no point can the expected loss by greater than $4kG^2B^2$ for any
+representation in $R$. Hence, in at most $20 KG^2B^2/\alpha$ generations,
+evolution reaches a representation with expected loss at most $\epsilon$. Note
+the only parameter introduced which has an inverse polynomial dependence on $n$
+is $p$. This implies that $s$ only has polylogarithmic dependence on $n$. This
+concludes the proof of the theorem.
 \end{proof}
 
-\begin{remark} We note that the same evolutionary process works when evolving
+\begin{remark} We note that the same evolutionary mechanism works when evolving
 the class $\lin^k_{0, u}$, as long as the sparsity $K$ of the representation
 class is allowed polynomial dependence on $1/\epsilon$, the accuracy parameter.
 This is consistent with the notion of attribute-efficiency, where the goal is
 that the information complexity should be polylogarithmic in the number of
-attributes.
+attributes, but may depend polynomially on $1/\epsilon$.
 \end{remark}
