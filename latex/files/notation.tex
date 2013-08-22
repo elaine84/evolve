@@ -6,6 +6,7 @@ more details the reader is referred to
 Feldman:2009-robustness, Valiant:2012-real, Kanade:2012-thesis}).
 
 \subsection{Valiant's Evolvability Framework}
+\label{sec:notation-model}
 
 Let $X$ denote a set of instances, \eg $X = \reals^n$ or $X = \{0, 1\}^n$. We
 assume that the representation length of each $x \in X$ is captured by the
@@ -198,18 +199,19 @@ idea has been used in learning theory~\cite{KST:2009,KKM:2013}. We consider
 distributions that are bounded and have $0$ mean. Formally, the class of
 distributions we consider is defined as:
 
-\begin{definition}[$\Delta$-smooth $G$-Nice Distribution] A distribution $D$ is a
-$\Delta$-smooth nice distribution, if it is obtained as follows. Let $\tilde{D}$
-be some distribution over $\reals^n$, and let $U^n_a$ denote the uniform
-distribution over $[-a, a]^n$, then $D = \tilde{D} * U^n_{\sqrt{3}\Delta}$ is
-obtained by convolution of $\tilde{D}$ and $U^n_{\sqrt{3} \Delta}$.\footnote{We
-could perform convolution with a spherical Gaussian distribution, however, this
-would make the resulting distribution unbounded. All results in this paper hold
-if we work with sub-Gaussian distributions and convolve using a spherical
-Gaussian distribution with variance $\Delta^2$.  However, we would be required
-to use Chebychev's inequality rather than Hoeffding's bound to show that the
-empirical estimate is close to the expected loss with high probability.}
-Furthermore, $D$ satisfies the following:
+\begin{definition}[$\Delta$-smooth $G$-Nice Distribution]
+\label{defn:afghanistan} A distribution $D$ is a $\Delta$-smooth nice
+distribution, if it is obtained as follows. Let $\tilde{D}$ be some distribution
+over $\reals^n$, and let $U^n_a$ denote the uniform distribution over $[-a,
+a]^n$, then $D = \tilde{D} * U^n_{\sqrt{3}\Delta}$ is obtained by convolution of
+$\tilde{D}$ and $U^n_{\sqrt{3} \Delta}$.\footnote{We could perform convolution
+with a spherical Gaussian distribution, however, this would make the resulting
+distribution unbounded. All results in this paper hold if we work with
+sub-Gaussian distributions and convolve using a spherical Gaussian distribution
+with variance $\Delta^2$.  However, we would be required to use Chebychev's
+inequality rather than Hoeffding's bound to show that the empirical estimate is
+close to the expected loss with high probability.} Furthermore, $D$ satisfies
+the following:
 %%
 \begin{enumerate}
 \item $\E_D[x] = 0$
@@ -226,8 +228,9 @@ consider bounded distributions with zero mean. We also require the variance to
 be upper and lower bounded in each dimension. Formally, the class of
 distributions we consider is
 
-\begin{definition}[$\mu$-Incoherent $\Delta, G$-Nice Distribution] A distribution $D$ is a
-$\mu$-incoherent nice distribution if the following hold:
+\begin{definition}[$\mu$-Incoherent $\Delta, G$-Nice Distribution]
+\label{defn:bhutan} A distribution $D$ is a $\mu$-incoherent nice distribution
+if the following hold:
 \begin{enumerate}
 \item $\E_D[x] = 0$
 \item For all $i$, $\Delta^2 \leq \E_D[x_i^2] \leq 1$
@@ -261,7 +264,7 @@ if $\langle x^i \rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
 %%
 \[ 
 \Pr\left[\left| \frac{1}{s} \sum_{i=1}^s \ell(w(x^i), f(x^i)) - \loss_{f, D}(w)
-\right| \geq \tau \right] \leq 2 \exp\left( -\frac{2 s \tau^2}{64(WG)^2}\right)
+\right| \geq \tau \right] \leq 2 \exp\left( -\frac{ s \tau^2}{8W^2G^2}\right)
 \]
 %%
 
@@ -269,37 +272,16 @@ if $\langle x^i \rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
 
 Finally, for linear functions $w$ ($x \mapsto w \cdot x$), let $\NZ(w) = \{ i
 ~|~ w_i \neq 0 \}$ denote the non-zero variables in $w$ and $\lznorm{w} =
-|\NZ(w)|$. Then, we have the following Lemma.
+|\NZ(w)|$. Then, we have the following Lemma. The proof appears in
+Appendix~\ref{app:notation-class}.
 
-\begin{lemma} \label{lemma:amsterdam} Let $D$ be a $\Delta$-smooth bounded
-distribution. Let $w \in \reals^n$ be a vector and consider the corresponding
-linear function, $x \mapsto w \cdot x$. Then the following are true:
+\begin{lemma} \label{lemma:amsterdam} Let $D$ be a $\Delta$-smooth $G$-nice
+distribution (Defn.~\ref{defn:afghanistan}), let $w \in \reals^n$ be a vector
+and consider the corresponding linear function, $x \mapsto w \cdot x$. Then the
+following are true:
 \begin{enumerate}
 \item For any $1 \leq i \leq n$, $w_i^2 \leq \frac{\ip{w}{w}}{\Delta^2}$.
 \item There exists an $i$, such that, $w_i^2 \leq
 \frac{\ip{w}{w}}{|\NZ(w)|\Delta^2}$.
 \end{enumerate}
 \end{lemma}
-\begin{proof}
-Note that for any $x \sim D$, we can write $x = \tilde{x} + \eta$, where
-$\tilde{x}$ is drawn from some smooth bounded distribution, and $\eta$ is drawn
-from the uniform distribution over $[-\sqrt{3} \Delta, \sqrt{3} \Delta]$. Note
-that $\eta$ and $\tilde{x}$ are independent, and all components of $\eta$ are
-independent. First, we observe that $\E[x_i^2] = \E[(\tilde{x}_i + \eta_i)^2]
-\geq \E[\eta_i^2] = \Delta^2$. Now, consider the following:
-%%
-\begin{align*}
-\ip{w}{w} &= \E\left[\left(\sum_{i=1}^n w_i x_i\right)^2\right] \\
-%\intertext{Using the fact that $x = \tilde{x} + \eta$, we get} %\eanote{Clarify.}}
-&= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
-&= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
-2\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
-\eta_i\right) \right] + \E\left[\left(\sum_{i=1}^n w_i \eta_i\right)^2\right] \\
-&\geq \sum_{i=1}^n w_i^2 \E[\eta_i^2] \mbox{~~~~~~~Since $\eta_i$ are all independent}
-\\
-&\geq \sum_{i = 1}^n w_i^2 \Delta^2  \mbox{~~~~~~~~~~Since $\E[\eta_i^2] = \Delta^2$ by
-definition} \\
-&= \sum_{i \in \NZ(w)} w_i^2 \Delta^2
-\end{align*}
-The conclusions of the Lemma follow easily by looking at the above expression.
-\end{proof}
