@@ -1,15 +1,17 @@
-In this section, we describe two algorithms for evolving sparse linear
-functions. The first evolves the class $\lin^k_{l, u}$ under the class of
-$\Delta$-smooth $G$-nice distributions, using the selection rule $\bnsel$. The
-second algorithm evolves the class $\lin^k_{0, u}$ under more restricted
-distributions, using the selection rule $\optsel$. We first define the notation
-used in the rest of this section.\smallskip \\
+In this section, we describe two evolutionary algorithms for evolving sparse
+linear functions. The first evolves the class $\lin^k_{l, u}$ under the class of
+$\Delta$-smooth $G$-nice distributions (Defn.~\ref{defn:afghanistan}), using the
+selection rule $\bnsel$. The second evolves the class $\lin^k_{0, u}$ under the
+more restricted class of $(1/2k)$-incoherent $\Delta, G$-nice distributions
+(Defn.~\ref{defn:bhutan}) distributions, using the selection rule $\optsel$. We
+first define the notation used in the rest of this section.\smallskip \\
 
 \noindent{\bf Notation}: $D$ denotes the target distribution over $X =
-\reals^n$, $f$ denotes the target (ideal) function. The inner product
+\reals^n$, $f$ denotes the ideal (target) function. The inner product
 $\ip{\cdot}{\cdot}$ and $2$-norm $\ltwonorm{\cdot}$ of functions are with
-respect to the distribution $D$. For $S \subseteq [n]$, $f^S$ denotes the best
-linear approximation of $f$ using the variables in the set $S$; formally,
+respect to the distribution $D$. $[n]$ denotes the set $\{1, \ldots, n\}$. For
+$S \subseteq [n]$, $f^S$ denotes the best linear approximation of $f$ using the
+variables in the set $S$; formally,
 %%
 \begin{align}
 f^S = \underset{w \in \reals^n~:~ w_i = 0 ~\vee~i \in S}\argmin \ltwonorm{f -
@@ -21,19 +23,19 @@ $\sparsity(w) = |\NZ(w)|$. A vector $w$ represents a linear function, $x \mapsto
 w \cdot x$. The vector $e^i$ has $1$ in coordinate $i$ and $0$ elsewhere and
 corresponds to the linear function $x \mapsto x_i$. Thus, in this notation,
 $\corr(x_i, x_j) = \ip{e^i}{e^j}/(\ltwonorm{e^i}\ltwonorm{e^j})$. The accuracy
-parameter is denoted by $\epsilon$. $[n]$ denotes the set $\{1, \ldots, n\}$.
+parameter is denoted by $\epsilon$. 
 
 \subsection{Evolving Sparse Linear Functions Using $\bnsel$}
 \label{sec:sparse_linear}
 
-We present a simple algorithm that evolves the class of sparse linear functions,
+We present a simple mechanism that evolves the class of sparse linear functions,
 $\lin^k_{l, u}$, with respect to $\Delta$-smooth $G$-nice distributions (see
-Definition~\ref{defn:afghanistan}). The representation class also consists of sparse
-linear functions, but with a greater number of non-zero entries than the
-\emph{ideal function}.  We also assume that a linear function is represented by
+Definition~\ref{defn:afghanistan}). The representation class also consists of
+sparse linear functions, but with a greater number of non-zero entries than the
+\emph{ideal function}. We also assume that a linear function is represented by
 $w \in \reals^n$, where each $w_i$ is a real number. (Handling the issues of
 finite precision is standard and is avoided in favour of simplicity.) Define the
-parameters $K = 32(k^2/\Delta^4)(u/l)^2$ and $B = 10 uk /\Delta$. Formally, the
+parameters $K = 5184(k/\Delta)^4(u/l)^2$ and $B = 10 uk /\Delta$. Formally, the
 representation class is
 \[ 
 R = \{ w ~|~ \sparsity(w) \leq K, w_i \in [-B, B] \}
@@ -42,38 +44,39 @@ The important point to note is that the parameters $K$ and $B$ do not depend on
 $n$, the total number of variables.
 
 Next, we define the mutator. Recall that the mutator is a randomized algorithm
-that takes as input an element $r \in R$ and accuracy parameter $\epsilon$,
-and outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Here, $\Neigh(r,
+that takes as input an element $r \in R$ and accuracy parameter $\epsilon$, and
+outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Here, $\Neigh(r,
 \epsilon)$ is populated by $m$ independent draws from the following procedure,
-where $m$ will be specified later. Starting from $w \in R$, define the mutated
-representation $w^\prime$, output by the mutator, as:
+where $m$ will be specified later (see proof of Thm. ~\ref{thm:sparse_linear}).
+Starting from $w \in R$, define the mutated representation $w^\prime$, output by
+the mutator, as:
 %%
 \begin{enumerate}
 %
-\item (Scaling) With probability $1/3$, choose $\gamma \in [-1, 1]$ uniformly at
+\item {\em Scaling}: With probability $1/3$, choose $\gamma \in [-1, 1]$ uniformly at
 random and let $w^\prime = \gamma w$. 
 %
-\item (Adjusting) With probability $1/3$, do the following.
-Pick $i \in \NZ(w) = \{ i~|~ w_i \neq 0 \}$ uniformly at random. Let
-$w^\prime$ denote the mutated representation, where $w^\prime_j = w_j$ for $j
-\neq i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random.
+\item {\em Adjusting}: With probability $1/3$, do the following.  Pick $i \in
+\NZ(w) = \{ i~|~ w_i \neq 0 \}$ uniformly at random. Let $w^\prime$ denote the
+mutated representation, where $w^\prime_j = w_j$ for $j \neq i$, and choose
+$w^\prime_i \in [-B, B]$ uniformly at random.
 %
 \item With the remaining $1/3$ probability, do the following:
 \begin{enumerate}
-\item (Swapping) If $|\NZ(w)| = K$, choose $i_1 \in \NZ(w)$ uniformly at random.
+\item {\em Swapping}: If $|\NZ(w)| = K$, choose $i_1 \in \NZ(w)$ uniformly at random.
 Then, choose $i_2 \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$
 be the mutated representation, where $w_j^\prime = w_j$ for $j \neq i_1, i_2$.
 Set $w_{i_1}^\prime = 0$ and choose $w_{i_2}^\prime \in [-B, B]$ uniformly at
 random. In this case, $\sparsity(w^\prime) = \sparsity(w) = K$
 with probability $1$, and hence $w^\prime \in R$.
-\item (Adding) If $|\NZ(w)| < K$, choose $i \in [n] \setminus \NZ(w)$ uniformly
+\item {\em Adding}: If $|\NZ(w)| < K$, choose $i \in [n] \setminus \NZ(w)$ uniformly
 at random. Let $w^\prime$ be the mutated representation, where $w_j^\prime =
 w_j$ for $j \neq i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random.
 \end{enumerate}
 \end{enumerate}
 
-Recall that $f \in \lin^k_{l, u}$ denotes the target (ideal) function, $D$ is
-the underlying distribution that is $\Delta$-smooth $G$-nice (see
+Recall that $f \in \lin^k_{l, u}$ denotes the ideal (ideal) function, $D$ is the
+underlying distribution that is $\Delta$-smooth $G$-nice (see
 Definition~\ref{defn:afghanistan}). Since we are working with the squared loss
 metric, $\ell(y^\prime, y) = (y^\prime - y)^2$, the expected loss for any $w \in
 R$ is given by $\loss_{f, D}(w) = \ltwonorm{f - w}^2 = \ip{f - w}{f - w}$.  We
@@ -128,31 +131,39 @@ algorithm has succeeded. \medskip
 The proofs of the above Claims are provided in
 Appendix~\ref{app:sparse_linear}. We now prove our main result using the
 above claims.
-% \vknote{I think we'll eventually structure this by saying -- the proofs of the
-% claim are in Appendix Hugh. Then, we'll have a short proof showing that if the
-% Claims are true, evolution indeed succeeds.}
-% 
 
 \begin{theorem} Let $\Dists$ be the class of $\Delta$-smooth $G$-nice
-distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}). Then the class
-$\lin^k_{l, u}$ is evolvable using the representation class $\lin^K_{0, B}$,
-where $K = O((k/\Delta)^4 (u/l)^2)$ and $B = O(uk/\Delta)$, using the mutation
-algorithm described in this section, the selection rule $\bnsel$.
-Furthermore, the following are true:
+distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}). Then the
+class $\lin^k_{l, u}$ is evolvable with respect to $\Dists$, using the
+representation class $\lin^K_{0, B}$, where $K = O((k/\Delta)^4 (u/l)^2)$ and $B
+= O(uk/\Delta)$, using the mutation algorithm described in this section, the
+selection rule $\bnsel$.  Furthermore, the following are true:
+%%
 \begin{enumerate}
-\item The number of generations required is $O()$ and is independent of $n$. \todoea{Fill in}
-\item The size polynomial $s$, depends polylogarithmically on $n$, and
-polynomially on the remaining parameters. \todoea{Fill in}
+%
+\item The number of generations required is polynomial in $(u/l)$, $1/\epsilon$,
+$1/\Delta$, and is independent of $n$, the total number of attributes. 
+%
+\item The size function $s$, the number of points used to calculate empirical
+losses, depends polylogarithmically on $n$, and
+polynomially on the remaining parameters. 
+%
 \end{enumerate}
 \label{thm:sparse_linear} \end{theorem}
 \begin{proof}
-The mutator is as described in this section. Let $p = \min\{1/12,
-l^2\Delta^3/(24K^3B^2), \sqrt{\epsilon}/(6KBnk)\}$, and let $\alpha =
-\sqrt{\epsilon} \min\{(l^4 \Delta^4)/(192 K^2B^2), (3 l^4 \Delta^6)/(64K^4B^2),
-(\epsilon\Delta^2)/(16k^2)\}$. Now, by Claims~\ref{claim:apple},
-\ref{claim:banana} and \ref{claim:cantaloupe}, if $\ltwonorm{f - w}^2 \geq
-\epsilon$, then the mutator outputs a mutation that decreases the squared loss
-by $\alpha$ with probability at least $p$.
+The mutator is as described in this section. Let 
+%%
+\[ p = \min\left\{\frac{1}{12}, \frac{l^2\Delta^3}{24K^3B^2}, \frac{\Delta
+\sqrt{\epsilon}}{6KBnk}\right\},\] 
+%%
+and let 
+%%
+\[ \alpha = \min\left\{\frac{l^4 \Delta^4}{192 K^2B^2}, \frac{3 l^4
+\Delta^6}{64K^4B^2}, \frac{\epsilon\Delta^2}{16k^2}\right\}.\] 
+%%
+Now, by Claims~\ref{claim:apple}, \ref{claim:banana} and \ref{claim:cantaloupe},
+if $\ltwonorm{f - w}^2 \geq \epsilon$, then the mutator outputs a mutation that
+decreases the squared loss by $\alpha$ with probability at least $p$.
 
 Recall that for $w \in R$, $\sum_{i} w_i^2 \leq KB^2$. By assumption it is the
 case that for any $x$ in the support of $D$, $\sum_{i} x_i^2 \leq G^2$. Clearly,
