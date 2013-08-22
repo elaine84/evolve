@@ -121,13 +121,13 @@ production are important. Note that this process need not be linear: a gene (mRN
 transcript) can be transcribed (translated) multiple times, not only in series
 but also in parallel fashion.  We also ignore
 other \emph{epigenetic} effects, \ie molecular modifications to DNA that do not
-change its sequence but alter gene expression,~\eg addition of methyl groups to
-nucleotides in a way that physically blocks transcription.}
+change its sequence but alter gene expression,~\eg the addition of methyl groups
+to nucleotides in a way that physically blocks transcription.}
 In a transcription network, a gene's transcription may be regulated by a set of
 proteins called \emph{transcription factors}.
 These transcription factors may increase or decrease a gene's transcription by
-binding to regions of DNA that are typically close to the gene.
-Importantly, only a small number of transcription factors
+physically binding to regions of DNA that are typically close to the gene.
+In natural systems, only a small number of transcription factors
 regulate any single gene, and so transcription networks are sparsely connected.
 For example, Balaji~\etal studied a yeast
 transcription network of 157 transcription factors regulating 4,410 genes. They
@@ -185,8 +185,8 @@ distributions, can be evolved using sparse linear functions as representations,
 when the performance is measured using squared error. The number of variables
 used by the representations is larger than the number of variables in the
 \emph{ideal function} and depends on the \emph{smoothness} parameter of the
-distribution. According to our notion of $\Delta$-smoothness, defined in
-Definition~\ref{defn:afghanistan}, the density function of a smooth distribution
+distribution. According to our notion of $\Delta$-smooth $G$-nice distributions
+(Definition~\ref{defn:afghanistan}), the density function of a smooth distribution
 is obtained by convolving an arbitrary density with a product measure on
 $[-\sqrt{3}\Delta, \sqrt{3}\Delta]^n$ (alternatively, drawing a point from the
 smooth distribution is equivalent to drawing a point from an arbitrary
@@ -194,7 +194,7 @@ distribution and adding a (noise) vector from a product distribution).
 
 A linear function is represented by a weighted arithmetic circuit with only one
 addition gate (alternatively, by a depth-two circuit with a layer of
-multiplication gates and some constant inputs).\footnote{Also, there is a
+multiplication gates and some constant inputs).\footnote{There is a
 natural tradeoff between the fan-in and depth, which may be useful depending on
 which is the more severe constraint.}
 %There is also a natural trade-off to be made between depth and fan-in.
@@ -229,9 +229,9 @@ as Theorem~\ref{thm:greedy} in Section~\ref{sec:greedy}. \vknote{FIXTHIS}
 The question of proper vs. improper learning has been studied in computational
 learning theory. A separation between the two kinds is known, unless $\NP =
 \RP$. However, most interesting PAC-learnable classes can be learned using
-thresholds of low-degree polynomials, and don't seem to require the full
-generality of polynomial-sized circuits.\footnote{For example, the class of
-$k$-CNF, $k$-term DNF, decision lists, low-rank decision trees, can all be
+thresholds of low-degree polynomials, and do not seem to require the full
+generality of polynomial-sized circuits.\footnote{For example, the classes of
+$k$-CNF, $k$-term DNF, decision lists and low-rank decision trees, can all be
 represented as PTFs.} In this context, Valiant's disjunction algorithm under the
 uniform distribution~\cite{Valiant:2009-evolvability}, Kanade {\it et al.}'s algorithm
 for homogeneous half-spaces under radially symmetric
@@ -244,7 +244,6 @@ evolutionary mechanism also succeeds using representations that depend only on a
 constant number of variables, thus attribute-efficient evolution can be
 achieved.
 
-
 The problem of learning sparse linear functions has been studied under various
 names in several fields for many applications, \eg recovering sparse solutions
 to (underdetermined) linear systems of equations~\cite{Donoho:2009-sparse}, or
@@ -254,14 +253,14 @@ sensing for sparse signal reconstruction~\cite{Candes:2008}; optimization with
 regularization or sparsity-inducing penalties in machine
 learning~\cite{Bach:2012}; sparse coding for learning an overcomplete
 basis~\cite{Olshausen:1997}, or for denoising in image and video
-processing~\cite{Elad:2010}. Learning the sparsest linear function is equivalent
+processing~\cite{Elad:2010}. This area is too vast to review here; Bruckstein
+\emph{et al.} have an excellent survey~\cite{Donoho:2009-sparse}.
+Learning the sparsest linear function is equivalent
 to finding the sparsest solution to a system of linear equations (assuming there
 is no noise in the data). In general, this problem is $\NP$-hard and the
 currently best-known approximation factor depends on the norm of the
 pseudo-inverse of the matrix~\cite{Natarajan:1995}.  Thus, some assumption on
-the distribution seems necessary. The area of compressed sensing is too vast to
-review here; Bruckstein \emph{et al.}~\cite{Donoho:2009-sparse} have an
-excellent survey.  The evolution based on optimisation algorithm
+the distribution seems necessary. The evolution based on optimisation algorithm
 (Section~\ref{sec:greedy}) is essentially the greedy orthogonal matching pursuit
 algorithm of Tropp~\cite{Tropp:2004-greed} and Donoho \emph{et
 al.}~\cite{Donoho:2006-recovery}, cast in the language of evolvability; these
