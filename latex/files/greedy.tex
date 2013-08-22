@@ -35,7 +35,7 @@ mutator as follows (we will define the parameters $\lambda$ and $m$ later):
 %%
 \begin{enumerate}
 %%
-\item (Adding) With probability $\lambda$ do the following: Recall $\NZ(w)$
+\item {\em Adding}: With probability $\lambda$ do the following: Recall $\NZ(w)$
 denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose $i \in [n]
 \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that $w^\prime_j =
 w_i$ for $j \neq i$ and $w^\prime_i \in [-B, B]$ uniformly at random. If
@@ -45,10 +45,10 @@ populated by $m$ independent draws from the procedure just described.
 \item With probability $1 - \lambda$ do the following:
 %
 \begin{enumerate}
-\item (Scaling) With probability $1/2$, choose $\gamma \in [-1, 1]$ uniformly at
+\item {\em Scaling}: With probability $1/2$, choose $\gamma \in [-1, 1]$ uniformly at
 random and let $w^\prime = \gamma w$.
 %
-\item (Adjusting) With probability $1/2$, do the following.  Pick $i \in \NZ(w)$
+\item {\em Adjusting}: With probability $1/2$, do the following.  Pick $i \in \NZ(w)$
 uniformly at random.  Let $w^\prime$ be such that $w^\prime_j = w_j$ for $j \neq
 i$, $w^\prime_i \in [-B, B]$ uniformly at random.
 \end{enumerate}
@@ -109,11 +109,16 @@ only polylogarithmically on $n$.
 \end{enumerate}
 %%
 \end{theorem}
-\begin{proof} The proof is straightforward, although heavy on notation. We provide a sketch here. 
-
-Let $p = \min\{1 /16, \sqrt{\epsilon}/(16k^2 B), \sqrt{(k+1)\epsilon}/k\}$,
-$\alpha = \min\{\epsilon/(4k^3), \epsilon/(192k^2)\}$, $\tau = \alpha/5$
-and $t = 3\alpha/5$.
+\begin{proof} The proof is straightforward, although heavy on notation;
+we provide a sketch here. The mutator is as described in this section. Let
+%%
+\[ p = \min\{1 /16, \sqrt{\epsilon}/(16k^2 B), \sqrt{(k+1)\epsilon}/k\}, \]
+%%
+and let
+%%
+\[ \alpha = \min\{\epsilon/(4k^3), \epsilon/(192k^2)\}. \]
+%%
+Also let $\tau = \alpha/5$ and $t = 3\alpha/5$.
 
 Consider a sequence of coin tosses, where the probability of heads is $\lambda$
 and the probability of tails is $1 - \lambda$. Let $Y_i$ be the number of tails
