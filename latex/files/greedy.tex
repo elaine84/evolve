@@ -94,10 +94,84 @@ The proofs of Claims~\ref{claim:date} and \ref{claim:elderberry} are not
 difficult and are provided in Appendix~\ref{app:greedy}. Based on the above
 claims we can prove the following theorem:
 
-\begin{theorem} 
-
+\begin{theorem} Let $\Dists$ be a class of distributions over $\reals^n$ as
+defined in Definition~\ref{defn:dist2}. Then, the class $\lin^k_{0, u}$ is
+evolvable by an evolutionary algorithm, using selection rule $\optsel$, and the
+representation class $R = \lin^k_{0, B}$, where $B = 10 uk/\Delta$. Furthermore,
+the following are true:
+%%
+\begin{enumerate}
+\item The number of generations is independent of the dimension $n$.
+\item The size of the sample required for estimating empirical losses depends
+only polylogarithmically on $n$.
+\end{enumerate}
+%%
 \end{theorem}
-\begin{proof}
+\begin{proof} The proof is straightforward, although heavy on notation. We provide a sketch here. 
+
+Let $p = \min\{1 /16, \sqrt{\epsilon}/(16k^2 B), \sqrt{(k+1)\epsilon}/k$. Also,
+let $\alpha = \min\{\epsilon/(4k^3), \epsilon/(192k^2)$. Let $\tau = \alpha/5$
+and $t = 3\alpha/5$.
+
+Consider a sequence of coin tosses, where the probability of heads is $\lambda$
+and the probability of tails is $1 - \lambda$. Let $Y_i$ be the number of tails
+between the $(i-1)\th$ and $i\th$ heads. Except with probability,
+$\epsilon/(4(k+1))$, $Y_i > \epsilon/(4(k+1)\lambda)$, by a simple union bound.
+Also, by Markov's inequality, except with probability, $\epsilon/(4(k+1))$, $Y_i
+< 4(k+1)/(\lambda\epsilon)$. Thus, except with probability $\epsilon/2$, $
+\epsilon/(4(k+1)\lambda) \leq Y_i \leq 4(k+1)/(\epsilon\lambda)$ for $i = 1, 2,
+\ldots, k+1$. 
+
+The heads in the above experiment correspond to time-steps when the mutator
+produces mutations of type ``adding'', and tails all the remaining mutations.
+Thus, let $g = 4(k+1)^2/(\epsilon\lambda) + k + 1$. Except with probability
+$\epsilon/2$, it must be the case that there have been at least $k + 1$
+``heads'', and furthermore, between the $(i-1)\th$ and $i\th$ heads there have
+been at least $\epsilon/(4(k+1)\lambda)$ tails. We will show that the steps with
+``tails'' are sufficient to ensure that evolution reaches the (almost) best
+possible target in the variables available to it. In particular, if the set of
+available variables is $S$, the representation reached by evolution $w$ will
+satisfy $\ltwonorm{f^S - w}^2 \leq \epsilon/(2k^2)$. For now, suppose that this
+is the case. 
+
+Also, let $m = p^{-1}\ln(4g/\epsilon)$ and $s = (800 kB^2G^2/\alpha^2)
+\ln(4mg/\epsilon)$. These, values ensure that for $g$ generations, except with
+probability $\epsilon/2$, the mutator always produces a mutation that had
+probability at least $p$ of being produced (conditioned on ``heads'' or
+``tails''), and that for all the representations concerned, $|\hat{\loss}_{f,
+D}(w) - \loss_{f, D}(w)| \leq \tau$, where $\tau = \alpha/5$. Thus, allowing the
+process to fail with probability $\epsilon$, we assume that none of the
+undesirable events have occurred.
+
+We claim by induction that evolution never adds a ``wrong'' variable, \ie one
+that's not present in the target funciton $f$. The base case is trivially true,
+since the starting representation is $0$. Now suppose, just before a ``heads''
+step, the representation is $w$, such that $S = \NZ(w)$ and $\ltwonorm{f^S - w}
+\leq \epsilon/(2k^2)$. The current step is assumed to be a ``heads'' step, thus
+the mutator has produced mutations by adding a new variable. Then, using
+Claim~\ref{claim:date}, we know that there is a mutation $w^\prime$ in $\Neigh(w,
+\epsilon)$, such that $\loss_{f, D}(w^\prime) < \loss_{f, D}(w) -
+\epsilon/(4k^2)$ (obtained by adding a correct variable). For the settings of
+tolerance $t$ and $\tau$, this ensures that the set $\best$ for selection by
+optimisation is non-empty. Also, by the latter half of Claim~\ref{claim:date},
+it is ensured that no mutation that adds an \emph{irrelevant} variable can
+appear in the set $\best$. Thus, evolution will choose a mutation that adds a
+\emph{relevant} variable.
+
+Finally, note that during an ``tails'' step -- as long as $\ltwonorm{f^S - w}^2
+\geq \epsilon/(4k^2)$, there exists a mutation that reduces the expected loss by
+at least $\epsilon^2/(192k^2)$. This implies that the set $\best$ is non-empty
+and for the values of tolerance $t = 3\alpha/5$ and $\tau = \alpha/5$, any
+mutation from the set $\best$ reduces the expected loss by at least $\alpha/5$.
+Since, the maximum loss is at most $4kB^2G^2$ for the class of distributions and
+a representation $w$ from the set $R$, in at most $20kB^2G^2/\alpha$ steps, a
+representation satisfying $\loss_{f, D}(w) \leq \epsilon/(4k^2)$ must be
+reached. Note that, subsequently it is ensured that the loss does not increase
+substantially, since with probability at least $(1 - \lambda)/2$, the mutator
+outputs the same representation. Hence, it is guaranteed that there is always a
+neutral mutation. Thus, if $\lambda$ is set to $\epsilon\alpha/(80
+k(k+1)B^2G^2$, the evolutionary algorithm using the selection rule $\optsel$
+succeeds.
 
 \end{proof}
 
