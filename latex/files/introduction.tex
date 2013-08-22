@@ -182,41 +182,43 @@ when the performance is measured using squared error. The number of variables
 used by the representations is larger than the number of variables in the
 \emph{ideal function} and depends on the \emph{smoothness} parameter of the
 distribution. According to our notion of $\Delta$-smoothness, defined in
-Section~\ref{sec:notation-class}, the density function of a smooth distribution
-is obtained by convolving an arbitrary density with a product measure on
-$[-\sqrt{3}\Delta, \sqrt{3}\Delta]^n$ (alternatively, drawing
-a point from the smooth distribution is equivalent to drawing a point from
-an arbitrary distribution and adding a (noise) vector from a product
-distribution). 
+Section~\ref{sec:notation-class}\vknote{FIX THIS}, the density function of a
+smooth distribution is obtained by convolving an arbitrary density with a
+product measure on $[-\sqrt{3}\Delta, \sqrt{3}\Delta]^n$ (alternatively, drawing
+a point from the smooth distribution is equivalent to drawing a point from an
+arbitrary distribution and adding a (noise) vector from a product distribution). 
 
-Note that a linear function is represented by a weighted arithmetic circuit with
-only one addition gate (alternatively, by a depth-two circuit with a layer of
-multiplication gates and some constant inputs). There is also a natural
-trade-off to be made between depth and fan-in.
-\todoea{The trade-off sentence could go elsewhere, not under contributions.}
-Also, the number of generations
-required for evolution to succeed depends polynomially on the sparsity $k$ of the
-target linear function, the smoothness parameter of the distribution and the
-inverse of the target accuracy $\epsilon$, but only polylogarithmically on the
-total number of parameters $n$ (the dimension of the input space). Thus, our
+A linear function is represented by a weighted arithmetic circuit with only one
+addition gate (alternatively, by a depth-two circuit with a layer of
+multiplication gates and some constant inputs).\footnote{Also, there is a
+natural tradeoff between the fan-in and depth, which may be useful depending on
+which is the more severe constraint.}
+%There is also a natural trade-off to be made between depth and fan-in.
+%\todoea{The trade-off sentence could go elsewhere, not under contributions.}
+Also, the number of generations required for evolution to succeed depends
+polynomially on the sparsity $k$ of the target linear function, the smoothness
+parameter of the distribution and the inverse of the target accuracy $\epsilon$,
+and has no dependence on $n$ (the dimension of the input space). Thus, our
 result shows \emph{attribute-efficient} evolvability of sparse linear functions,
 in the sense of Littlestone~\cite{Littlestone:1988}.  For the precise statement,
 see Theorem~\ref{thm:sparse_linear} in Section~\ref{sec:sparse_linear}.
 
 Valiant also proposed a stronger selection mechanism -- when natural selection
 aggressively selects the (almost) best mutation, rather than merely a beneficial
-one -- called evolution by optimisation.  Under stronger conditions on the
-distribution, we show that under evolution by optimisation, sparse linear
+one -- called evolution by optimisation. Our second result requires a much
+stronger distributional assumption -- the correlation $\corr(x_i, x_j) \leq
+1/(2k)$ -- where $k$ is the sparsity of the target  linear function.  Under such
+distributions, we show that under evolution by optimisation, sparse linear
 functions can be evolved by representations with the same sparsity. The
 mechanism we propose and its analysis is inspired by the greedy orthogonal
 matching pursuit algorithms in signal
-processing~\cite{Donoho:2006-recovery,Tropp:2004-greed}. This algorithm however
-requires initialisation, \ie the evolutionary process begins with the $0$
-function. As in the previous case, the number of generations required depends
-polynomially on the sparsity $k$ of the target linear function, the inverse of
-the accuracy parameter $\epsilon$, but only polylogarithmically on the total
-number of attributes $n$. The precise statement appears as
-Theorem~\ref{thm:greedy} in Section~\ref{sec:greedy}.
+processing~\cite{Donoho:2006-recovery,Tropp:2004-greed}. Unlike the previous
+evolutionary algorithm, this one requires initialisation, \ie the evolutionary
+process begins with the $0$ function. As in the previous case, the number of
+generations required depends polynomially on the sparsity $k$ of the target
+linear function, the inverse of the accuracy parameter $\epsilon$, but has no
+dependence on the total number of attributes $n$. The precise statement appears
+as Theorem~\ref{thm:greedy} in Section~\ref{sec:greedy}. \vknote{FIXTHIS}
 
 \subsubsection*{Related Work}
 
@@ -226,68 +228,72 @@ learning theory. A separation between the two kinds is known, unless $\NP =
 thresholds of low-degree polynomials, and don't seem to require the full
 generality of polynomial-sized circuits.\footnote{For example, the class of
 $k$-CNF, $k$-term DNF, decision lists, low-rank decision trees, can all be
-represented as PTFs.} In the context of evolvability, strong negative results
+represented as PTFs.} In this context, Valiant's disjunction algorithm under the
+uniform distribution~\cite{Valiant:2009-evolvability}, Kanade {\it et al.}'s algorithm
+for homogeneous half-spaces under radially symmetric
+distributions~\cite{KVV:2010-drift}, and P. Valiant's algorithm for linear
+(polynomial) functions using squared loss~\cite{Valiant:2012-real}, are
+\emph{proper} evolutionary mechanisms, \ie the representation used is from the
+same class as the ideal function.  In the first two cases, it is straightforward
+to show that if the target depends only on a constant number of variables, the
+evolutionary mechanism also succeeds using representations that depend only on a
+constant number of variables, thus attribute-efficient evolution can be
+achieved.
+
+
+The problem of learning sparse linear functions has been studied under various
+names in several fields for many applications, \eg recovering sparse solutions
+to (underdetermined) linear systems of equations~\cite{Donoho:2009-sparse}, or
+recovering sparse representations with a redundant
+dictionary~\cite{Mallat:2008,Elad:2010}; compressive sampling or compressed
+sensing for sparse signal reconstruction~\cite{Candes:2008}; optimization with
+regularization or sparsity-inducing penalties in machine
+learning~\cite{Bach:2012}; sparse coding for learning an overcomplete
+basis~\cite{Olshausen:1997}, or for denoising in image and video
+processing~\cite{Elad:2010}. Learning the sparsest linear function is equivalent
+to finding the sparsest solution to a system of linear equations (assuming there
+is no noise in the data). In general, this problem is $\NP$-hard and the
+currently best-known approximation factor depends on the norm of the
+pseudo-inverse of the matrix~\cite{Natarajan:1995}.  Thus, some assumption on
+the distribution seems necessary. The area of compressed sensing is too vast to
+review here; Bruckstein \emph{et al.}~\cite{Donoho:2009-sparse} have an
+excellent survey.  The evolution based on optimisation algorithm
+(Section~\ref{sec:greedy}) is essentially the greedy orthogonal matching pursuit
+algorithm of Tropp~\cite{Tropp:2004-greed} and Donoho \emph{et
+al.}~\cite{Donoho:2006-recovery}, cast in the language of evolvability; these
+algorithms are also known in statistical modeling as forward stepwise
+regression~\cite{Daniel:1999,Hastie:2001}.
+
+Finally, the question of \emph{attribute-efficient} regression in the PAC (or
+SQ) model is a natural one. Here, the goal would be to design a polynomial time
+algorithm for producing an $\epsilon$-accurate linear function, with sample
+complexity that is polynomial in the sparsity $k$ of the target function and the
+inverse of the target accuracy $\epsilon$, and only polylogarithmic in $n$, the
+total number of attributes. Under mild boundedness assumptions on the
+distribution, this can be achieved by setting up an $L_1$-regularized
+optimisation problem; the output classifier may not be sparse in light of the
+$\NP$-hardness result mentioned above. We note that under the distributional
+assumption made in the paper, finding the \emph{sparsest} linear function that
+fits the data is also easy in the PAC/SQ setting, since the solution to the
+optimisation problem in this case is unique. The focus in our work is different,
+namely showing that simple evolutionary mechanisms can succeed, while using
+representations that are themselves sparse linear functions at all times.
+
+\vknote{Move this para to conclusions:
+In the context of evolvability, strong negative results
 are known for distribution-independent evolvability of boolean functions, \eg
 even the class of conjunctions is not evolvable. However, it is interesting to
 study whether under restricted classes of distributions, evolution is possible
 for simple, restricted concept classes. Currently, even under (biased) product
 distributions, no evolutionary mechanism is known for the class of disjunctions,
 except via Feldman's general reduction from CSQ algorithms. The class of
-smooth distributions may also be a natural starting place for studying
-evolvability of simple concept classes. In this context, Valiant's disjunction
-algorithm under the uniform distribution~\cite{Valiant:2009-evolvability},
-Kanade et al.'s algorithm for homogeneous half-spaces under radially symmetric
-distributions~\cite{KVV:2010-drift}, and P. Valiant's algorithm for linear
-(polynomial) functions using squared loss~\cite{Valiant:2012-real}, are
-\emph{proper} evolutionary mechanisms, \ie the representation used is from the
-same class as the ideal function. In the first and second of these, it is
-straightforward to show that if the target depends only on a constant number of
-variables, the evolutionary mechanism also succeeds using representations that
-depend only on a constant number of variables, thus attribute-efficient
-evolution can be achieved.
-
-Learning sparse linear functions is a problem that has been studied under
-various names in several fields for many applications, \eg, recovering sparse
-solutions to (underdetermined) linear systems of
-equations~\cite{Donoho:2009-sparse}, or recovering sparse representations with a
-redundant dictionary~\cite{Mallat:2008,Elad:2010}; compressive sampling or
-compressed sensing for sparse signal reconstruction~\cite{Candes:2008};
-optimization with regularization or sparsity-inducing penalties in machine
-learning~\cite{Bach:2012}; sparse coding for learning an overcomplete
-basis~\cite{Olshausen:1997}, or for denoising in image and video
-processing~\cite{Elad:2010}. Learning the sparsest linear function is equivalent
-to finding the sparsest solution to a system of linear equations (assuming there
-is no noise in the data). This area is too vast to review here; Bruckstein
-\emph{et al.}~\cite{Donoho:2009-sparse} have an excellent survey.
-In general, this problem is $\NP$-hard and the
-currently best-known approximation factor depends on the norm of the
-pseudo-inverse of the matrix~\cite{Natarajan:1995}. Thus, some assumption on the
-distribution seems necessary. The evolution based on
-optimisation algorithm (Section~\ref{sec:greedy}) is essentially the greedy
-orthogonal matching pursuit algorithm of Tropp~\cite{Tropp:2004-greed} and
-Donoho \emph{et al.}~\cite{Donoho:2006-recovery}, cast in the language of
-evolvability; these algorithms are also known in statistical modeling
-as forward stepwise regression~\cite{Daniel:1999,Hastie:2001}.
-
-Finally, the question of \emph{attribute-efficient} regression in the PAC (or
-SQ) model is a natural one. Here, the goal would be to design a polynomial time
-algorithm for producing an $\epsilon$-accurate linear function, with sample
-complexity that is polynomial in the sparsity $k$ of the target function and
-the inverse of the target accuracy $\epsilon$,
-and polylogarithmic in $n$, the total number of attributes. Under
-mild boundedness assumptions on the distribution, this can be achieved by
-setting up an $L_1$-regularized optimisation problem. The output classifier may
-not be sparse in light of the $\NP$-hardness result mentioned above. We note
-that under the distributional assumption made in the paper, finding the
-\emph{sparsest} linear function that fits the data is also easy in the PAC/SQ
-setting.  The focus in our work is different, namely showing that simple
-evolutionary mechanisms can succeed, while using representations that are
-themselves sparse linear functions at all times.
+smooth distributions may be a natural starting place for studying
+evolvability of simple concept classes.  }
 
 \subsubsection*{Organization}
 
 In Section~\ref{sec:notation}, we give an overview of Valiant's evolution model
 and describe the concept classes and class of distributions considered in this
-paper.  Section~\ref{sec:sparse_linear} contains the mechanisms for evolving
-sparse linear functions. We conclude in Section~\ref{sec:conclusion} with some
+paper.  Section~\ref{sec:algorithms} contains the mechanisms for evolving sparse
+linear functions. We conclude in Section~\ref{sec:conclusion} with some
 discussion and directions for future work.
