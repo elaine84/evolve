@@ -6,8 +6,10 @@ evolution~\cite{Valiant:2009-evolvability}.  In his model, an organism is an
 entity that computes a function of its environment.  There is a (possibly
 hypothetical) \emph{ideal function} indicating the best behaviour in every
 possible environment. The performance of the organism is measured by how close
-the function it computes is to the ideal. Mutations may alter the function
-computed by an organism and the performance (fitness) measure forms the basis of
+the function it computes is to the ideal. \textcolor{red}{An organism produces a
+set of offspring, where each is the same as its parent except for mutations that}
+may alter the function it computes. The performance (fitness)
+measure \textcolor{red}{acting on a population of mutants} forms the basis of
 natural selection. The resources allowed are the most generous while remaining
 feasible; the mutation mechanism may be any efficient randomised Turing machine,
 and the function represented by the organism may be arbitrary as long as it is
@@ -26,17 +28,17 @@ algorithm is only allowed to make \emph{performance queries}, \ie it produces a
 hypothesis and then makes a query to an oracle that returns the (approximate)
 performance of that hypothesis under the
 distribution~\cite{Feldman:2008-evolvability}.\footnote{Feldman calls these
-queries correlational statistical queries, because when working with boolean
+correlational statistical queries, because when working with boolean
 functions with range $\{-1, 1\}$, the performance of any hypothesis is its
 correlation with the ideal function.} P.  Valiant studied the evolvability of
 real-valued functions and showed that whenever the corresponding weak
 optimisation problem, \ie approximately minimising the expected loss, can be
-solved by using a weak-evaluation oracle, such an algorithm can be converted
+solved by using a weak evaluation oracle, such an algorithm can be converted
 into an evolutionary mechanism~\cite{Valiant:2012-real}. This implies that a
-large of class of functions -- low degree real polynomials -- can be evolved
+large of class of functions -- \textcolor{red}{fixed}-degree real polynomials -- can be evolved
 with respect to any convex loss function.
 
-Direct evolutionary mechanisms, not invoking the general reduction of Feldman
+Direct evolutionary mechanisms, not invoking the general reductions of Feldman
 and P. Valiant, have been proposed for certain classes in restricted settings.
 Valiant showed that the class of disjunctions is evolvable using a simple set of
 mutations under the uniform distribution~\cite{Valiant:2009-evolvability}.
@@ -46,20 +48,22 @@ Feldman considered a model where the ideal function is boolean but the
 representation can be real-valued, allowing for more detailed feedback. He
 presents an algorithm for evolving large margin linear separators for a large
 class of convex loss functions~\cite{Feldman:2011-LTF}. P. Valiant also showed
-that with very simple mutations, the class of low-degree polynomials can be
+that with very simple mutations, the class of \textcolor{red}{fixed}-degree polynomials can be
 evolved with respect to the squared loss~\cite{Valiant:2012-real}.
 
-The more direct algorithms are somewhat appealing due to the simplicity of their
-mutations.  However, a meaningful definition of \emph{naturalness} of mutations
-is currently difficult to make.
-Another desirable property of some of these more direct algorithms is that the
-representations used are functions of low complexity. Feldman's general
-reduction from statistical query algorithms may use arbitrarily complex
-representations (polynomial-sized circuits) depending on the specific algorithm
-used. The ``chemical computers'' of organisms may be slow, and hence,
-representations that have low-complexity are attractive. We first describe a
-particular class of biological circuits, \emph{transcription networks}, that
-motivate our study. We then frame the question in the language of computational
+\textcolor{red}{It is currently difficult to formalize a notion of
+\emph{naturalness} for mutations in these frameworks; in particular, it is
+not generally understood how mutations to DNA relate to functional changes
+for an organism. That said, the more direct algorithms are appealing due to the
+simplicity of their mutations.  Also,}
+the ``chemical computers'' of organisms may be slow, and hence,
+representations that have low complexity are attractive.
+\textcolor{red}{In contrast,} Feldman's general reduction from statistical query
+algorithms may use arbitrarily complex representations
+(polynomial-sized circuits), depending on the specific algorithm used.
+In the remainder of the introduction, we first describe a particular class of
+biological circuits, \emph{transcription networks}, that motivate our study.
+We then frame the evolutionary question in the language of computational
 learning theory, summarize our contributions and discuss related work.
 
 \subsection{Representation in Biology}
