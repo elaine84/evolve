@@ -9,7 +9,7 @@ considerably stronger than the assumptions used earlier.
 \begin{enumerate}
 %
 \item For any two variables, $x_i$ and $x_j$, the correlation coefficient,
-$\corr(x_i, x_j) \leq \frac{1}{2k}$, where $k$ is the sparsity of the target,
+$\corr(x_i, x_j) \leq \frac{1}{2k}$,
 where $k$ is the sparsity of the target linear function.
 %
 \item The selection rule is based on \emph{optimisation}, \ie nature selects the
@@ -20,9 +20,9 @@ corresponds to the $0$ vector.
 %
 \end{enumerate}
 
-Nevertheless, the algorithm is appealing for its simplicity and also for the fact
-that it is a \emph{proper} evolutionary mechanism -- it never uses a
-representation that is not a $k$-sparse linear function. 
+\noindent Nevertheless, the algorithm is appealing for its simplicity and also
+for the fact that it is a \emph{proper} evolutionary mechanism -- it never uses
+a representation that is not a $k$-sparse linear function.
 
 Recall that $f \in  \lin^k_{0, u}$ is the ideal (target)
 function.\footnote{Here, we no longer need the fact that each coefficient in the
@@ -30,8 +30,8 @@ target linear function has magnitude at least $l$.} Let
 %
 \[ R = \{w ~|~ \sparsity(w) \leq k, w_i \in [-B, B] \}, \]
 %
-where $B = 10uk/\Delta$. Now, define the action of the mutator as follows (we
-will define the parameters $\lambda$ and $m$ later): For $w \in R$, 
+where $B = 10uk/\Delta$. Now, starting from $w \in R$, define the action of the
+mutator as follows (we will define the parameters $\lambda$ and $m$ later):
 %%
 \begin{enumerate}
 %%
@@ -59,7 +59,7 @@ from the procedure just described.
 One thing to note in the above definition is that the mutations produced by the
 mutator at any given time are correlated -- \ie they are all either of the kind
 that add a new variable, or all of the kind that just manipulate existing
-variables.  At a high-level, we prove the success of this mechanism as follows:
+variables.  At a high level, we prove the success of this mechanism as follows:
 \begin{enumerate}
 %
 \item Using mutations of type ``scaling'' or ``adjusting,'' a representation
@@ -94,9 +94,10 @@ The proofs of Claims~\ref{claim:date} and \ref{claim:elderberry} are not
 difficult and are provided in Appendix~\ref{app:greedy}. Based on the above
 claims we can prove the following theorem:
 
-\begin{theorem} Let $\Dists$ be a class of distributions over $\reals^n$ as
-defined in Definition~\ref{defn:dist2}. Then, the class $\lin^k_{0, u}$ is
-evolvable by an evolutionary algorithm, using selection rule $\optsel$, and the
+\begin{theorem} Let $\Dists$ be the class of $\Delta$-smooth $G$-nice
+distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}).
+Then, the class $\lin^k_{0, u}$ is evolvable by an evolutionary algorithm, using
+the mutation algorithm described in this section, selection rule $\optsel$, and the
 representation class $R = \lin^k_{0, B}$, where $B = 10 uk/\Delta$. Furthermore,
 the following are true:
 %%
