@@ -6,14 +6,13 @@ evolution~\cite{Valiant:2009-evolvability}.  In his model, an organism is an
 entity that computes a function of its environment.  There is a (possibly
 hypothetical) \emph{ideal function} indicating the best behaviour in every
 possible environment. The performance of the organism is measured by how close
-the function it computes is to the ideal. \textcolor{red}{An organism produces a
-set of offspring, where each is the same as its parent except for mutations that}
-may alter the function it computes. The performance (fitness)
-measure \textcolor{red}{acting on a population of mutants} forms the basis of
-natural selection. The resources allowed are the most generous while remaining
-feasible; the mutation mechanism may be any efficient randomised Turing machine,
-and the function represented by the organism may be arbitrary as long as it is
-computable by an efficient Turing machine.
+the function it computes is to the ideal. An organism produces a set of
+offspring, which may have mutations that  alter the function computed. The
+performance (fitness) measure acting on a population of mutants forms the basis
+of natural selection. The resources allowed are the most generous while
+remaining feasible; the mutation mechanism may be any efficient randomised
+Turing machine, and the function represented by the organism may be arbitrary as
+long as it is computable by an efficient Turing machine.
 
 Formulated this way, the question of evolvability can be asked in the language
 of computational learning theory. For what classes of ideal functions, $C$, can
@@ -35,7 +34,7 @@ real-valued functions and showed that whenever the corresponding weak
 optimisation problem, \ie approximately minimising the expected loss, can be
 solved by using a weak evaluation oracle, such an algorithm can be converted
 into an evolutionary mechanism~\cite{Valiant:2012-real}. This implies that a
-large of class of functions -- \textcolor{red}{fixed}-degree real polynomials -- can be evolved
+large of class of functions -- fixed-degree real polynomials -- can be evolved
 with respect to any convex loss function.
 
 Direct evolutionary mechanisms, not invoking the general reductions of Feldman
@@ -48,22 +47,21 @@ Feldman considered a model where the ideal function is boolean but the
 representation can be real-valued, allowing for more detailed feedback. He
 presents an algorithm for evolving large margin linear separators for a large
 class of convex loss functions~\cite{Feldman:2011-LTF}. P. Valiant also showed
-that with very simple mutations, the class of \textcolor{red}{fixed}-degree polynomials can be
+that with very simple mutations, the class of fixed-degree polynomials can be
 evolved with respect to the squared loss~\cite{Valiant:2012-real}.
 
-\textcolor{red}{It is currently difficult to formalize a notion of
-\emph{naturalness} for mutations in these frameworks; in particular, it is
-not generally understood how mutations to DNA relate to functional changes
-for an organism. That said, the more direct algorithms are appealing due to the
-simplicity of their mutations.  Also,}
-the ``chemical computers'' of organisms may be slow, and hence,
-representations that have low complexity are attractive.
-\textcolor{red}{In contrast,} Feldman's general reduction from statistical query
-algorithms may use arbitrarily complex representations
-(polynomial-sized circuits), depending on the specific algorithm used.
-In the remainder of the introduction, we first describe a particular class of
-biological circuits, \emph{transcription networks}, that motivate our study.
-We then frame the evolutionary question in the language of computational
+\textcolor{blue}{Current understanding of biology (or lack thereof), makes it
+difficult to formalize a notion of \emph{naturalness} for mutations in these
+frameworks; in particular, it is not well understood how mutations to DNA
+relate to functional changes in an organism. That said, the more direct
+algorithms are appealing due to the simplicity of their mutations.}  Also, the
+``chemical computers'' of organisms may be slow, and hence, representations that
+have low complexity are attractive.  \textcolor{blue}{In general,} Feldman's
+general reduction from statistical query algorithms may use arbitrarily complex
+representations (polynomial-sized circuits), depending on the specific algorithm
+used.  In the remainder of the introduction, we first describe a particular
+class of biological circuits, \emph{transcription networks}, that motivate our
+study.  We then frame the evolutionary question in the language of computational
 learning theory, summarize our contributions and discuss related work.
 
 \subsection{Representation in Biology}
@@ -194,28 +192,26 @@ distribution and adding a (noise) vector from a product distribution).
 
 A linear function is represented by a weighted arithmetic circuit with only one
 addition gate (alternatively, by a depth-two circuit with a layer of
-multiplication gates and some constant inputs).\footnote{There is a
-natural tradeoff between the fan-in and depth, which may be useful depending on
-which is the more severe constraint.}
-%There is also a natural trade-off to be made between depth and fan-in.
-%\todoea{The trade-off sentence could go elsewhere, not under contributions.}
-Also, the number of generations required for evolution to succeed depends
-polynomially on the sparsity $k$ of the target linear function, the smoothness
-parameter of the distribution and the inverse of the target accuracy $\epsilon$,
-and has no dependence on $n$ (the dimension of the input space). Thus, our
-result shows \emph{attribute-efficient} evolvability of sparse linear functions,
-in the sense of Littlestone~\cite{Littlestone:1988}.  For the precise statement,
-see Theorem~\ref{thm:sparse_linear} in Section~\ref{sec:sparse_linear}.
+multiplication gates and some constant inputs).\footnote{There is a natural
+tradeoff between the fan-in and depth, which may be useful depending on which is
+the more severe constraint.} Also, the number of generations required for
+evolution to succeed depends polynomially on the sparsity $k$ of the target
+linear function, the smoothness parameter of the distribution and the inverse of
+the target accuracy $\epsilon$, and has no dependence on $n$ (the dimension of
+the input space). Thus, our result shows \emph{attribute-efficient} evolvability
+of sparse linear functions (in the sense of
+Littlestone~\cite{Littlestone:1988}). For the precise statement, see
+Theorem~\ref{thm:sparse_linear} in Section~\ref{sec:sparse_linear}.
 
 Valiant also proposed a stronger selection mechanism -- when natural selection
 aggressively selects the (almost) best mutation, rather than merely a beneficial
 one -- called evolution by optimisation. Our second result requires a much
 stronger distributional assumption -- the correlation $\corr(x_i, x_j) \leq
-1/(2k)$ -- where $k$ is the sparsity of the target  linear function.  Under such
-distributions, we show that under evolution by optimisation, sparse linear
-functions can be evolved by representations with the same sparsity. The
-mechanism we propose and its analysis is inspired by the greedy orthogonal
-matching pursuit algorithms in signal
+1/(2k)$ -- where $k$ is the sparsity of the target  linear function (see
+Defn.~\ref{defn:bhutan}). Under such distributions, we show that under evolution
+by optimisation, sparse linear functions can be evolved by representations with
+the same sparsity. The mechanism we propose and its analysis is inspired by the
+greedy orthogonal matching pursuit algorithms in signal
 processing~\cite{Donoho:2006-recovery,Tropp:2004-greed}. Unlike the previous
 evolutionary algorithm, this one requires initialisation, \ie the evolutionary
 process begins with the $0$ function. As in the previous case, the number of
@@ -233,15 +229,15 @@ thresholds of low-degree polynomials, and do not seem to require the full
 generality of polynomial-sized circuits.\footnote{For example, the classes of
 $k$-CNF, $k$-term DNF, decision lists and low-rank decision trees, can all be
 represented as PTFs.} In this context, Valiant's disjunction algorithm under the
-uniform distribution~\cite{Valiant:2009-evolvability}, Kanade {\it et al.}'s algorithm
-for homogeneous half-spaces under radially symmetric
+uniform distribution~\cite{Valiant:2009-evolvability}, Kanade {\it et al.}'s
+algorithm for homogeneous half-spaces under radially symmetric
 distributions~\cite{KVV:2010-drift}, and P. Valiant's algorithm for linear
 (polynomial) functions using squared loss~\cite{Valiant:2012-real}, are
 \emph{proper} evolutionary mechanisms, \ie the representation used is from the
 same class as the ideal function.  In the first two cases, it is straightforward
 to show that if the target depends only on a constant number of variables, the
 evolutionary mechanism also succeeds using representations that depend only on a
-constant number of variables, thus attribute-efficient evolution can be
+constant number of variables. Thus, attribute-efficient evolution can be
 achieved.
 
 The problem of learning sparse linear functions has been studied under various
@@ -254,18 +250,17 @@ regularization or sparsity-inducing penalties in machine
 learning~\cite{Bach:2012}; sparse coding for learning an overcomplete
 basis~\cite{Olshausen:1997}, or for denoising in image and video
 processing~\cite{Elad:2010}. This area is too vast to review here; Bruckstein
-\emph{et al.} have an excellent survey~\cite{Donoho:2009-sparse}.
-Learning the sparsest linear function is equivalent
-to finding the sparsest solution to a system of linear equations (assuming there
-is no noise in the data). In general, this problem is $\NP$-hard and the
-currently best-known approximation factor depends on the norm of the
-pseudo-inverse of the matrix~\cite{Natarajan:1995}.  Thus, some assumption on
-the distribution seems necessary. The evolution based on optimisation algorithm
-(Section~\ref{sec:greedy}) is essentially the greedy orthogonal matching pursuit
-algorithm of Tropp~\cite{Tropp:2004-greed} and Donoho \emph{et
-al.}~\cite{Donoho:2006-recovery}, cast in the language of evolvability; these
-algorithms are also known in statistical modeling as forward stepwise
-regression~\cite{Daniel:1999,Hastie:2001}.
+\emph{et al.} have an excellent survey~\cite{Donoho:2009-sparse}.  Learning the
+sparsest linear function is equivalent to finding the sparsest solution to a
+system of linear equations (assuming there is no noise in the data). In general,
+this problem is $\NP$-hard and the currently best-known approximation factor
+depends on the norm of the pseudo-inverse of the matrix~\cite{Natarajan:1995}.
+Thus, some assumption on the distribution seems necessary. Our evolution based
+on optimisation algorithm (Section~\ref{sec:greedy}) is essentially the greedy
+orthogonal matching pursuit algorithm of Tropp~\cite{Tropp:2004-greed} and
+Donoho \emph{et al.}~\cite{Donoho:2006-recovery}, cast in the language of
+evolvability; these algorithms are also known in statistical modeling as forward
+stepwise regression~\cite{Daniel:1999,Hastie:2001}.
 
 Finally, the question of \emph{attribute-efficient} regression in the PAC (or
 SQ) model is a natural one. Here, the goal would be to design a polynomial time
