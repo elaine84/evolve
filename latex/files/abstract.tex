@@ -1,16 +1,20 @@
-\eat{
 In a seminal paper, Valiant (2006) introduced a computational model for
-biological evolution, to address the question of complexity of functions that
-may be evolved through Darwinian mechanisms. The goal is to evolve a
-representation that computes a function that is \emph{close} to some \emph{ideal
-function} under the target distribution. Thus, the question of what classes of
-functions is evolvable may be studied through the framework of computational
-learning theory.
+evolution, to addrss the question of complexity that can arise through Darwinian
+mechanisms. Valiant views evolution as a restricted form of computational
+learning, where the goal is \emph{evolve} a hypothesis that is close to the
+\emph{ideal function}. Feldman (2008) showed that (C)SQ learning algorithms
+could be framed as evolutionary mechanisms in Valiant's model. P. Valiant (2012)
+considered evolvability of real-valued function and also showed that
+weak-optimisation algorithms could be converted to evolutionary mechanisms.
 
-Feldman (2008) showed that the class of functions evolvable in Valiant's model
-were exactly captured by a restriction of Kearns' statistical query learning
-framework. P. Valiant considers the evolvability of \emph{real-valued}
-functions. 
+In this work, we focus on the \emph{complexity} of representations that
+evolutionary mechanism. In general, the reductions of Feldman and P. Valiant may
+result in intermediate representations that are arbitrarily complex
+(polynomial-sized circuits). We argue that biological constraints often dictate
+that the representations have low-complexity, such as constant depth and fan-in
+circuits.  We give mechanisms for evolving sparse linear functions under a large
+class of distributions. These evolutionary algorithms are attribute-efficient in
+the sense that the size of the representations, and the number of generations
+required depend only on the sparsity of the target function and the accuracy
+parameter, but is independent of the total number of attributes.
 
-We consider the notion of \emph{natural}}
--- To be added --

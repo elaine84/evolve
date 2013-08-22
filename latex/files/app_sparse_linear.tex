@@ -1,33 +1,34 @@
-\begin{proof}[Proof of Claim \ref{claim:apple}] We show that in this case, a ``scaling''
-mutation achieves the desired result. Restricted to the direction $w$, the best
-approximation to $f^S$ is $\frac{\ip{w}{f^S}}{\ltwonorm{w}^2}w$. We have that
+\begin{proof}[Proof of Claim \ref{claim:apple}] We show that in this case, a
+``scaling'' mutation achieves the desired result. Restricted to the direction
+$w$, the best approximation to $f^S$ is $\frac{\ip{f^S}{w}}{\ltwonorm{w}^2}w$.
+We have that
 %%
 \[
-\left\Vert \frac{\ip{w}{f^S}}{\ltwonorm{w}^2} w \right\Vert \leq
+\left\Vert \frac{\ip{f^S}{w}}{\ltwonorm{w}^2} w \right\Vert \leq
 \ltwonorm{f^S} \leq \frac{\ltwonorm{w}}{2}
 \]
 %%
-Hence, if $\ip{w}{f^S} > 0$, for $\gamma \in [1/4, 3/4]$ (and similarly if
-$\ip{w}{f^S} < 0$ for $\gamma \in [-3/4, -1/4]$ ), we have that
+Hence, if $\ip{f^S}{w} > 0$, for $\gamma \in [1/4, 3/4]$ (and similarly if
+$\ip{f^S}{w} < 0$ for $\gamma \in [-3/4, -1/4]$ ), we have that
 %%
 \begin{align*}
-\ltwonorm{\gamma w - f^S}^2 &= \ltwonorm{w- f^S}^2 - 2 (1 - \gamma) \ip{w -
-f^S}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
+\ltwonorm{f^S - \gamma w}^2 &= \ltwonorm{f^S - w}^2 + 2 (1 - \gamma) \ip{f^S -
+w}{w} + (1 - \gamma)^2 \ltwonorm{w}^2 \\
 &\leq \ltwonorm{w - f^S}^2 - (1 - \gamma) \ltwonorm{w}^2 + (1 - \gamma)^2
 \ltwonorm{w}^2 \\
 &= \ltwonorm{w - f^S}^2 - (\gamma - \gamma^2) \ltwonorm{w}^2
 \intertext{Finally, by observing that for $\gamma \in [1/4, 3/4]$, $\gamma -
 \gamma^2 \geq 3/16$ and that by the triangle inequality, $\ltwonorm{w} \geq
-(2/3)\ltwonorm{w - f^S}$ when $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, we obtain}
+(2/3)\ltwonorm{f^S - w}$ when $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, we obtain}
 %
-\ltwonorm{\gamma w - f^S}^2 &\leq \ltwonorm{w - f^S}^2 - \frac{1}{12}
-\ltwonorm{w - f^S}^2
+\ltwonorm{f^S - \gamma w}^2 &\leq \ltwonorm{f^S - w}^2 - \frac{1}{12}
+\ltwonorm{f^S - w}^2
 \end{align*}
 We note that $\loss_{f, D}(w^\prime) = \ltwonorm{f - f^S}^2 + \ltwonorm{f^S -
 \gamma w}^2$ and $\loss_{f, D}(w) = \ltwonorm{f - f^S}^2 + \ltwonorm{f^S -
-w}^2$.  An appropriate value of $\gamma$ is chosen with probability at least $1/4$,
-and combined with the probability of choosing a scaling mutation we get the
-desired result.
+w}^2$. An appropriate value of $\gamma$ is chosen with probability at least
+$1/4$, and combined with the probability of choosing a scaling mutation we get
+the desired result.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:banana}] Here, we appeal to a mutation
