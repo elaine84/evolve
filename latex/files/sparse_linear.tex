@@ -2,7 +2,7 @@ In this section, we describe two evolutionary algorithms for evolving sparse
 linear functions. The first evolves the class $\lin^k_{l, u}$ under the class of
 $\Delta$-smooth $G$-nice distributions (Defn.~\ref{defn:afghanistan}), using the
 selection rule $\bnsel$. The second evolves the class $\lin^k_{0, u}$ under the
-more restricted class of $(1/2k)$-incoherent $\Delta, G$-nice distributions
+more restricted class of $(1/2k)$-incoherent $(\Delta, G)$-nice distributions
 (Defn.~\ref{defn:bhutan}) distributions, using the selection rule $\optsel$. We
 first define the notation used in the rest of this section.\smallskip \\
 
@@ -30,7 +30,7 @@ parameter is denoted by $\epsilon$.
 
 We present a simple mechanism that evolves the class of sparse linear functions,
 $\lin^k_{l, u}$, with respect to $\Delta$-smooth $G$-nice distributions (see
-Definition~\ref{defn:afghanistan}). The representation class also consists of
+Defn.~\ref{defn:afghanistan}). The representation class also consists of
 sparse linear functions, but with a greater number of non-zero entries than the
 \emph{ideal function}. We also assume that a linear function is represented by
 $w \in \reals^n$, where each $w_i$ is a real number. (Handling the issues of
@@ -77,7 +77,7 @@ w_j$ for $j \neq i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random.
 
 Recall that $f \in \lin^k_{l, u}$ denotes the ideal (ideal) function, $D$ is the
 underlying distribution that is $\Delta$-smooth $G$-nice (see
-Definition~\ref{defn:afghanistan}). Since we are working with the squared loss
+Defn.~\ref{defn:afghanistan}). Since we are working with the squared loss
 metric, $\ell(y^\prime, y) = (y^\prime - y)^2$, the expected loss for any $w \in
 R$ is given by $\loss_{f, D}(w) = \ltwonorm{f - w}^2 = \ip{f - w}{f - w}$.  We
 will show that for any $w \in R$, if $\ltwonorm{f - w}^2 > \epsilon$, with
@@ -133,7 +133,7 @@ Appendix~\ref{app:sparse_linear}. We now prove our main result using the
 above claims.
 
 \begin{theorem} Let $\Dists$ be the class of $\Delta$-smooth $G$-nice
-distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}). Then the
+distributions over $\reals^n$ (Defn.~\ref{defn:afghanistan}). Then the
 class $\lin^k_{l, u}$ is evolvable with respect to $\Dists$, using the
 representation class $\lin^K_{0, B}$, where $K = O((k/\Delta)^4 (u/l)^2)$ and $B
 = O(uk/\Delta)$, using the mutation algorithm described in this section, the
