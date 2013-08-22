@@ -152,14 +152,16 @@ $f - w = f - f^S + r^S$ and that $\ip{f - f^S}{e^{i^\prime}} = 0$
 (since $i^\prime \in S$). Thus, we get that}
 %%
 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
-  \ltwonorm{e^{i^\prime}}^2 &\leq 2 |w_{i^\prime}| |\ip{r^S + \gamma
-  e^i}{e^{i^\prime}}| + w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \nonumber
-\intertext{Using the fact that $\ltwonorm{r^S} \leq \gamma$, $|w_{i^\prime}|< \gamma$
-\eanote{(which we will show below)}, $|\ip{e^i}{e^{i^\prime}}| \leq 1$ and
-$\ltwonorm{e^{i^\prime}} \leq 1$, we obtain}
+\ltwonorm{e^{i^\prime}}^2 &\leq 2 |w_{i^\prime}| |\ip{r^S + \gamma
+e^i}{e^{i^\prime}}| + w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \nonumber
+%%
+\intertext{Using the fact that $\ltwonorm{r^S} \leq \gamma$, $|w_{i^\prime}|<
+\gamma$ (which can be verified by the setting of $K$ below),
+$|\ip{e^i}{e^{i^\prime}}| \leq 1$ and $\ltwonorm{e^{i^\prime}} \leq 1$, we
+obtain}
 %%
 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
-  \ltwonorm{e^{i^\prime}}^2 &\leq 6 |w_{i^\prime}||\gamma| \label{eqn:cabbage}
+\ltwonorm{e^{i^\prime}}^2 &\leq 6 |w_{i^\prime}||\gamma| \label{eqn:cabbage}
 %%
 \intertext{Recall that $|w_{i^\prime}| \leq \ltwonorm{w}/\sqrt{K}$. Also $\ltwonorm{w}
 \leq \ltwonorm{f^S} + \ltwonorm{r^S} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}
@@ -171,7 +173,6 @@ $|w_i| \leq 2uk/\sqrt{K}$ and $|\gamma| \leq 3 |\beta|/2$, we get}
 \ltwonorm{r}^2 - \frac{3}{4} \beta^2 + 18 |\beta|uk/\sqrt{K} \nonumber
 %%
 \end{align}
-\eanote{Checked this far.}
 Finally, we note that when $K > 5184 (k/\Delta)^4 (u/l)^2$, the above
 equation ensures that the expected loss drops by at least $\beta^2/4$.  The probability of
 choosing a swapping operations is $1/3$, of subsequently choosing the correct

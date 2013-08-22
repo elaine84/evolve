@@ -84,11 +84,12 @@ To complete the proof we establish the following claims.
 $\loss_{f, D}(w + \gamma e^i) \leq \loss_{f, D}(w) - \epsilon/(4k^2)$ and for
 any $j \not\in \NZ(f)$, $\beta \in [-B, B]$, $\loss_{f, D}(w + \beta e^j) \geq
 \loss_{f, D}(w + \gamma e^i) + \epsilon/(4k^3)$. Futhermore, $b - a \geq
-\sqrt{(k+1) \epsilon}/k$. \end{claim}
+\sqrt{(k+1) \epsilon}/k^2$. \end{claim}
 
-\begin{claim} \label{claim:elderberry} With probability at least $(1 - \lambda)
-\min\{1/8, \ltwonorm{f^S - w}/(4k^2)\}$, there exists a mutation that reduces the
-squared loss by at least $\ltwonorm{f^S - w}^2/12$. \end{claim}
+\begin{claim} \label{claim:elderberry} Conditioned on the mutator not outputting
+mutations that add a new variable, with probability at least $\min\{1/16,
+\ltwonorm{f^S - w}/(16k^2)\}$, there exists a mutation that reduces the squared
+loss by at least $\ltwonorm{f^S - w}^2/(12k^2)$. \end{claim}
 
 The proofs of Claims~\ref{claim:date} and \ref{claim:elderberry} are not
 difficult and are provided in Appendix~\ref{app:greedy}. Based on the above

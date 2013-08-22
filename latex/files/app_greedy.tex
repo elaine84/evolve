@@ -22,13 +22,13 @@ where in the last two steps we used the fact that $\corr(x_i, x_j) =
 \end{align}
 
 \noindent Here, again in the last two steps, we have used the fact that
-$\corr(x_{i^\prime}, x_j) \leq 1/(2k)$ and that $|r_i| \ltwonorm{e^i}$
-is the largest such term.
+$\corr(x_{i^\prime}, x_j) \leq 1/(2k)$ and that $|r_i| \cdot \ltwonorm{e^i}$ is
+the largest such term.
 
 First, we claim that if $\ltwonorm{r}^2 \geq \epsilon$, then the $i$ that
 maximised $|r_i| \cdot \ltwonorm{e^i}$ must be from the set $\NZ(f) \setminus
-S$. Note that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 = \loss_{f, D}(w)$, so if
-$\ltwonorm{r}^2 \leq \epsilon$, evolution has reached its goal. By the
+S$. (Note that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 = \loss_{f, D}(w)$, so if
+$\ltwonorm{r}^2 \leq \epsilon$, evolution has reached its goal.) By the
 triangle inequality, $\sum_{i \in \NZ(r)} |r_i| \cdot \ltwonorm{e^i} \geq
 \ltwonorm{r} \geq \sqrt{\epsilon}$. Hence, it must be the case that $|r_i| \cdot
 \ltwonorm{e^i} \geq \sqrt{\epsilon}/{k}$. For contradiction, assume that $i \in
@@ -81,51 +81,39 @@ $|r_i| \cdot \ltwonorm{e^i} \geq \sqrt{\epsilon}/k$, we have that $|r_i| \geq
 \geq \sqrt{(k+1) \epsilon}/k^2$, for $\delta = \sqrt{1/(k+1)}$.
 \end{proof}
 
-\begin{proof}[Proof of Claim~\ref{claim:elderberry}] With probability $\lambda$,
-the mutator only outputs mutations that add an extra variable. We ignore these
-kinds of mutations in this analysis. However, with the remaining $1 - \lambda$
-probability, the mutator outputs a mutation that is either of the type
-``scaling'' or ``adjusting'', or else is identical to the current
-representation. The proof follows along the lines of the proofs of
-Claims~\ref{claim:apple} and \ref{claim:banana}.
-
-First, suppose that
-$\ltwonorm{w} \geq 2 \ltwonorm{f^S}$. In this case, we claim that for $\gamma
-\in [1/2, 3/4]$, the mutation $\gamma w$ reduces the squared loss by at least
-$\ltwonorm{f^S - w}^2/12$. This analysis is completely identical to that in
-Claim~\ref{claim:apple} and hence is omitted.  The only difference is that the
-probability that such a mutation is selected is $((1 - \lambda)/4) \cdot 1/4$. 
+\begin{proof}[Proof of Claim~\ref{claim:elderberry}] 
+The proof follows along the lines of the proofs of Claims~\ref{claim:apple} and
+\ref{claim:banana}.  First, suppose that $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$.
+In this case, we claim that for $\gamma \in [1/2, 3/4]$, the mutation $\gamma w$
+reduces the squared loss by at least $\ltwonorm{f^S - w}^2/12$. This analysis is
+completely identical to that in Claim~\ref{claim:apple} and hence is omitted.
+The only difference is that the probability that such a mutation is selected is
+$1/16$, conditioned on the event that the mutator chooses mutations that don't
+add an extra variable.
 
 Next, we assume that $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$. Let $r^S = f^S - w$.
 Now, as in the proof of Claim~\ref{claim:date}, consider $i \in \NZ(r^S)$ (recall
 that $\NZ(r^S) = S$) that maximises $|r^S_i| \cdot \ltwonorm{e^i}$.
 Then, the following is true:
-\begin{align*}
+\begin{align}
 %%
 \left| \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}} \right| &\geq |r^S_i|
 \frac{\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in S, j \neq i} |r^S_j|
-\frac{\ip{e^i}{e^j}}{\ltwonorm{e^i}} \\
+\frac{\ip{e^i}{e^j}}{\ltwonorm{e^i}} \nonumber \\
 %%
 &\geq |r^S_i| \cdot \ltwonorm{e^i} - \frac{1}{2k} \sum_{j \in S, j \neq i}
-|r^S_j| \cdot \ltwonorm{e^j}
-%\mbox{Since $\corr(x_i, x_j) \leq \frac{1}{2k}$}
-\\
+|r^S_j| \cdot \ltwonorm{e^j} \nonumber \\
 %%
-&\geq |r^S_i| \cdot \ltwonorm{e^i} \cdot \frac{k+1}{2k}
-%|r^S_i| \cdot \ltwonorm{e^i} - \frac{k-1}{2k} \cdot |r^S_i| \cdot \ltwonorm{e^i},
-%\mbox{Since $|r^S_i| \ltwonorm{e^i}$ is the largest}
-%%
-%&\geq \frac{1}{2} |r^S_i| \cdot \ltwonorm{e^i}
-\end{align*}
-
-\noindent where in the last two steps we used the fact that
-$\corr(x_i, x_j) \leq 1/(2k)$ and that $|r^S_j| \ltwonorm{e^j}$ is maximised
-for $j = i$.
-Also, by the triangle inequality, we know that $\sum_{j \in S} |r^S_j| \cdot
-\ltwonorm{e^j} \geq \ltwonorm{r^S}$; hence, by definition of $i$, we have that
-$|r^S_i| \cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, let $\beta =
-\ip{e^i}{r^S}/\ltwonorm{e^i}^2$, and for $\gamma \in [\beta - |\beta|/2, \beta +
-|\beta|/2]$, consider the mutation $w + \gamma e^i$. We have,
+&\geq |r^S_i| \cdot \ltwonorm{e^i} \cdot \frac{k+1}{2k} \label{eqn:fennel}
+\end{align}
+%
+where in the last two steps we used the fact that $\corr(x_i, x_j) \leq 1/(2k)$
+and that $|r^S_j| \cdot \ltwonorm{e^j}$ is maximised for $j = i$, and the fact
+that $|S| \leq k$. Also, by the triangle inequality, we know that $\sum_{j \in
+S} |r^S_j| \cdot \ltwonorm{e^j} \geq \ltwonorm{r^S}$; hence, by definition of
+$i$, we have that $|r^S_i| \cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, let
+$\beta = \ip{e^i}{r^S}/\ltwonorm{e^i}^2$, and for $\gamma \in [\beta -
+|\beta|/2, \beta + |\beta|/2]$, consider the mutation $w + \gamma e^i$. We have,
 %%
 \begin{align*}
 %%
@@ -137,7 +125,8 @@ $|r^S_i| \cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, let $\beta =
 &\leq - \frac{3}{4} \ltwonorm{e^i}^2 \beta^2 &\mbox{For $\gamma \in [\beta -
 |\beta|/2, \beta + |\beta|/2]$} \\
 %%
-&\leq - \frac{3}{16} \frac{\ltwonorm{r^S}^2}{k^2} \qquad \eanote{~Check!}
+&\leq - \frac{3}{16} \frac{\ltwonorm{r^S}^2}{k^2} &\mbox{Using
+(\ref{eqn:fennel}) and the defn. of $\beta$}
 \end{align*}
 
 In order for $w + \gamma e^i$ to be a valid mutation, we need to check that
@@ -150,19 +139,22 @@ j_2 \in \NZ(w)} 2 |w_{j_1} w_{j_2}| |\ip{e^{j_1}}{e^{j_2}}| \\
 |w_{j_1} w_{j_2}| \ltwonorm{e^{j_1}}\ltwonorm{e^{j_2}} \\
 &\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 + \frac{1}{2k} \sum_{j_1 < j_2}
 (|w_{j_1}| \ltwonorm{e^{j_1}} - |w_{j_2}| \ltwonorm{e^{j_2}})^2 \\
-&\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 \qquad \eanote{~Check!}
+&\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 %\qquad \eanote{~Check!}
 \end{align*}
 
-\noindent Hence, by a fairly loose analysis, $\ltwonorm{e^i} |w_i| \leq 2 \ltwonorm{w}
-\leq 4 \ltwonorm{f} \leq 4uk$. Also $\ltwonorm{e^i} |\beta| =
-|\ip{e^i}{r^S}|/\ltwonorm{e^i}| \leq \ltwonorm{r^S} \leq 3 \ltwonorm{f}$.  Since
-$\ltwonorm{e^i} \geq \Delta$, it's easy to see that $|w_i| + (3/2) |\beta| \leq
-B$, for $B = 10 uk/\Delta$.
+\noindent Hence, by a fairly loose analysis, $|w_i|  \leq 2 \ltwonorm{w}/\Delta
+\leq 4 \ltwonorm{f}/\Delta \leq 4uk/\Delta$ (since $\ltwonorm{e^i} \geq \Delta$
+for the class of distributions defined in Defn.~\ref{defn:bhutan}). Also
+$|\beta| = |\ip{e^i}{r^S}|/\ltwonorm{e^i}^2 \leq \ltwonorm{r^S}/\ltwonorm{e^i}
+\leq 3 \ltwonorm{f}/\Delta$ (since $\ltwonorm{r^S} \leq \ltwonorm{f^S} +
+\ltwonorm{w} \leq 3 \ltwonorm{f^S} \leq 3 \ltwonorm{f}$). It's easy to see that
+$|w_i| + (3/2) |\beta| \leq B$, for $B = 10 uk/\Delta$.
 
-Finally, note that the probability of choosing such a mutation is at least $(1 -
-\lambda)|\beta|/(8Bk)$ ($1 - \lambda$ for not choosing to add a new variable,
-$1/4$ for choosing a mutation of type ``adjusting'', $1/k$ for choosing the
-appropriate variable to adjust and $|\beta|/(2B)$ for choosing the correct
-value). Combining the claims for mutations of the ``scaling'' and ``adjusting''
-types proves the statement of the claim.
+Finally, note that conditioned on the mutator choosing a mutation that doesn't
+add new variables, the probability of choosing such a mutation is at least
+$|\beta|/(8Bk)$ ($1/4$ for choosing a mutation of type ``adjusting'', $1/k$ for
+choosing the appropriate variable to adjust and $|\beta|/(2B)$ for choosing the
+correct value). Combining the claims for mutations of the ``scaling'' and
+``adjusting'' types and taking the appropritae minimum values proves the
+statement of the claim.
 \end{proof}
