@@ -1,28 +1,22 @@
 In this section, we present a different evolutionary mechanism for evolving
 sparse linear functions. This algorithm essentially is an adaptation of a greedy
 algorithm commonly known as orthogonal matching pursuit (OMP) in the signal
-processing literature (see ~\cite{Donoho:2006-recovery, Tropp:2004-greed}). We
-require three assumptions to prove that this mechanism succeeds, which are
-considerably stronger than the assumptions used earlier.
-%%
-%%
-\begin{enumerate}
-%
-\item For any two variables, $x_i$ and $x_j$, the correlation coefficient,
-$\corr(x_i, x_j) \leq \frac{1}{2k}$,
-where $k$ is the sparsity of the target linear function.
-%
-\item The selection rule is based on \emph{optimisation}, \ie nature selects the
-(almost) best mutation from the candidate pool. 
-%
-\item Evolution is allowed \emph{initialisation}; the starting representation
-corresponds to the $0$ vector.
-%
-\end{enumerate}
-
-\noindent Nevertheless, the algorithm is appealing for its simplicity and also
-for the fact that it is a \emph{proper} evolutionary mechanism -- it never uses
-a representation that is not a $k$-sparse linear function.
+processing literature (see ~\cite{Donoho:2006-recovery, Tropp:2004-greed}). Our
+analysis requires stronger properties on the distribution: we show that
+$k$-sparse linear functions can be evolved with respect to $1/(2k)$-incoherent
+$\Delta, G$-nice distributions (see Defn.~\ref{defn:bhutan}). Also, here the
+selection rule used is selection using \emph{optimisation}
+($\optsel$).\footnote{Valiant showed that selection using optimisation was
+equivalent to selection using beneficial and neutral
+mutations~\cite{Valiant:2009-evolvability}. However, this reduction uses
+representation classes that may be somewhat complex. For restricted
+representation classes, it is not clear that such a reduction holds. In
+particular, the necessary ingredients seems to be \emph{polynomial-size}
+memory.} And, the algorithm is guaranteed to succeed only with
+\emph{initialization} from the $0$ function.  Nevertheless, this evolutionary
+algorithm is appealing due to its simplicity and also because it is a
+\emph{proper} evolutionary mechanism -- it never uses a representation that is
+not a $k$-sparse linear function.
 
 Recall that $f \in  \lin^k_{0, u}$ is the ideal (target)
 function.\footnote{Here, we no longer need the fact that each coefficient in the
@@ -31,7 +25,8 @@ target linear function has magnitude at least $l$.} Let
 \[ R = \{w ~|~ \sparsity(w) \leq k, w_i \in [-B, B] \}, \]
 %
 where $B = 10uk/\Delta$. Now, starting from $w \in R$, define the action of the
-mutator as follows (we will define the parameters $\lambda$ and $m$ later):
+mutator as follows (we will define the parameters $\lambda$ and $m$ later in the
+proof of Theorem~\ref{thm:greedy}):
 %%
 \begin{enumerate}
 %%
@@ -45,10 +40,11 @@ populated by $m$ independent draws from the procedure just described.
 \item With probability $1 - \lambda$ do the following:
 %
 \begin{enumerate}
-\item {\em Scaling}: With probability $1/2$, choose $\gamma \in [-1, 1]$ uniformly at
+\item {\em Identical}: With probability $1/2$ output $w^\prime = w$
+\item {\em Scaling}: With probability $1/4$, choose $\gamma \in [-1, 1]$ uniformly at
 random and let $w^\prime = \gamma w$.
 %
-\item {\em Adjusting}: With probability $1/2$, do the following.  Pick $i \in \NZ(w)$
+\item {\em Adjusting}: With probability $1/4$, do the following.  Pick $i \in \NZ(w)$
 uniformly at random.  Let $w^\prime$ be such that $w^\prime_j = w_j$ for $j \neq
 i$, $w^\prime_i \in [-B, B]$ uniformly at random.
 \end{enumerate}
@@ -95,12 +91,12 @@ The proofs of Claims~\ref{claim:date} and \ref{claim:elderberry} are not
 difficult and are provided in Appendix~\ref{app:greedy}. Based on the above
 claims we can prove the following theorem:
 
-\begin{theorem} Let $\Dists$ be the class of $\Delta$-smooth $G$-nice
-distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}).
+\begin{theorem} \label{thm:greedy} Let $\Dists$ be the class of $\Delta$-smooth
+$G$-nice distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}).
 Then, the class $\lin^k_{0, u}$ is evolvable by an evolutionary algorithm, using
-the mutation algorithm described in this section, selection rule $\optsel$, and the
-representation class $R = \lin^k_{0, B}$, where $B = 10 uk/\Delta$. Furthermore,
-the following are true:
+the mutation algorithm described in this section, selection rule $\optsel$, and
+the representation class $R = \lin^k_{0, B}$, where $B = 10 uk/\Delta$.
+Furthermore, the following are true:
 %%
 \begin{enumerate}
 \item The number of generations $g$ is independent of the dimension $n$.
