@@ -24,22 +24,23 @@ Nevertheless, the algorithm is appealing for its simplicity and also for the fac
 that it is a \emph{proper} evolutionary mechanism -- it never uses a
 representation that is not a $k$-sparse linear function. 
 
-Let $C^k_{0, u}$ be the concept class from which the \emph{ideal function} is
-chosen.\footnote{Here, we no longer need the fact that each coefficient in the
-target linear function has magnitude at least $l$.} Let $R = \{w ~|~
-\sparsity(w) \leq k, w_i \in [-B, B] \}$. Now, define the action of the mutator
-as follows (we will define the parameters $B$, $\lambda$, and $m$ later
-\vknote{FILL THIS}): For $w \in R$, 
+Recall that $f \in  \lin^k_{0, u}$ is the ideal (target)
+function.\footnote{Here, we no longer need the fact that each coefficient in the
+target linear function has magnitude at least $l$.} Let 
+%
+\[ R = \{w ~|~ \sparsity(w) \leq k, w_i \in [-B, B] \}, \]
+%
+where $B = 10uk/\Delta$. Now, define the action of the mutator as follows (we
+will define the parameters $\lambda$ and $m$ later): For $w \in R$, 
 %%
 \begin{enumerate}
 %%
-\item (Adding) With probability $\lambda$ do the following:
-Recall $\NZ(w)$ denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose
-$i \in [n] \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that
-$w^\prime_j = w_i$ for $j \neq i$ and $w^\prime_i \in [-B, B]$ uniformly at
-random. If $\NZ(w)= k$, let $w^\prime = w$. Then, the multiset $\Neigh(w,
-\epsilon)$ is populated by $m$ independent draws from the procedure just
-described.
+\item (Adding) With probability $\lambda$ do the following: Recall $\NZ(w)$
+denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose $i \in [n]
+\setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that $w^\prime_j =
+w_i$ for $j \neq i$ and $w^\prime_i \in [-B, B]$ uniformly at random. If
+$\NZ(w)= k$, let $w^\prime = w$. Then, the multiset $\Neigh(w, \epsilon)$ is
+populated by $m$ independent draws from the procedure just described.
 %
 \item With probability $1 - \lambda$ do the following:
 %
@@ -56,20 +57,23 @@ from the procedure just described.
 \end{enumerate}
 
 One thing to note in the above definition is that the mutations produced by the
-mutator at any given time are correlated -- \ie they are all either of the kind that
-add a new variable, or all of the kind that just manipulate existing variables.
-At a high-level, we prove the success of this mechanism as follows:
+mutator at any given time are correlated -- \ie they are all either of the kind
+that add a new variable, or all of the kind that just manipulate existing
+variables.  At a high-level, we prove the success of this mechanism as follows:
 \begin{enumerate}
+%
 \item Using mutations of type ``scaling'' or ``adjusting,'' a representation
-that is close to the \emph{best} in the space is evolved.
+that is close to the \emph{best} in the space, \ie $f^S$, is evolved.
+%
 \item When the representation is (close to) the best possible using current
 variables, adding one of the variables that is present in the \emph{ideal
-function}, but not in the current representation,
-results in the greatest reduction of expected loss. Thus, selection
-based on optimisation would always add a variable in $\NZ(f)$. By tuning
-$\lambda$ appropriately, it is ensured that candidate mutations that add new
-variables are never chosen until evolution has had time to approach the
-\emph{best} representation using existing variables.
+function}, but not in the current representation, results in the greatest
+reduction of expected loss. Thus, selection based on optimisation would always
+add a variable in $\NZ(f)$. By tuning $\lambda$ appropriately, it is ensured
+that candidate mutations that add new variables are never chosen until evolution
+has had time to approach the \emph{best} representation using existing
+variables.
+%
 \end{enumerate}
 
 To complete the proof we establish the following claims.
@@ -79,126 +83,24 @@ To complete the proof we establish the following claims.
 \setminus S$ and $-B < a < b < B$, such that for any $\gamma \in [a, b]$,
 $\loss_{f, D}(w + \gamma e^i) \leq \loss_{f, D}(w) - \epsilon/(4k^2)$ and for
 any $j \not\in \NZ(f)$, $\beta \in [-B, B]$, $\loss_{f, D}(w + \beta e^j) \geq
-\loss_{f, D}(w + \gamma e^i) + \epsilon/(4k^3)$. \end{claim}
+\loss_{f, D}(w + \gamma e^i) + \epsilon/(4k^3)$. Futhermore, $b - a \geq
+\sqrt{(k+1) \epsilon}/k$. \end{claim}
 
 \begin{claim} \label{claim:elderberry} With probability at least $(1 - \lambda)
 \min\{1/8, \ltwonorm{f^S - w}/(4k^2)\}$, there exists a mutation that reduces the
 squared loss by at least $\ltwonorm{f^S - w}^2/12$. \end{claim}
 
-\begin{proof}[Proof of Claim~\ref{claim:date}] Since $S \subseteq \NZ(f)$, the
-residual $r = f - w$ is such that $\NZ(r) \subseteq \NZ(f)$. Let $i \in \NZ(r)$
-such that $|r_i||\ltwonorm{e^i}|$ is the maximum. Then, we have:
-\begin{align}
-\left|\frac{\ip{e^i}{r}}{\ltwonorm{e^i}} \right| &\geq
-\frac{|r_i|\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in \NZ(r), j \neq i}
-\frac{|r_j|\ip{e^i}{e^j}}{\ltwonorm{e^i}} \nonumber  \\
-&\geq |r_i|\ltwonorm{e^i} - \frac{1}{2k} \sum_{j \in \NZ(r), j \neq i}
-|r_j| \ltwonorm{e^j} \label{eqn:chives} \\
-&\geq |r_i| \ltwonorm \cdot \frac{k+1}{2k}, \nonumber
-\end{align}
-where in the last two steps we used the fact that $\corr(x_i, x_j) =
-\ip{e^i}{e^j}/(\ltwonorm{e^i} \ltwonorm{e^j}) \leq 1/(2k)$ and that $|\NZ(r)
-\setminus \{ i \}| \leq k-1$. On the other hand, for any $i^\prime \not\in
-\NZ(r)$, we have
-\begin{align}
-\left| \frac{\ip{e^{i^\prime}}{r}}{\ltwonorm{e^{i^\prime}}} \right| &\leq
-\sum_{j \in \NZ(r)} \frac{|r_j\ip{e^{i^\prime}}{e^j}|}{\ltwonorm{e^{i^\prime}}}
-\nonumber \\
-&\leq \frac{1}{2k} \sum_{j \in \NZ(r)} |r_j| \ltwonorm{e^j} \leq \frac{1}{2}
-|r_i| \ltwonorm{e^i} \label{eqn:dill}
-\end{align}
+The proofs of Claims~\ref{claim:date} and \ref{claim:elderberry} are not
+difficult and are provided in Appendix~\ref{app:greedy}. Based on the above
+claims we can prove the following theorem:
 
-Here, again in the last two steps, we've used the fact that $\corr(x_{i^\prime},
-x_j) \leq 1/(2k)$ and the fact that $|r_i| \ltwonorm{e^i}$ is the largest such
-term. 
+\begin{theorem} 
 
-First, we claim that if $\ltwonorm{r}^2 \geq \epsilon$, then the $i$ that
-maximised $|r_i| \ltwonorm{e^i}$ must be from the set $\NZ(f) \setminus S$. Note
-that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 = \loss_{f, D}(w)$, so if
-$\ltwonorm{r}^2 \leq \epsilon$, evolution has reached it's goal. Now, we have by
-triangle inequality, $\sum_{i \in \NZ(r)} |r_i| \ltwonorm{e^i} \geq \ltwonorm{r}
-\geq \sqrt{\epsilon}$. Hence, it must be the case that $|r_i| \ltwonorm{e^i}
-\geq \sqrt{\epsilon}{k}$. For contradiction, if $i \in S$, then since $f^S$ is
-the projection of $f$ in the space spanned by $S$, we have $r = f - f^S + f^S -
-w$ and $\ip{e^i}{r} = \ip{e^i}{f^S - w}$, since $\ip{e^i}{f - f^S} = 0$. But, by
-assumption of claim, $|\ip{e^i}{r}|\leq \ltwonorm{e^i} \ltwonorm{f^S - w} \leq
-\ltwonorm{e^i} \sqrt{\epsilon}{2k}$. But, by (\ref{eqn:chives}), we know that
-$|\ip{e^i}{r}| \geq (k+1/(2k)) |r_i| \ltwonorm{e^i}^2 > \ltwonorm
-\sqrt{\epsilon}/2k$. Thus, it cannot be the case that $i \in S$. 
+\end{theorem}
+\begin{proof}
 
-Let $w^\prime = w + \gamma e^i$. Then, 
-\begin{align} 
-\ltwonorm{f - (w + \gamma e^i)}^2 - \ltwonorm{f - w}^2 &= - 2 \gamma \ip{f -
-w}{e^i} + \gamma^2 \ltwonorm{e^i}^2 \nonumber
-&\leq - \ltwonorm{e^i}^2 (|\gamma| |r_i| \frac{k+1}{k} - |\gamma|^2 \nonumber
-\intertext{Now suppose $\gamma$ satisfies $1 - \delta \leq
-(2|\gamma|k)/(|r_i|(k+1)) \leq 1$, then using the fact that the quadratic
-function on the RHS is maximised at $|\gamma| = (k+1) |r_i|/(2k)$, we have}
-\ltwonorm{f - (w + \gamma e^i)}^2 - \ltwonorm{f - w}^2 &\leq - \ltwonorm{e^i}^2
-\frac{r_i^2}{4} \frac{(k+1)^2}{k^2} (1 - \delta^2) \label{eqn:eggplant}
-\end{align}
-
-Note that for any $i^\prime \not\in S$, the ``best'' representation of the form
-$w + \beta e^{i^\prime}$ is when $\beta =
-\ip{e^{i^\prime}}{r}/\ltwonorm{e^{i^\prime}}^2$, and the corresponding reduction
-in squared loss is $(\ip{e^{i^\prime}}{r})^2/\ltwonorm{e^{i^\prime}}^2$. Thus,
-for any $i^\prime \neq i$, we have
-\begin{align}
-\ltwonorm{f - (w + \beta e^{i^\prime})}^2 - \ltwonorm{f - w}^2 &\leq -
-\frac{\ip{e^{i^\prime}}{r}^2}{\ltwonorm{e^{i^\prime}}^2} \nonumber
-&\leq - \frac{r_i^2}{4} \ltwonorm{e^i}^2 &\mbox{Using~(\ref{eqn:dill})}
-\nonumber
-\end{align}
-Now, by setting $\delta = \sqrt{1/k+1}$ completes the proof of the Claim.
 \end{proof}
 
-\begin{proof}[Proof of Claim~\ref{claim:elderberry}] With probability $\lambda$,
-the mutator only outputs mutations that add an extra variable. We ignore these
-kinds of mutations in this analysis. However, with the remaining $1 - \lambda$
-probability, the mutator outputs a mutation that is either of the type
-``scaling'' or ``adjusting''. The proof follows along the lines of the proofs of
-Claims~\ref{claim:apple} and \ref{claim:banana}. First, suppose that
-$\ltwonorm{w} \geq 2 \ltwonorm{f^S}$. In this case, we claim that for $\gamma
-\in [1/2, 3/4]$, the mutation $\gamma w$ reduces the squared loss by at least
-$\ltwonorm{f^S - w}^2$. This analysis is completely identical to that in
-Claim~\ref{claim:apple} and hence is omitted. The only difference is that the
-probability that such a mutation is selected is $((1 - \lambda)/2) \cdot 1/4$. 
-
-Next, we assume that $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$. Let $r^S = f^S - w$.
-Now, as in the proof of Claim~\ref{claim:date}, let $i \in \NZ(r^S) (= S)$ be
-such that $|r^S_i| \ltwonorm{e^i}$ is maximised. Hence, the following is true:
-\begin{align*}
-\left| \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}} \right| &\geq |r^S_i|
-\frac{\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in S, j \neq i} |r^S_j|
-\frac{\ip{e^i}{e^j}}{\ltwonorm{e^i}} \\
-&\geq |r_i| \ltwonorm{e^i} - \frac{1}{2k} \sum_{j \in S, j \neq i} |r_j| \ltwonorm{e^j}
-&\mbox{Since $\corr(x_i, x_j) \leq \frac{1}{2k}$} \\
-&\geq |r_i| \ltwonorm{e^i} - \frac{k-1}{2k} \cdot |r_i| \ltwonorm{e^i} &
-\mbox{Since $|r_i| \ltwonorm{e^i}$ is the largest}
-&\geq \frac{1}{2} |r_i| \ltwonorm{e^i} 
-\end{align*}
-
-Also, by triangle inequality we know that $\sum_{j \in S} |r_j| \ltwonorm{e^j}
-\geq \ltwonorm{r^S}$; and hence by definition of $i$, $|r_i| \ltwonorm{e^i} \geq
-\ltwonorm{r^S}/k$. Now, finally let $\beta = \ip{e^i}{r^S}/\ltwonorm{e^i}^2$,
-and for $\gamma \in [\beta - |\beta|/2, \beta + |\beta|/2]$, consider the
-mutation $w + \gamma e^i$. We have,
-\begin{align*}
-\ltwonorm{f^S - (w + \gamma e^i)}^2 - \ltwonorm{f^S - w}^2 &= -2 \gamma
-\ip{e^i}{r^S} + \gamma^2 \ltwonorm{e^i}^2 \\
-&= - \ltwonorm{e^i}^2(2 |\gamma| |\beta| - |\gamma|^2)
-&\leq - \frac{ 3 \ltwonorm{e^i}^2 \beta^2}{4} \\
-&\mbox{For $\gamma \in [\beta - |\beta|/2, \beta + |\beta|/2]$}
-&\leq - \frac{3}{4} \ltwonorm{r^S}^2
-\end{align*}
-
-Finally, note that the probability of choosing such a mutation is at least $(1 -
-\lambda)|\beta|/(4Bk)$ ($1 - \lambda$ for not choosing to add a new variable,
-$1/2$ for choosing a mutation of type ``adjusting'', $1/k$ for choosing the
-appropriate variable to adjust and $|\beta|/(2B)$ for choosing the correct
-value). Combining the claims for mutations of the ``scaling'' and ``adjusting''
-type proves the statement of the claim.
-\end{proof}
 
 %% VK %% In the ensuing discussion, we will prove that for any target function
 %% VK %% $w^* \in C^k_{l,u}$, if $w \in R$ is such that
