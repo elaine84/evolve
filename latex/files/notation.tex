@@ -199,7 +199,7 @@ idea has been used in learning theory~\cite{KST:2009,KKM:2013}. We consider
 distributions that are bounded and have $0$ mean. Formally, the class of
 distributions we consider is defined as:
 
-\begin{definition}[$\Delta$-smooth $G$-Nice Distribution]
+\begin{definition}[$\Delta$-Smooth $G$-Nice Distribution]
 \label{defn:afghanistan} A distribution $D$ is a $\Delta$-smooth nice
 distribution, if it is obtained as follows. Let $\tilde{D}$ be some distribution
 over $\reals^n$, and let $U^n_a$ denote the uniform distribution over $[-a,
@@ -222,15 +222,16 @@ the following:
 
 \noindent{\bf Incoherent Distributions}: We also consider \emph{incoherent}
 distributions.\footnote{This terminology is adapted from incoherence of
-matrices.} For a distribution $D$ over $\reals^n$, the coherence is defined as
+matrices, \eg see~cite{Donoho:2009-sparse}.}
+For a distribution $D$ over $\reals^n$, the coherence is defined as
 $\max_{i, j} \corr(x_i, x_j)$, where $\corr(x_i, x_j)$ is correlation. Again, we
 consider bounded distributions with zero mean. We also require the variance to
 be upper and lower bounded in each dimension. Formally, the class of
 distributions we consider is
 
-\begin{definition}[$\mu$-Incoherent $\Delta, G$-Nice Distribution]
-\label{defn:bhutan} A distribution $D$ is a $\mu$-incoherent nice distribution
-if the following hold:
+\begin{definition}[$\mu$-Incoherent $(\Delta, G)$-Nice Distribution]
+\label{defn:bhutan} A distribution $D$ is a $\mu$-incoherent $(\Delta, G)$-nice
+distribution if the following hold:
 \begin{enumerate}
 \item $\E_D[x] = 0$
 \item For all $i$, $\Delta^2 \leq \E_D[x_i^2] \leq 1$
@@ -253,11 +254,11 @@ if the following hold:
 
 We say a linear function represented by $w \in \reals^n$ is $W$-bounded if
 $\sum_{i=1}^n w_i^2 \leq W^2$. We use the notation $w(x) = w \cdot x$. Suppose
-$f, w$ are $W$-bounded linear functions distribution $D$ is such that for every
+$f, w$ are $W$-bounded linear functions, and distribution $D$ is such that for every
 $x$ in the support of $D$, $\sum_{i=1}^n x_i^2 \leq G^2$.  We consider the
 squared loss function, where for scalars $y, y^\prime$, $\ell(y^\prime, y) =
 (y^\prime - y)^2$.  Then, for any $x$ in the support of $D$, $\ell(f(x), w(x))
-\leq 4 W^2G^2$. Thus, standard Hoeffding bounds imply that,
+\leq 4 W^2G^2$. Thus, standard Hoeffding bounds imply that
 %when $\ell$ is the squared loss function, for the class of $\Delta$-smooth
 %$G$-bounded distributions, and $W$-bounded linear functions, 
 if $\langle x^i \rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
