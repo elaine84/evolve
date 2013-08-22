@@ -1,6 +1,6 @@
 \begin{proof}[Proof of Claim~\ref{claim:date}] Since $S \subseteq \NZ(f)$, the
-residual $r = f - w$ is such that $\NZ(r) \subseteq \NZ(f)$. Let $i \in \NZ(r)$
-such that $|r_i|\cdot \ltwonorm{e^i}$ is the maximum. Then, we have:
+residual $r = f - w$ is such that $\NZ(r) \subseteq \NZ(f)$. Consider $i \in \NZ(r)$
+that maximises $|r_i|\cdot \ltwonorm{e^i}$. Then, we have:
 \begin{align}
 \left|\frac{\ip{e^i}{r}}{\ltwonorm{e^i}} \right| &\geq
 \frac{|r_i|\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in \NZ(r), j \neq i}
@@ -21,25 +21,25 @@ where in the last two steps we used the fact that $\corr(x_i, x_j) =
 |r_i| \cdot \ltwonorm{e^i} \label{eqn:dill}
 \end{align}
 
-Here, again in the last two steps, we've used the fact that $\corr(x_{i^\prime},
-x_j) \leq 1/(2k)$ and the fact that $|r_i| \ltwonorm{e^i}$ is the largest such
-term. 
+\noindent Here, again in the last two steps, we have used the fact that
+$\corr(x_{i^\prime}, x_j) \leq 1/(2k)$ and that $|r_i| \ltwonorm{e^i}$
+is the largest such term.
 
 First, we claim that if $\ltwonorm{r}^2 \geq \epsilon$, then the $i$ that
 maximised $|r_i| \cdot \ltwonorm{e^i}$ must be from the set $\NZ(f) \setminus
 S$. Note that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 = \loss_{f, D}(w)$, so if
-$\ltwonorm{r}^2 \leq \epsilon$, evolution has reached it's goal. Now, we have by
+$\ltwonorm{r}^2 \leq \epsilon$, evolution has reached its goal. By the
 triangle inequality, $\sum_{i \in \NZ(r)} |r_i| \cdot \ltwonorm{e^i} \geq
 \ltwonorm{r} \geq \sqrt{\epsilon}$. Hence, it must be the case that $|r_i| \cdot
 \ltwonorm{e^i} \geq \sqrt{\epsilon}/{k}$. For contradiction, assume that $i \in
-S$, then since $f^S$ is the projection of $f$ in the space spanned by $S$, we
-have $r = f - f^S + f^S - w$ and $\ip{e^i}{r} = \ip{e^i}{f^S - w}$, since
-$\ip{e^i}{f - f^S} = 0$. But, by assumption of claim, $|\ip{e^i}{r}|\leq
+S$. Then, since $f^S$ is the projection of $f$ in the space spanned by $S$, we
+have $\ip{e^i}{r} = \ip{e^i}{f^S - w}$, since $r = f - f^S + f^S - w$ and
+$\ip{e^i}{f - f^S} = 0$. But, by the assumption of the claim, $|\ip{e^i}{r}|\leq
 \ltwonorm{e^i} \cdot \ltwonorm{f^S - w} \leq \ltwonorm{e^i} \cdot
-(\sqrt{\epsilon}/(2k))$. But, by (\ref{eqn:chives}), we know that $|\ip{e^i}{r}|
-\geq ((k+1)/(2k)) \cdot (|r_i| \cdot \ltwonorm{e^i}) \cdot \ltwonorm{e^i} >
-\ltwonorm{e^i} \cdot(\sqrt{\epsilon}/(2k))$.  Thus, it cannot be the case that
-$i \in S$. 
+\sqrt{\epsilon}/(2k)$, and by (\ref{eqn:chives}), we know that $|\ip{e^i}{r}|
+\geq \ltwonorm{e^i} \cdot (|r_i| \cdot \ltwonorm{e^i}) \cdot (k+1)/(2k) >
+\ltwonorm{e^i} \cdot \ltwonorm{r} / (2k) \ge \ltwonorm{e^i} \cdot \sqrt{\epsilon}/(2k)$.
+Thus, it cannot be the case that $i \in S$.
 
 Let $w^\prime = w + \gamma e^i$. Then, 
 %%
@@ -72,11 +72,11 @@ for any $i^\prime \neq i$, we have
 &\leq - \frac{r_i^2}{4} \ltwonorm{e^i}^2 &\mbox{Using~(\ref{eqn:dill})}
 \nonumber
 \end{align}
-Now, by setting $\delta = \sqrt{1/(k+1)}$ completes the proof of the claim. To
-see that $b - a \geq \sqrt{(k+1)\epsilon}/k^2$. Notice that for any $\gamma$,
+Setting $\delta = \sqrt{1/(k+1)}$ completes the proof of the claim. To
+see that $b - a \geq \sqrt{(k+1)\epsilon}/k^2$, notice that any $\gamma$,
 such that $|\gamma| \in [(1 - \delta) ((k+1)/(2k)) |r_i|, (1 - \delta)
-((k+1)/(2k)) |r_i|]$ achieves the claimed reduction in squared loss. Since
-$|r_i| \cdot \ltwonorm{e^i} \geq \sqrt{\epsilon}/k$, $|r_i| \geq
+((k+1)/(2k)) |r_i|]$, achieves the claimed reduction in squared loss. Since
+$|r_i| \cdot \ltwonorm{e^i} \geq \sqrt{\epsilon}/k$, we have that $|r_i| \geq
 \sqrt{\epsilon}/k$. Hence, $b - a \geq 2 \delta ((k+1)/2k) (\sqrt{\epsilon}/k)
 \geq \sqrt{(k+1) \epsilon}/k^2$, for $\delta = \sqrt{1/(k+1)}$.
 \end{proof}
@@ -87,7 +87,9 @@ kinds of mutations in this analysis. However, with the remaining $1 - \lambda$
 probability, the mutator outputs a mutation that is either of the type
 ``scaling'' or ``adjusting'', or else is identical to the current
 representation. The proof follows along the lines of the proofs of
-Claims~\ref{claim:apple} and \ref{claim:banana}. First, suppose that
+Claims~\ref{claim:apple} and \ref{claim:banana}.
+
+First, suppose that
 $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$. In this case, we claim that for $\gamma
 \in [1/2, 3/4]$, the mutation $\gamma w$ reduces the squared loss by at least
 $\ltwonorm{f^S - w}^2/12$. This analysis is completely identical to that in
@@ -95,9 +97,9 @@ Claim~\ref{claim:apple} and hence is omitted.  The only difference is that the
 probability that such a mutation is selected is $((1 - \lambda)/4) \cdot 1/4$. 
 
 Next, we assume that $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$. Let $r^S = f^S - w$.
-Now, as in the proof of Claim~\ref{claim:date}, let $i \in \NZ(r^S)$ (recall
-that $\NZ(r^S) = S$) be such that $|r^S_i| \cdot \ltwonorm{e^i}$ is maximised.
-Hence, the following is true:
+Now, as in the proof of Claim~\ref{claim:date}, consider $i \in \NZ(r^S)$ (recall
+that $\NZ(r^S) = S$) that maximises $|r^S_i| \cdot \ltwonorm{e^i}$.
+Then, the following is true:
 \begin{align*}
 %%
 \left| \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}} \right| &\geq |r^S_i|
@@ -105,18 +107,23 @@ Hence, the following is true:
 \frac{\ip{e^i}{e^j}}{\ltwonorm{e^i}} \\
 %%
 &\geq |r^S_i| \cdot \ltwonorm{e^i} - \frac{1}{2k} \sum_{j \in S, j \neq i}
-|r^S_j| \cdot \ltwonorm{e^j} &\mbox{Since $\corr(x_i, x_j) \leq \frac{1}{2k}$}
+|r^S_j| \cdot \ltwonorm{e^j}
+%\mbox{Since $\corr(x_i, x_j) \leq \frac{1}{2k}$}
 \\
 %%
-&\geq |r^S_i| \cdot \ltwonorm{e^i} - \frac{k-1}{2k} \cdot |r^S_i| \cdot
-\ltwonorm{e^i} & \mbox{Since $|r^S_i| \ltwonorm{e^i}$ is the largest}
+&\geq |r^S_i| \cdot \ltwonorm{e^i} \cdot \frac{k+1}{2k}
+%|r^S_i| \cdot \ltwonorm{e^i} - \frac{k-1}{2k} \cdot |r^S_i| \cdot \ltwonorm{e^i},
+%\mbox{Since $|r^S_i| \ltwonorm{e^i}$ is the largest}
 %%
-&\geq \frac{1}{2} |r^S_i| \cdot \ltwonorm{e^i} 
+%&\geq \frac{1}{2} |r^S_i| \cdot \ltwonorm{e^i}
 \end{align*}
 
-Also, by the triangle inequality we know that $\sum_{j \in S} |r^S_j| \cdot
-\ltwonorm{e^j} \geq \ltwonorm{r^S}$; and hence by definition of $i$, $|r^S_i|
-\cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, finally let $\beta =
+\noindent where in the last two steps we used the fact that
+$\corr(x_i, x_j) \leq 1/(2k)$ and that $|r^S_j| \ltwonorm{e^j}$ is maximised
+for $j = i$.
+Also, by the triangle inequality, we know that $\sum_{j \in S} |r^S_j| \cdot
+\ltwonorm{e^j} \geq \ltwonorm{r^S}$; hence, by definition of $i$, we have that
+$|r^S_i| \cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, let $\beta =
 \ip{e^i}{r^S}/\ltwonorm{e^i}^2$, and for $\gamma \in [\beta - |\beta|/2, \beta +
 |\beta|/2]$, consider the mutation $w + \gamma e^i$. We have,
 %%
@@ -127,26 +134,26 @@ Also, by the triangle inequality we know that $\sum_{j \in S} |r^S_j| \cdot
 %%
 &= - \ltwonorm{e^i}^2(2 |\gamma| |\beta| - |\gamma|^2) \\
 %%
-&\leq - \frac{ 3 \ltwonorm{e^i}^2 \beta^2}{4} &\mbox{For $\gamma \in [\beta -
+&\leq - \frac{3}{4} \ltwonorm{e^i}^2 \beta^2 &\mbox{For $\gamma \in [\beta -
 |\beta|/2, \beta + |\beta|/2]$} \\
 %%
-&\leq - \frac{3}{4} \ltwonorm{r^S}^2
+&\leq - \frac{3}{16} \frac{\ltwonorm{r^S}^2}{k^2} \qquad \eanote{~Check!}
 \end{align*}
 
-In order for $w + \gamma e^i$ to be a valid mutation, We need to check that
+In order for $w + \gamma e^i$ to be a valid mutation, we need to check that
 $|w_i| + 3 |\beta|/2 < B$. To see this, observe the following:
 %%
 \begin{align*}
-\ltwonorm{w}^2 &\geq \sum_{i \in \NZ(w)} w_i^2 \ltwonorm{e^i}^2 - \sum_{i < j; i,
-j \in \NZ(w)} |w_i w_j| |\ip{e^i}{e^j}| \\
-&\geq \sum_{i \in \NZ(w)} w_i^2 \ltwonorm{e^i}^2 - \frac{1}{2k} \sum_{i < j}
-|w_i w_j| \ltwonorm{e^i}\ltwonorm{e^j} \\
-&\geq \frac{1}{2} \sum_{i \in \NZ(w)} w_i^2 \ltwonorm{e^i}^2 + \sum_{i < j}
-(|w_i| \ltwonorm{e^i} - |w_j| \ltwonorm{e^j})^2 \\
-&\geq \frac{1}{2} \sum_{i \in \NZ(w)} w_i^2
+\ltwonorm{w}^2 &\geq \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 - \sum_{j_1 < j_2; j_1,
+j_2 \in \NZ(w)} 2 |w_{j_1} w_{j_2}| |\ip{e^{j_1}}{e^{j_2}}| \\
+&\geq \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 - \frac{1}{k} \sum_{j_1 < j_2}
+|w_{j_1} w_{j_2}| \ltwonorm{e^{j_1}}\ltwonorm{e^{j_2}} \\
+&\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 + \frac{1}{2k} \sum_{j_1 < j_2}
+(|w_{j_1}| \ltwonorm{e^{j_1}} - |w_{j_2}| \ltwonorm{e^{j_2}})^2 \\
+&\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 \qquad \eanote{~Check!}
 \end{align*}
 
-Hence, by a fairly loose analysis, $\ltwonorm{e^i} |w_i| \leq 2 \ltwonorm{w}
+\noindent Hence, by a fairly loose analysis, $\ltwonorm{e^i} |w_i| \leq 2 \ltwonorm{w}
 \leq 4 \ltwonorm{f} \leq 4uk$. Also $\ltwonorm{e^i} |\beta| =
 |\ip{e^i}{r^S}|/\ltwonorm{e^i}| \leq \ltwonorm{r^S} \leq 3 \ltwonorm{f}$.  Since
 $\ltwonorm{e^i} \geq \Delta$, it's easy to see that $|w_i| + (3/2) |\beta| \leq
@@ -157,5 +164,5 @@ Finally, note that the probability of choosing such a mutation is at least $(1 -
 $1/4$ for choosing a mutation of type ``adjusting'', $1/k$ for choosing the
 appropriate variable to adjust and $|\beta|/(2B)$ for choosing the correct
 value). Combining the claims for mutations of the ``scaling'' and ``adjusting''
-type proves the statement of the claim.
+types proves the statement of the claim.
 \end{proof}
