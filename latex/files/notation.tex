@@ -138,6 +138,12 @@ should be bounded by a polynomial in $n, 1/\epsilon$.  \end{definition}
 starting representation $r_0$, we say $C$ is evolvable with
 \emph{initialization}. \end{remark}
 
+\begin{remark} If the functions in concept class $C$ depend only on $k$
+variables, we say the evolutionary algorithm is attribute-efficient, if the size
+function is polylogarithmic in $n$ and polynomial in the remaining parameters
+and the number of generations required is independent of $n$.
+\end{remark}
+
 The definition presented above varies slightly from the definition of Valiant,
 in the sense that we explicitly focus on the complexity of representations used
 by the evolutionary algorithm. As discussed in the introduction, we focus on
@@ -200,7 +206,7 @@ distributions that are bounded and have $0$ mean. Formally, the class of
 distributions we consider is defined as:
 
 \begin{definition}[$\Delta$-Smooth $G$-Nice Distribution]
-\label{defn:afghanistan} A distribution $D$ is a $\Delta$-smooth nice
+\label{defn:afghanistan} A distribution $D$ is a $\Delta$-smooth $G$-nice
 distribution, if it is obtained as follows. Let $\tilde{D}$ be some distribution
 over $\reals^n$, and let $U^n_a$ denote the uniform distribution over $[-a,
 a]^n$, then $D = \tilde{D} * U^n_{\sqrt{3}\Delta}$ is obtained by convolution of
@@ -222,7 +228,7 @@ the following:
 
 \noindent{\bf Incoherent Distributions}: We also consider \emph{incoherent}
 distributions.\footnote{This terminology is adapted from incoherence of
-matrices, \eg see~cite{Donoho:2009-sparse}.}
+matrices, \eg see~\cite{Donoho:2009-sparse}.}
 For a distribution $D$ over $\reals^n$, the coherence is defined as
 $\max_{i, j} \corr(x_i, x_j)$, where $\corr(x_i, x_j)$ is correlation. Again, we
 consider bounded distributions with zero mean. We also require the variance to
@@ -263,10 +269,11 @@ squared loss function, where for scalars $y, y^\prime$, $\ell(y^\prime, y) =
 %$G$-bounded distributions, and $W$-bounded linear functions, 
 if $\langle x^i \rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
 %%
-\[ 
+\begin{align}
 \Pr\left[\left| \frac{1}{s} \sum_{i=1}^s \ell(w(x^i), f(x^i)) - \loss_{f, D}(w)
-\right| \geq \tau \right] \leq 2 \exp\left( -\frac{ s \tau^2}{8W^2G^2}\right)
-\]
+\right| \geq \tau \right] &\leq 2 \exp\left( -\frac{ s \tau^2}{8W^2G^2}\right)
+\label{eqn:concentration}
+\end{align}
 %%
 
 %\eanote{Minor:  $w(x_i)$ doesn't seem explicitly defined.}
