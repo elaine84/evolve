@@ -7,7 +7,7 @@ entity that computes a function of its environment.  There is a (possibly
 hypothetical) \emph{ideal function} indicating the best behavior in every
 possible environment. The performance of the organism is measured by how close
 the function it computes is to the ideal. An organism produces a set of
-offspring, which may have mutations that  alter the function computed. The
+offspring, that may have mutations that  alter the function computed. The
 performance (fitness) measure acting on a population of mutants forms the basis
 of natural selection. The resources allowed are the most generous while
 remaining feasible; the mutation mechanism may be any efficient randomized
@@ -18,7 +18,7 @@ Formulated this way, the question of evolvability can be asked in the language
 of computational learning theory. For what classes of ideal functions, $C$, can
 one expect to find an evolutionary mechanism that gets arbitrarily close to the
 ideal, within feasible computational resources? Darwinian selection is
-restrictive in the sense that the only feedback received is aggregate over life
+restrictive in the sense that the only feedback received is {\em aggregate} over life
 experiences. Valiant observed that any feasible evolutionary mechanism could be
 simulated in the statistical query framework of Kearns~\cite{Kearns:1998}. In a
 remarkable result, Feldman showed that in fact, evolvable concept classes are
@@ -57,7 +57,7 @@ relate to functional changes in an organism. That said, the more direct
 algorithms are appealing due to the simplicity of their mutations.  Also, the
 ``chemical computers'' of organisms may be slow, and hence, representations that
 have low complexity are attractive.  In general, Feldman's
-general reduction from statistical query algorithms may use arbitrarily complex
+generic reduction from statistical query algorithms may use arbitrarily complex
 representations (polynomial-sized circuits), depending on the specific algorithm
 used.  In the remainder of the introduction, we first describe a particular
 class of biological circuits, \emph{transcription networks}, that motivate our
@@ -152,7 +152,7 @@ focus on systems that are directed acyclic graphs, and the resulting computation
 can be viewed as a circuit. We illustrate a small, real transcription network in
 Figure~\ref{fig:network}. These circuits are by necessity shallow due to
 a temporal constraint, that the time required for sufficient quantities of
-protein to be produced is of the same magnitude as cell-division
+protein to be produced is of the same order of magnitude as cell-division
 time.\footnote{Other kinds of networks, such as signaling networks, operate by
 changing the shapes of proteins. The fact that these transformations are rapid
 may allow for much larger depth. Note that fast conformational changes govern
@@ -193,7 +193,7 @@ distribution and adding a (noise) vector from a product distribution).
 A linear function is represented by a weighted arithmetic circuit with only one
 addition gate (alternatively, by a depth-two circuit with a layer of
 multiplication gates and some constant inputs).\footnote{There is a natural
-tradeoff between the fan-in and depth, that may be useful, depending on which is
+tradeoff between fan-in and depth, that may be useful, depending on which is
 the more severe constraint.} Also, the number of generations required for
 evolution to succeed depends polynomially on the sparsity $k$ of the target
 linear function, the smoothness parameter $\Delta$ of the distribution and the inverse of
