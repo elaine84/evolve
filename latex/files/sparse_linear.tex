@@ -34,7 +34,7 @@ Defn.~\ref{defn:afghanistan}). The representation class also consists of
 sparse linear functions, but with a greater number of non-zero entries than the
 \emph{ideal function}. We also assume that a linear function is represented by
 $w \in \reals^n$, where each $w_i$ is a real number. (Handling the issues of
-finite precision is standard and is avoided in favour of simplicity.) Define the
+finite precision is standard and is avoided in favor of simplicity.) Define the
 parameters $K = 5184(k/\Delta)^4(u/l)^2$ and $B = 10 uk /\Delta$. Formally, the
 representation class is
 \[ 
@@ -83,7 +83,7 @@ R$ is given by $\loss_{f, D}(w) = \ltwonorm{f - w}^2 = \ip{f - w}{f - w}$.  We
 will show that for any $w \in R$, if $\ltwonorm{f - w}^2 > \epsilon$, with
 non-negligible (inverse polynomial) probability, the above procedure produces a
 mutation $w^\prime$ that decreases the expected loss by at least some inverse
-polynomial amount. Thus, by setting the size of the neighbourhood $m$ large
+polynomial amount. Thus, by setting the size of the neighborhood $m$ large
 enough, we can guarantee that with high probability there will always exist a
 beneficial mutation.
 %
@@ -182,11 +182,11 @@ Now, let $t = 3\alpha / 5$ be the \emph{tolerance function}, set $\tau =
 \emph{size function}. Note that, $\sum_{i} w_i^2 \leq KB^2$ for $w \in R$ (this
 also holds for $f$, since $k < K$ and $u < B$). If $\langle x^i \rangle_{i=1}^s$
 is an i.i.d. sample drawn from $d$, for each $\bar{w}$ of the $mg$
-representations that may be considered in the neighbourhoods for the first $g$
+representations that may be considered in the neighborhoods for the first $g$
 time-steps, using~(\ref{eqn:concentration}), it holds that $|\hat{\loss}_{f,
 D}(\bar{w}) - \loss_{f, D}(\bar{w})| \leq \tau$ simultaneously except with
 probability $\epsilon/2$ (by a union bound). Thus, allowing for failure
-probability $\epsilon$, we assume that we are in the case when the neighbourhood
+probability $\epsilon$, we assume that we are in the case when the neighborhood
 always has a mutation that decreases the expected loss by $\alpha$ (whenever the
 expected loss of the current representation is at least $\epsilon$) and that all
 empirical expected losses are $\tau$-close to the true expected losses.

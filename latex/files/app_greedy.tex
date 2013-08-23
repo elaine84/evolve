@@ -1,6 +1,6 @@
 \begin{proof}[Proof of Claim~\ref{claim:date}] Since $S \subseteq \NZ(f)$, the
 residual $r = f - w$ is such that $\NZ(r) \subseteq \NZ(f)$. Consider $i \in \NZ(r)$
-that maximises $|r_i|\cdot \ltwonorm{e^i}$. Then, we have:
+that maximizes $|r_i|\cdot \ltwonorm{e^i}$. Then, we have:
 \begin{align}
 \left|\frac{\ip{e^i}{r}}{\ltwonorm{e^i}} \right| &\geq
 \frac{|r_i|\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in \NZ(r), j \neq i}
@@ -26,7 +26,7 @@ $\corr(x_{i^\prime}, x_j) \leq 1/(2k)$ and that $|r_i| \cdot \ltwonorm{e^i}$ is
 the largest such term.
 
 First, we claim that if $\ltwonorm{r}^2 \geq \epsilon$, then the $i$ that
-maximised $|r_i| \cdot \ltwonorm{e^i}$ must be from the set $\NZ(f) \setminus
+maximized $|r_i| \cdot \ltwonorm{e^i}$ must be from the set $\NZ(f) \setminus
 S$. (Note that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 = \loss_{f, D}(w)$, so if
 $\ltwonorm{r}^2 \leq \epsilon$, evolution has reached its goal.) By the
 triangle inequality, $\sum_{i \in \NZ(r)} |r_i| \cdot \ltwonorm{e^i} \geq
@@ -53,7 +53,7 @@ w}{e^i} + \gamma^2 \ltwonorm{e^i}^2 \nonumber \\
 %%
 \intertext{Now suppose $\gamma$ satisfies $1 - \delta \leq
 (2|\gamma|k)/(|r_i|(k+1)) \leq 1 + \delta$, then using the fact that the quadratic
-function on the RHS is maximised at $|\gamma| = (k+1) |r_i|/(2k)$, we have}
+function on the RHS is maximized at $|\gamma| = (k+1) |r_i|/(2k)$, we have}
 \ltwonorm{f - (w + \gamma e^i)}^2 - \ltwonorm{f - w}^2 &\leq - \ltwonorm{e^i}^2
 \cdot \frac{r_i^2}{4} \cdot \frac{(k+1)^2}{k^2} \cdot (1 - \delta^2) \label{eqn:eggplant}
 \end{align}
@@ -93,7 +93,7 @@ add an extra variable.
 
 Next, we assume that $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$. Let $r^S = f^S - w$.
 Now, as in the proof of Claim~\ref{claim:date}, consider $i \in \NZ(r^S)$ (recall
-that $\NZ(r^S) = S$) that maximises $|r^S_i| \cdot \ltwonorm{e^i}$.
+that $\NZ(r^S) = S$) that maximizes $|r^S_i| \cdot \ltwonorm{e^i}$.
 Then, the following is true:
 \begin{align}
 %%
@@ -108,7 +108,7 @@ Then, the following is true:
 \end{align}
 %
 where in the last two steps we used the fact that $\corr(x_i, x_j) \leq 1/(2k)$
-and that $|r^S_j| \cdot \ltwonorm{e^j}$ is maximised for $j = i$, and the fact
+and that $|r^S_j| \cdot \ltwonorm{e^j}$ is maximized for $j = i$, and the fact
 that $|S| \leq k$. Also, by the triangle inequality, we know that $\sum_{j \in
 S} |r^S_j| \cdot \ltwonorm{e^j} \geq \ltwonorm{r^S}$; hence, by definition of
 $i$, we have that $|r^S_i| \cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, let
@@ -155,6 +155,6 @@ add new variables, the probability of choosing such a mutation is at least
 $|\beta|/(8Bk)$ ($1/4$ for choosing a mutation of type ``adjusting'', $1/k$ for
 choosing the appropriate variable to adjust and $|\beta|/(2B)$ for choosing the
 correct value). Combining the claims for mutations of the ``scaling'' and
-``adjusting'' types and taking the appropritae minimum values proves the
+``adjusting'' types and taking the appropriate minimum values proves the
 statement of the claim.
 \end{proof}

@@ -4,13 +4,13 @@ that could arise through Darwinian mechanisms has remained virtually unexplored.
 To address this question, Valiant introduced a computational model of
 evolution~\cite{Valiant:2009-evolvability}.  In his model, an organism is an
 entity that computes a function of its environment.  There is a (possibly
-hypothetical) \emph{ideal function} indicating the best behaviour in every
+hypothetical) \emph{ideal function} indicating the best behavior in every
 possible environment. The performance of the organism is measured by how close
 the function it computes is to the ideal. An organism produces a set of
 offspring, which may have mutations that  alter the function computed. The
 performance (fitness) measure acting on a population of mutants forms the basis
 of natural selection. The resources allowed are the most generous while
-remaining feasible; the mutation mechanism may be any efficient randomised
+remaining feasible; the mutation mechanism may be any efficient randomized
 Turing machine, and the function represented by the organism may be arbitrary as
 long as it is computable by an efficient Turing machine.
 
@@ -31,7 +31,7 @@ correlational statistical queries, because when working with boolean
 functions with range $\{-1, 1\}$, the performance of any hypothesis is its
 correlation with the ideal function.} P.  Valiant studied the evolvability of
 real-valued functions and showed that whenever the corresponding weak
-optimisation problem, \ie approximately minimising the expected loss, can be
+optimization problem, \ie approximately minimizing the expected loss, can be
 solved by using a weak evaluation oracle, such an algorithm can be converted
 into an evolutionary mechanism~\cite{Valiant:2012-real}. This implies that a
 large of class of functions -- fixed-degree real polynomials -- can be evolved
@@ -185,7 +185,7 @@ used by the representations is larger than the number of variables in the
 \emph{ideal function} and depends on the \emph{smoothness} parameter of the
 distribution. According to our notion of $\Delta$-smooth $G$-nice distributions
 (Definition~\ref{defn:afghanistan}), the density function of a smooth distribution
-is obtained by convolving an arbitrary density with a product measure on
+is obtained by convolution of an arbitrary density with a product measure on
 $[-\sqrt{3}\Delta, \sqrt{3}\Delta]^n$ (alternatively, drawing a point from the
 smooth distribution is equivalent to drawing a point from an arbitrary
 distribution and adding a (noise) vector from a product distribution). 
@@ -205,15 +205,15 @@ Theorem~\ref{thm:sparse_linear} in Section~\ref{sec:sparse_linear}.
 
 Valiant also proposed a stronger selection mechanism -- when natural selection
 aggressively selects the (almost) best mutation, rather than merely a beneficial
-one -- called evolution by optimisation. Our second result requires a much
+one -- called evolution by optimization. Our second result requires a much
 stronger distributional assumption -- the correlation $\corr(x_i, x_j) \leq
 1/(2k)$ -- where $k$ is the sparsity of the target  linear function (see
 Defn.~\ref{defn:bhutan}). Under such distributions, we show that under evolution
-by optimisation, sparse linear functions can be evolved by representations with
+by optimization, sparse linear functions can be evolved by representations with
 the same sparsity. The mechanism we propose and its analysis is inspired by the
 greedy orthogonal matching pursuit algorithms in signal
 processing~\cite{Donoho:2006-recovery,Tropp:2004-greed}. Unlike the previous
-evolutionary algorithm, this one requires initialisation, \ie the evolutionary
+evolutionary algorithm, this one requires initialization, \ie the evolutionary
 process begins with the $0$ function. As in the previous case, the number of
 generations required depends polynomially on the sparsity $k$ of the target
 linear function, the inverse of the accuracy parameter $\epsilon$, but has no
@@ -256,7 +256,7 @@ system of linear equations (assuming there is no noise in the data). In general,
 this problem is $\NP$-hard and the currently best-known approximation factor
 depends on the norm of the pseudo-inverse of the matrix~\cite{Natarajan:1995}.
 Thus, some assumption on the distribution seems necessary. Our evolution based
-on optimisation algorithm (Section~\ref{sec:greedy}) is essentially the greedy
+on optimization algorithm (Section~\ref{sec:greedy}) is essentially the greedy
 orthogonal matching pursuit algorithm of Tropp~\cite{Tropp:2004-greed} and
 Donoho \emph{et al.}~\cite{Donoho:2006-recovery}, cast in the language of
 evolvability; these algorithms are also known in statistical modeling as forward
@@ -269,11 +269,11 @@ complexity that is polynomial in the sparsity $k$ of the target function and the
 inverse of the target accuracy $\epsilon$, and only polylogarithmic in $n$, the
 total number of attributes. Under mild boundedness assumptions on the
 distribution, this can be achieved by setting up an $L_1$-regularized
-optimisation problem; the output classifier may not be sparse in light of the
+optimization problem; the output classifier may not be sparse in light of the
 $\NP$-hardness result mentioned above. We note that under the distributional
 assumption made in the paper, finding the \emph{sparsest} linear function that
 fits the data is also easy in the PAC/SQ setting, since the solution to the
-optimisation problem in this case is unique. The focus in our work is different,
+optimization problem in this case is unique. The focus in our work is different,
 namely showing that simple evolutionary mechanisms can succeed, while using
 representations that are themselves sparse linear functions at all times.
 

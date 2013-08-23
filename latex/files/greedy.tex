@@ -5,8 +5,8 @@ processing literature (see ~\cite{Donoho:2006-recovery, Tropp:2004-greed}). Our
 analysis requires stronger properties on the distribution: we show that
 $k$-sparse linear functions can be evolved with respect to $1/(2k)$-incoherent
 $(\Delta, G)$-nice distributions (Defn.~\ref{defn:bhutan}). Here, the
-selection rule used is selection using \emph{optimisation}
-($\optsel$).\footnote{Valiant showed that selection using optimisation was
+selection rule used is selection using \emph{optimization}
+($\optsel$).\footnote{Valiant showed that selection using optimization was
 equivalent to selection using beneficial and neutral
 mutations~\cite{Valiant:2009-evolvability}. However, this reduction uses
 representation classes that may be somewhat complex. For restricted
@@ -63,7 +63,7 @@ that is close to the \emph{best} in the space, \ie $f^S$, is evolved.
 \item When the representation is (close to) the best possible using current
 variables, adding one of the variables that is present in the \emph{ideal
 function}, but not in the current representation, results in the greatest
-reduction of expected loss. Thus, selection based on optimisation would always
+reduction of expected loss. Thus, selection based on optimization would always
 add a variable in $\NZ(f)$. By tuning $\lambda$ appropriately, it is ensured
 that with high probability, candidate mutations that add new variables are not
 chosen until evolution has had time to approach the \emph{best} representation
@@ -78,7 +78,7 @@ To complete the proof we establish the following claims.
 \setminus S$ and $-B < a < b < B$, such that for any $\gamma \in [a, b]$,
 $\loss_{f, D}(w + \gamma e^i) \leq \loss_{f, D}(w) - \epsilon/(4k^2)$ and for
 any $j \not\in \NZ(f)$, $\beta \in [-B, B]$, $\loss_{f, D}(w + \beta e^j) \geq
-\loss_{f, D}(w + \gamma e^i) + \epsilon/(4k^3)$. Futhermore, $b - a \geq
+\loss_{f, D}(w + \gamma e^i) + \epsilon/(4k^3)$. Furthermore, $b - a \geq
 \sqrt{(k+1) \epsilon}/k^2$. \end{claim}
 
 \begin{claim} \label{claim:elderberry} Conditioned on the mutator not outputting
@@ -124,7 +124,7 @@ Also, let $\tau = \alpha/5$ and let $t = 3\alpha/5$ be the \emph{tolerance
 function}.
 
 First, we show that between the ``rare'' time-steps when the mutator outputs
-mutations that add a new variable, evolution has enough time to \emph{stabilise}
+mutations that add a new variable, evolution has enough time to \emph{stabilize}
 (reach close to local optimal) using existing variables. To see this, consider a
 sequence of coin tosses, where the probability of heads is $\lambda$ and the
 probability of tails is $1 - \lambda$. Let $Y_i$ be the number of tails between
