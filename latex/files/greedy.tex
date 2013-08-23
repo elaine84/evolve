@@ -4,15 +4,15 @@ algorithm commonly known as orthogonal matching pursuit (OMP) in the signal
 processing literature (see ~\cite{Donoho:2006-recovery, Tropp:2004-greed}). Our
 analysis requires stronger properties on the distribution: we show that
 $k$-sparse linear functions can be evolved with respect to $1/(2k)$-incoherent
-$\Delta, G$-nice distributions (see Defn.~\ref{defn:bhutan}). Also, here the
+$(\Delta, G)$-nice distributions (Defn.~\ref{defn:bhutan}). Here, the
 selection rule used is selection using \emph{optimisation}
 ($\optsel$).\footnote{Valiant showed that selection using optimisation was
 equivalent to selection using beneficial and neutral
 mutations~\cite{Valiant:2009-evolvability}. However, this reduction uses
 representation classes that may be somewhat complex. For restricted
 representation classes, it is not clear that such a reduction holds. In
-particular, the necessary ingredients seems to be \emph{polynomial-size}
-memory.} And, the algorithm is guaranteed to succeed only with
+particular, one of the necessary ingredients seems to be \emph{polynomial-size}
+memory.} Also, the algorithm is guaranteed to succeed only with
 \emph{initialization} from the $0$ function.  Nevertheless, this evolutionary
 algorithm is appealing due to its simplicity and because it never uses a
 representation that is not a $k$-sparse linear function.
@@ -29,30 +29,30 @@ proof of Theorem~\ref{thm:greedy}):
 %%
 \begin{enumerate}
 %%
-\item {\em Adding}: With probability $\lambda$ do the following: Recall $\NZ(w)$
-denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose $i \in [n]
+\item {\em Adding}: With probability $\lambda$ do the following: Recall that
+$\NZ(w)$ denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose $i \in [n]
 \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that $w^\prime_j =
-w_i$ for $j \neq i$ and $w^\prime_i \in [-B, B]$ uniformly at random. If
+w_i$ for $j \neq i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random. If
 $\NZ(w)= k$, let $w^\prime = w$. Then, the multiset $\Neigh(w, \epsilon)$ is
 populated by $m$ independent draws from the procedure just described.
 %
 \item With probability $1 - \lambda$ do the following:
 %
 \begin{enumerate}
-\item {\em Identical}: With probability $1/2$ output $w^\prime = w$
+\item {\em Identical}: With probability $1/2$, output $w^\prime = w$.
 \item {\em Scaling}: With probability $1/4$, choose $\gamma \in [-1, 1]$ uniformly at
 random and let $w^\prime = \gamma w$.
 %
 \item {\em Adjusting}: With probability $1/4$, do the following.  Pick $i \in \NZ(w)$
 uniformly at random.  Let $w^\prime$ be such that $w^\prime_j = w_j$ for $j \neq
-i$, $w^\prime_i \in [-B, B]$ uniformly at random.
+i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random.
 \end{enumerate}
 Then, the multiset $\Neigh(w, \epsilon)$ is populated by $m$ independent draws
 from the procedure just described.
 \end{enumerate}
 
 One thing to note in the above definition is that the mutations produced by the
-mutator at any given time are correlated \ie they are all either of the kind
+mutator at any given time are correlated, \ie they are all either of the kind
 that add a new variable, or all of the kind that just manipulate existing
 variables.  At a high level, we prove the success of this mechanism as follows:
 \begin{enumerate}
@@ -90,9 +90,10 @@ The proofs of Claims~\ref{claim:date} and \ref{claim:elderberry} are not
 difficult and are provided in Appendix~\ref{app:greedy}. Based on the above
 claims we can prove the following theorem:
 
-\begin{theorem} \label{thm:greedy} Let $\Dists$ be the class of $\Delta$-smooth
-$G$-nice distributions over $\reals^n$ (Definition~\ref{defn:afghanistan}).
-Then, the class $\lin^k_{0, u}$ is evolvable with respect to $\Dists$, by an
+\begin{theorem} \label{thm:greedy} Let $\Dists$ be the class of
+$1/(2k)$-incoherent $(\Delta, G)$-nice distributions over $\reals^n$
+(Defn.~\ref{defn:bhutan}).
+Then, the class $\lin^k_{0, u}$ is evolvable with respect to $\Dists$ by an
 evolutionary algorithm, using the mutation algorithm described in this section,
 selection rule $\optsel$, and the representation class $R = \lin^k_{0, B}$,
 where $B = 10 uk/\Delta$.  Furthermore, the following are true:
@@ -100,7 +101,7 @@ where $B = 10 uk/\Delta$.  Furthermore, the following are true:
 \begin{enumerate}
 %
 \item The number of generations $g$ is polynomial in $1/\epsilon$, $k$,
-$1/\Delta$, but independent of the dimension $n$.
+$1/\Delta$, but independent of the dimension~$n$.
 %
 \item The size function $s$, the number of points used to calculate the
 empirical losses, depends polylogarithmically on $n$ and polynomially on the
@@ -111,14 +112,15 @@ remaining parameters.
 \begin{proof} The proof is straightforward, although a bit heavy on notation; we
 provide a sketch here. The mutator is as described in this section. Let
 %%
-\[ p = \min\{ \frac{1}{16}, \frac{\sqrt{\epsilon}}{16k^3 B},
-\frac{\sqrt{(k+1)\epsilon}}{k^2} \}, \]
+\[ p = \min \left\{ \frac{1}{16}, \frac{\sqrt{\epsilon}}{16k^3 B},
+\frac{\sqrt{(k+1)\epsilon}}{k^2} \right\}, \]
 %%
 and let
 %%
-\[ \alpha = \min\{\epsilon/(4k^3), \epsilon/(192k^4)\} = \frac{\epsilon}{192k^4}. \]
+\[ \alpha = \min \left\{ \frac{\epsilon}{4k^3}, \frac{\epsilon}{192k^4} \right\}
+= \frac{\epsilon}{192k^4}. \]
 %%
-Also let $\tau = \alpha/5$ and let $t = 3\alpha/5$ be the \emph{tolerance
+Also, let $\tau = \alpha/5$ and let $t = 3\alpha/5$ be the \emph{tolerance
 function}.
 
 First, we show that between the ``rare'' time-steps when the mutator outputs
@@ -132,10 +134,10 @@ inequality, except with probability $\epsilon/(4(k+1))$, $Y_i <
 4(k+1)/(\epsilon\lambda)$. Thus, except with probability $\epsilon/2$, we have
 $\epsilon/(4(k+1)\lambda) \leq Y_i \leq 4(k+1)/(\epsilon\lambda)$ for $i = 1, 2,
 \ldots, k+1$. Let $g = 4(k+1)^2/(\epsilon\lambda) + (k+1)$. Thus, this ensures
-that, except with probability $\epsilon/2$, by $g$ time-steps, at least $k$
-time-steps where the mutator outputs mutations of type ``adding'' have occurred,
+that, except with probability $\epsilon/2$, after $g$ time steps, at least $k$
+time steps where the mutator outputs mutations of type ``adding'' have occurred,
 and the first $k$ of these occurrences are all separated by at least
-$\epsilon/(4(k+1) \lambda)$ time-steps of other types of mutations.
+$\epsilon/(4(k+1) \lambda)$ time steps of other types of mutations.
 
 Also, let $m = p^{-1}\ln(4g/\epsilon)$ and $s = (200 kG^2B^2/\alpha^2)
 \ln(4mg/\epsilon)$ be the \emph{size function}.  These values ensure that for
@@ -148,7 +150,7 @@ to fail with probability $\epsilon$, we assume that none of the undesirable
 events have occurred.
 
 We will show that the steps with mutations other than ``adding'' are sufficient
-to ensure that evolution reaches the (almost) best possible target in the
+to ensure that evolution reaches the (almost) best possible target with the
 variables available to it. In particular, if the set of available variables is
 $S$, the representation $w$ reached by evolution will satisfy $\ltwonorm{f^S -
 w}^2 \leq \epsilon/(2k^2)$. For now, suppose that this is the case. 
@@ -167,14 +169,14 @@ $\hat{\loss}_{f, D}(w^\prime) \leq \hat{\loss}_{f, D}(w) - 3 \alpha/5$. This
 ensures that the set $\best$, for selection rule $\optsel$ is not empty.
 Furthermore, we claim that no mutation that adds an \emph{irrelevant} variable
 can be in $\best$. Suppose $w^{\prime\prime}$ is a mutation that adds an
-\emph{irrelevant} variables, according to Claim~\ref{claim:elderberry},
+\emph{irrelevant} variable; according to Claim~\ref{claim:elderberry},
 $\loss_{f, D}(w^{\prime\prime})> \loss_{f, D}(w^\prime) + \alpha$, and hence
-$\loss_{f, D})(w^{\prime\prime}) > \loss_{f, D}(w^\prime) + t$. This ensures
-that every representation in $\best$ corresponds to mutations that adds some
+$\loss_{f, D}(w^{\prime\prime}) > \loss_{f, D}(w^\prime) + t$. This ensures
+that every representation in $\best$ corresponds to a mutation that adds some
 \emph{relevant} variable. Thus, the evolutionary algorithm never adds any
 \emph{irrelevant} variable.
 
-Finally, note that during a ``tails'' step (mutator produces mutations of types
+Finally, note that during a ``tails'' step (when the mutator produces mutations of types
 other than ``adding''), as long as $\ltwonorm{f^S - w}^2 \geq \epsilon/(4k^2)$,
 there exists a mutation that reduces the expected loss by at least
 $\epsilon^2/(192k^4) = \alpha$. This implies that the set $\best$ is non-empty
@@ -187,12 +189,12 @@ representation satisfying $\loss_{f, D}(w) \leq \epsilon/(4k^2)$ must be
 reached. Note that once such a representation is reached, it is ensured that the
 loss does not increase substantially, since with probability at least $1/2$, the
 mutator outputs the same representation. Hence, it is guaranteed that there is
-always a neutral mutation. Thus, before the next ``heads''-step it must be the
+always a neutral mutation. Thus, before the next ``heads'' step, it must be the
 case that $\ltwonorm{f^S - w}^2 \leq \epsilon/2k^2$. If $\lambda$ is set to
 $\epsilon\alpha/(80 k(k+1)B^2G^2$, the evolutionary algorithm using the
 selection rule $\optsel$ succeeds. 
 
-It is readily verified that the values of $g$ and $s$ satisfy the claims in
+It is readily verified that the values of $g$ and $s$ satisfy the claims in the
 statement of the theorem.
 \end{proof}
 
