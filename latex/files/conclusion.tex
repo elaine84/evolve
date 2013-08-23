@@ -1,10 +1,25 @@
-In the context of evolvability, strong negative results
-are known for distribution-independent evolvability of boolean functions, \eg
-even the class of conjunctions is not evolvable~\cite{?}. However, it is interesting to
-study whether under restricted classes of distributions, evolution is possible
-for simple, restricted concept classes, using only simple mutations.
-Currently, even under (biased) product
-distributions, no evolutionary mechanism is known for the class of disjunctions,
-except via Feldman's general reduction from CSQ algorithms. The class of
-smooth bounded distributions is one natural starting place for studying
-evolvability of simple concept classes.
+In this work, we provided simple evolutionary mechanisms for evolving sparse
+linear functions, under a large class of distributions. These evolutionary
+mechanisms have the desirable properties that the representations used are
+themselves sparse linear funcitons, and that they are attribute-efficient in the
+sense that the number of generations required for evolution to succeed is
+independent of the total number of attributes.
+
+Strong negative results are known for distribution-independent evolvability of
+boolean functions, \eg even the class of conjunctions is not
+evolvable~\cite{Feldman:2011-LTF}.  However, it would interesting to study
+whether under restricted classes of distributions, evolution is possible for
+simple concept classes, using representations of low-complexity. Currently, even
+under (biased) product distributions, no evolutionary mechanism is known for the
+class of disjunctions, except via Feldman's general reduction from CSQ
+algorithms. Even if the queries made by the CSQ algorithm are simple, Feldman's
+reduction uses intermediate representations that randomly combine queries made
+by the algorithm. 
+
+A natural extension of our current results would be to fixed-degree sparse
+polynomials. An interesting class of boolean functions is low-weight threshold
+functions, which includes disjunctions and conjunctions.  The class of smooth
+bounded distributions may be a natural starting place for studying evolvability
+of simple concept classes. For example, is the class of low-weight threshold
+functions evolvable under smooth distributions, or at least log-concave
+distributions? 

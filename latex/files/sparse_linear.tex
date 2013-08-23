@@ -183,14 +183,13 @@ Now, let $t = 3\alpha / 5$ be the \emph{tolerance function}, set $\tau =
 also holds for $f$, since $k < K$ and $u < B$). If $\langle x^i \rangle_{i=1}^s$
 is an i.i.d. sample drawn from $d$, for each $\bar{w}$ of the $mg$
 representations that may be considered in the neighbourhoods for the first $g$
-time-steps, using~(\ref{eqn:concentration})\vknote{FILL THIS}, it holds that
-$|\hat{\loss}_{f, D}(\bar{w}) - \loss_{f, D}(\bar{w})| \leq \tau$ simultaneously
-except with probability $\epsilon/2$ (by a union bound). Thus, allowing for
-failure probability $\epsilon$, we assume that we are in the case when the
-neighbourhood always has a mutation that decreases the expected loss by $\alpha$
-(whenever the expected loss of the current representation is at least
-$\epsilon$) and that all empirical expected losses are $\tau$-close to the true
-expected losses.
+time-steps, using~(\ref{eqn:concentration}), it holds that $|\hat{\loss}_{f,
+D}(\bar{w}) - \loss_{f, D}(\bar{w})| \leq \tau$ simultaneously except with
+probability $\epsilon/2$ (by a union bound). Thus, allowing for failure
+probability $\epsilon$, we assume that we are in the case when the neighbourhood
+always has a mutation that decreases the expected loss by $\alpha$ (whenever the
+expected loss of the current representation is at least $\epsilon$) and that all
+empirical expected losses are $\tau$-close to the true expected losses.
 
 Now let $w$ be the representation at some generation such that $\loss_{f, D}(w)
 \geq \epsilon$, let $w^\prime \in \Neigh(w, \epsilon)$ such that $\loss_{f,
