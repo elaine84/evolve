@@ -29,14 +29,14 @@ proof of Theorem~\ref{thm:greedy}):
 %%
 \begin{enumerate}
 %%
-\item {\em Adding}: With probability $\lambda$ do the following: Recall that
+\item {\em Adding}: With probability $\lambda$, do the following. Recall that
 $\NZ(w)$ denotes the non-zero entries of $w$. If $|\NZ(w)| < k$, choose $i \in [n]
 \setminus \NZ(w)$ uniformly at random. Let $w^\prime$ be such that $w^\prime_j =
 w_i$ for $j \neq i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random. If
 $\NZ(w)= k$, let $w^\prime = w$. Then, the multiset $\Neigh(w, \epsilon)$ is
 populated by $m$ independent draws from the procedure just described.
 %
-\item With probability $1 - \lambda$ do the following:
+\item With probability $1 - \lambda$, do the following:
 %
 \begin{enumerate}
 \item {\em Identical}: With probability $1/2$, output $w^\prime = w$.
@@ -123,7 +123,7 @@ and let
 Also, let $\tau = \alpha/5$ and let $t = 3\alpha/5$ be the \emph{tolerance
 function}.
 
-First, we show that between the ``rare'' time-steps when the mutator outputs
+First, we show that between the ``rare'' time steps when the mutator outputs
 mutations that add a new variable, evolution has enough time to \emph{stabilize}
 (reach close to local optimal) using existing variables. To see this, consider a
 sequence of coin tosses, where the probability of heads is $\lambda$ and the
@@ -133,17 +133,17 @@ $Y_i > \epsilon/(4(k+1)\lambda)$ by a simple union bound.  Also, by Markov's
 inequality, except with probability $\epsilon/(4(k+1))$, $Y_i <
 4(k+1)/(\epsilon\lambda)$. Thus, except with probability $\epsilon/2$, we have
 $\epsilon/(4(k+1)\lambda) \leq Y_i \leq 4(k+1)/(\epsilon\lambda)$ for $i = 1, 2,
-\ldots, k+1$. Let $g = 4(k+1)^2/(\epsilon\lambda) + (k+1)$. Thus, this ensures
+\ldots, k+1$. Let $g = 4(k+1)^2/(\epsilon\lambda) + (k+1)$. This ensures
 that, except with probability $\epsilon/2$, after $g$ time steps, at least $k$
 time steps where the mutator outputs mutations of type ``adding'' have occurred,
 and the first $k$ of these occurrences are all separated by at least
 $\epsilon/(4(k+1) \lambda)$ time steps of other types of mutations.
 
-Also, let $m = p^{-1}\ln(4g/\epsilon)$ and $s = (200 kG^2B^2/\alpha^2)
+Also, let $m = p^{-1}\ln(4g/\epsilon)$ and let $s = (200 kG^2B^2/\alpha^2)
 \ln(4mg/\epsilon)$ be the \emph{size function}.  These values ensure that for
 $g$ generations, except with probability $\epsilon/2$, the mutator always
 produces a mutation that had probability at least $p$ of being produced
-(conditioned on the type of mutations output by the mutator at that time-step),
+(conditioned on the type of mutations output by the mutator at that time step),
 and that for all the representations concerned, $|\hat{\loss}_{f, D}(w) -
 \loss_{f, D}(w)| \leq \tau$, where $\tau = \alpha/5$. Thus, allowing the process
 to fail with probability $\epsilon$, we assume that none of the undesirable
@@ -162,7 +162,7 @@ step, the representation is $w$, such that $S = \NZ(w)$ and $\ltwonorm{f^S - w}
 \leq \epsilon/(2k^2)$. The current step is assumed to be a ``heads'' step, thus
 the mutator has produced mutations by adding a new variable. Then, using
 Claim~\ref{claim:date}, we know that there is a mutation $w^\prime$ in
-$\Neigh(w, \epsilon)$, such that $\loss_{f, D}(w^\prime) < \loss_{f, D}(w) -
+$\Neigh(w, \epsilon)$ such that $\loss_{f, D}(w^\prime) < \loss_{f, D}(w) -
 \epsilon/(4k^2)$ (obtained by adding a correct variable). Since $\alpha <
 \epsilon/(4k^2)$ and $\tau = \alpha/5$, it must be the case that
 $\hat{\loss}_{f, D}(w^\prime) \leq \hat{\loss}_{f, D}(w) - 3 \alpha/5$. This

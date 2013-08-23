@@ -3,7 +3,7 @@ linear functions. The first evolves the class $\lin^k_{l, u}$ under the class of
 $\Delta$-smooth $G$-nice distributions (Defn.~\ref{defn:afghanistan}), using the
 selection rule $\bnsel$. The second evolves the class $\lin^k_{0, u}$ under the
 more restricted class of $(1/2k)$-incoherent $(\Delta, G)$-nice distributions
-(Defn.~\ref{defn:bhutan}) distributions, using the selection rule $\optsel$. We
+(Defn.~\ref{defn:bhutan}), using the selection rule $\optsel$. We
 first define the notation used in the rest of this section.\smallskip \\
 
 \noindent{\bf Notation}: $D$ denotes the target distribution over $X =
@@ -15,7 +15,7 @@ variables in the set $S$; formally,
 %%
 \begin{align}
 f^S = \underset{w \in \reals^n~:~ w_i = 0 ~\vee~i \in S}\argmin \ltwonorm{f -
-w}^2 \nonumber i%\label{eqn:artichoke}
+w}^2 \nonumber %\label{eqn:artichoke}
 \end{align}
 %%
 Finally, recall that for $w \in \reals^n$, $\NZ(w) = \{i ~|~ w_i \neq 0 \}$ and
@@ -28,15 +28,15 @@ parameter is denoted by $\epsilon$.
 \subsection{Evolving Sparse Linear Functions Using $\bnsel$}
 \label{sec:sparse_linear}
 
-We present a simple mechanism that evolves the class of sparse linear functions,
-$\lin^k_{l, u}$, with respect to $\Delta$-smooth $G$-nice distributions (see
+We present a simple mechanism that evolves the class of sparse linear functions
+$\lin^k_{l, u}$ with respect to $\Delta$-smooth $G$-nice distributions (see
 Defn.~\ref{defn:afghanistan}). The representation class also consists of
 sparse linear functions, but with a greater number of non-zero entries than the
 \emph{ideal function}. We also assume that a linear function is represented by
 $w \in \reals^n$, where each $w_i$ is a real number. (Handling the issues of
 finite precision is standard and is avoided in favor of simplicity.) Define the
 parameters $K = 5184(k/\Delta)^4(u/l)^2$ and $B = 10 uk /\Delta$. Formally, the
-representation class is
+representation class is:
 \[ 
 R = \{ w ~|~ \sparsity(w) \leq K, w_i \in [-B, B] \}
 \]
@@ -47,7 +47,7 @@ Next, we define the mutator. Recall that the mutator is a randomized algorithm
 that takes as input an element $r \in R$ and accuracy parameter $\epsilon$, and
 outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Here, $\Neigh(r,
 \epsilon)$ is populated by $m$ independent draws from the following procedure,
-where $m$ will be specified later (see proof of Thm. ~\ref{thm:sparse_linear}).
+where $m$ will be specified later (see the proof of Thm.~\ref{thm:sparse_linear}).
 Starting from $w \in R$, define the mutated representation $w^\prime$, output by
 the mutator, as:
 %%
@@ -75,7 +75,7 @@ w_j$ for $j \neq i$, and choose $w^\prime_i \in [-B, B]$ uniformly at random.
 \end{enumerate}
 \end{enumerate}
 
-Recall that $f \in \lin^k_{l, u}$ denotes the ideal (ideal) function, $D$ is the
+Recall that $f \in \lin^k_{l, u}$ denotes the ideal (target) function and $D$ is the
 underlying distribution that is $\Delta$-smooth $G$-nice (see
 Defn.~\ref{defn:afghanistan}). Since we are working with the squared loss
 metric, $\ell(y^\prime, y) = (y^\prime - y)^2$, the expected loss for any $w \in
@@ -109,7 +109,7 @@ the following claims.
 %%
 \begin{claim} \label{claim:apple} If $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$, then
 with probability at least $1/12$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
-\ltwonorm{w - f^S}^2/12$. In particular, a ``scaling'' type mutation achieves
+\ltwonorm{f^S - w}^2/12$. In particular, a ``scaling'' type mutation achieves
 this. \end{claim}
 %%
 \begin{claim} \label{claim:banana} When $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$,
@@ -136,7 +136,7 @@ above claims.
 distributions over $\reals^n$ (Defn.~\ref{defn:afghanistan}). Then the
 class $\lin^k_{l, u}$ is evolvable with respect to $\Dists$, using the
 representation class $\lin^K_{0, B}$, where $K = O((k/\Delta)^4 (u/l)^2)$ and $B
-= O(uk/\Delta)$, using the mutation algorithm described in this section, the
+= O(uk/\Delta)$, using the mutation algorithm described in this section, and the
 selection rule $\bnsel$.  Furthermore, the following are true:
 %%
 \begin{enumerate}
@@ -168,22 +168,22 @@ decreases the squared loss by $\alpha$ with probability at least $p$.
 Recall that $K = 5184 (k/\Delta)^4 (u/l)^2$ and $B = 10uk/\Delta$.  Now, let $g
 = 20 K G^2 B^2/\alpha$ (recall that $G^2$ is the bound on $\sum_{i} x_i^2$ for
 $x$ in the support of the distribution). We will show that evolution succeeds in
-at most $g$ generations. Note, that $g$ has no dependence on $n$, the number of
-attributes and polynomial dependence on the remaining parameters. Define $m =
-p^{-1} \ln(2g /\epsilon)$, and at each time-step we have that $|\Neigh(w,
+at most $g$ generations. Note that $g$ has no dependence on $n$, the number of
+attributes, and polynomial dependence on the remaining parameters. Define $m =
+p^{-1} \ln(2g /\epsilon)$, and at each time step we have that $|\Neigh(w,
 \epsilon)| = m$.  Note that together with the observation above, this implies
 that except with probability $\epsilon/2$, for $1 \leq i \leq g$, if $w^i$ is
-the representation at time-step $i$, $\Neigh(w^i, \epsilon)$ contains a mutation
+the representation at time step $i$, $\Neigh(w^i, \epsilon)$ contains a mutation
 that decreases the loss by at least $\alpha$, if $\loss_{f, D}(w^i) \geq
 \epsilon$. 
 
 Now, let $t = 3\alpha / 5$ be the \emph{tolerance function}, set $\tau =
 \alpha/5$ and let $s = (200 KG^2B^2/\alpha^2) \ln(4mg/\epsilon)$ be the
-\emph{size function}. Note that, $\sum_{i} w_i^2 \leq KB^2$ for $w \in R$ (this
+\emph{size function}. Note that $\sum_{i} w_i^2 \leq KB^2$ for $w \in R$ (this
 also holds for $f$, since $k < K$ and $u < B$). If $\langle x^i \rangle_{i=1}^s$
-is an i.i.d. sample drawn from $d$, for each $\bar{w}$ of the $mg$
+is an i.i.d. sample drawn from $D$, for each $\bar{w}$ of the $mg$
 representations that may be considered in the neighborhoods for the first $g$
-time-steps, using~(\ref{eqn:concentration}), it holds that $|\hat{\loss}_{f,
+time steps, using~(\ref{eqn:concentration}), it holds that $|\hat{\loss}_{f,
 D}(\bar{w}) - \loss_{f, D}(\bar{w})| \leq \tau$ simultaneously except with
 probability $\epsilon/2$ (by a union bound). Thus, allowing for failure
 probability $\epsilon$, we assume that we are in the case when the neighborhood
@@ -203,7 +203,7 @@ $\hat{\loss}_{f, D}(\tilde{w}) \leq \hat{\loss}_{f, D}(w) - t$. Thus, we have
 $\loss_{f, D}(\tilde{w}) \leq \loss_{f, D}(w) - \alpha/5$. Hence, the expected
 loss decreases at least by $\alpha/5$.
 
-Note that at no point can the expected loss by greater than $4kG^2B^2$ for any
+Note that at no point can the expected loss be greater than $4KG^2B^2$ for any
 representation in $R$. Hence, in at most $20 KG^2B^2/\alpha$ generations,
 evolution reaches a representation with expected loss at most $\epsilon$. Note
 the only parameter introduced which has an inverse polynomial dependence on $n$
@@ -213,7 +213,7 @@ concludes the proof of the theorem.
 
 \begin{remark} We note that the same evolutionary mechanism works when evolving
 the class $\lin^k_{0, u}$, as long as the sparsity $K$ of the representation
-class is allowed polynomial dependence on $1/\epsilon$, the accuracy parameter.
+class is allowed polynomial dependence on $1/\epsilon$, the inverse of the accuracy parameter.
 This is consistent with the notion of attribute-efficiency, where the goal is
 that the information complexity should be polylogarithmic in the number of
 attributes, but may depend polynomially on $1/\epsilon$.

@@ -90,7 +90,7 @@ produced signifying failure of evolution.
 %
 \item {\bf Selection based on optimization} ($\optsel$): Let $\widehat{\opt} =
 \displaystyle\min_{r^\prime \in \Neigh(r, \epsilon)} \hat{\loss}_{f,
-D}(r^\prime)$.  If $\widehat{\opt} < \hat{\loss}_{f, D}(r) + t(r, \epsilon)$,
+D}(r^\prime)$.  If $\widehat{\opt} > \hat{\loss}_{f, D}(r) + t(r, \epsilon)$,
 then $\bot$ is produced signifying failure of evolution.  Otherwise, consider
 the multiset, $\best = \{ r^\prime \in \Neigh(r, \epsilon) ~|~ \hat{\loss}_{f,
 D}(r^\prime) \leq \widehat{\opt} + t(r, \epsilon) \}$, and then $r^\prime$ is
@@ -123,7 +123,7 @@ $g$ is the smallest index for which the expected loss $\loss_{f, D}(r_g) \leq
 \epsilon$.
 
 \begin{definition}[Evolvability \cite{Valiant:2009-evolvability}] We say that a
-concept class $C$ is evolvable with respect to loss function $\ell$, selection
+concept class $C$ is evolvable with respect to loss function $\ell$ and selection
 rule $\Sel$, under a class of distributions $\Dists$ using a representation
 class $H$, if there exists a representation scheme $R \subseteq \{0, 1\}^*$,
 such that $R$ represents $H$, and there exists an evolutionary algorithm $\evalg
@@ -131,8 +131,8 @@ such that $R$ represents $H$, and there exists an evolutionary algorithm $\evalg
 every $\epsilon > 0$, and every $r_0 \in R$, with probability at least $1 -
 \epsilon$, $\evalg$ run starting from $r_0$ with respect to $f, D, \ell,
 \epsilon$, produces $r_g$ for which $\loss_{f, D}(r_g) < \epsilon$.
-Furthermore, the number of generations required for evolution to succeed, $g$,
-should be bounded by a polynomial in $n, 1/\epsilon$.  \end{definition}
+Furthermore, the number of generations $g$ required for evolution to succeed
+should be bounded by a polynomial in $n$ and $1/\epsilon$.  \end{definition}
 
 \begin{remark} If the evolutionary algorithm succeeds only for a specific
 starting representation $r_0$, we say $C$ is evolvable with
@@ -141,7 +141,7 @@ starting representation $r_0$, we say $C$ is evolvable with
 \begin{remark} If the functions in concept class $C$ depend only on $k$
 variables, we say the evolutionary algorithm is attribute-efficient, if the size
 function is polylogarithmic in $n$ and polynomial in the remaining parameters
-and the number of generations required is independent of $n$.
+and the number of generations $g$ required is independent of $n$.
 \end{remark}
 
 The definition presented above varies slightly from the definition of Valiant,
@@ -168,7 +168,7 @@ variables.}
 \label{sec:notation-class}
 
 Our main result in this paper concerns the class of sparse linear functions.  We
-represent a linear functions from $\reals^n \rightarrow \reals$ by a vector $w
+represent a linear function from $\reals^n \rightarrow \reals$ by a vector $w
 \in \reals^n$, where $x \mapsto w \cdot x$.  For a vector $w \in \reals^n$,
 $\lznorm{w}$ is the number of non-zero elements of $w$.
 
@@ -182,7 +182,7 @@ Thus, $\lin^k_{l, u}$ is the class of $k$-sparse linear functions, where the
 use the word ``influence'' in the precise technical sense here.}
 \todoea{Why ``influence'' rather than simply magnitude?}
 
-Let $D$ be a distribution over $\reals^n$. For $w, w^\prime$, define the inner
+Let $D$ be a distribution over $\reals^n$. For $w, w^\prime \in \reals^n$, define the inner
 product $\ip{w}{w^\prime} = \E_{x \sim D}[(w \cdot x) (w^\prime \cdot x)]$,
 where $w \cdot x = \sum_{i = 1}^n w_i x_i$ denotes the standard dot product in
 $\reals^n$. In this paper, we use $\ltwonorm{w}$ to denote $\sqrt{\ip{w}{w}}$
@@ -202,19 +202,19 @@ them formally here. \medskip
 bounded distributions over $\reals^n$. The concept of smoothed analysis of
 algorithms was introduced by Spielman and Teng~\cite{ST:2004} and recently the
 idea has been used in learning theory~\cite{KST:2009,KKM:2013}. We consider
-distributions that are bounded and have $0$ mean. Formally, the class of
-distributions we consider is defined as:
+distributions that are bounded and have $0$ mean. Formally,
+distributions we consider are defined as:
 
 \begin{definition}[$\Delta$-Smooth $G$-Nice Distribution]
 \label{defn:afghanistan} A distribution $D$ is a $\Delta$-smooth $G$-nice
-distribution, if it is obtained as follows. Let $\tilde{D}$ be some distribution
+distribution if it is obtained as follows. Let $\tilde{D}$ be some distribution
 over $\reals^n$, and let $U^n_a$ denote the uniform distribution over $[-a,
-a]^n$, then $D = \tilde{D} * U^n_{\sqrt{3}\Delta}$ is obtained by convolution of
+a]^n$. Then $D = \tilde{D} * U^n_{\sqrt{3}\Delta}$ is obtained by the convolution of
 $\tilde{D}$ with $U^n_{\sqrt{3} \Delta}$.\footnote{We could perform convolution
 with a spherical Gaussian distribution, however, this would make the resulting
 distribution unbounded. All results in this paper hold if we work with
 sub-Gaussian distributions and consider convolution with a spherical Gaussian
-distribution with variance $\Delta^2$.  However, we would be required to use
+distribution with variance $\Delta^2$.  In this case, we would be required to use
 Chebychev's inequality rather than Hoeffding's bound to show that the empirical
 estimate is close to the expected loss with high probability.} Furthermore, $D$
 satisfies the following:
@@ -232,8 +232,8 @@ matrices, \eg see~\cite{Donoho:2009-sparse}.}
 For a distribution $D$ over $\reals^n$, the coherence is defined as
 $\max_{i, j} \corr(x_i, x_j)$, where $\corr(x_i, x_j)$ is correlation. Again, we
 consider bounded distributions with zero mean. We also require the variance to
-be upper and lower bounded in each dimension. Formally, the class of
-distributions we consider is
+be upper and lower bounded in each dimension. Formally, the
+distributions we consider are defined as:
 
 \begin{definition}[$\mu$-Incoherent $(\Delta, G)$-Nice Distribution]
 \label{defn:bhutan} A distribution $D$ is a $\mu$-incoherent $(\Delta, G)$-nice
@@ -262,7 +262,7 @@ We say a linear function represented by $w \in \reals^n$ is $W$-bounded if
 $\sum_{i=1}^n w_i^2 \leq W^2$. We use the notation $w(x) = w \cdot x$. Suppose
 $f, w$ are $W$-bounded linear functions, and distribution $D$ is such that for every
 $x$ in the support of $D$, $\sum_{i=1}^n x_i^2 \leq G^2$.  We consider the
-squared loss function, where for scalars $y, y^\prime$, $\ell(y^\prime, y) =
+squared loss function, which for $y, y^\prime \in \reals$ is $\ell(y^\prime, y) =
 (y^\prime - y)^2$.  Then, for any $x$ in the support of $D$, $\ell(f(x), w(x))
 \leq 4 W^2G^2$. Thus, standard Hoeffding bounds imply that
 %when $\ell$ is the squared loss function, for the class of $\Delta$-smooth
@@ -279,7 +279,7 @@ if $\langle x^i \rangle_{i=1}^s$ is an i.i.d. sample drawn from $D$, then
 %\eanote{Minor:  $w(x_i)$ doesn't seem explicitly defined.}
 
 Finally, for linear functions $w$ ($x \mapsto w \cdot x$), let $\NZ(w) = \{ i
-~|~ w_i \neq 0 \}$ denote the non-zero variables in $w$ and $\lznorm{w} =
+~|~ w_i \neq 0 \}$ denote the non-zero variables in $w$, so $\lznorm{w} =
 |\NZ(w)|$. Then, we have the following Lemma. The proof appears in
 Appendix~\ref{app:notation-class}.
 
@@ -289,7 +289,7 @@ and consider the corresponding linear function, $x \mapsto w \cdot x$. Then the
 following are true:
 \begin{enumerate}
 \item For any $1 \leq i \leq n$, $w_i^2 \leq \frac{\ip{w}{w}}{\Delta^2}$.
-\item There exists an $i$, such that, $w_i^2 \leq
+\item There exists an $i$ such that $w_i^2 \leq
 \frac{\ip{w}{w}}{|\NZ(w)|\Delta^2}$.
 \end{enumerate}
 \end{lemma}

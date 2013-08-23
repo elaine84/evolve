@@ -184,7 +184,7 @@ when the performance is measured using squared error. The number of variables
 used by the representations is larger than the number of variables in the
 \emph{ideal function} and depends on the \emph{smoothness} parameter of the
 distribution. According to our notion of $\Delta$-smooth $G$-nice distributions
-(Definition~\ref{defn:afghanistan}), the density function of a smooth distribution
+(Defn.~\ref{defn:afghanistan}), the density function of a smooth distribution
 is obtained by convolution of an arbitrary density with a product measure on
 $[-\sqrt{3}\Delta, \sqrt{3}\Delta]^n$ (alternatively, drawing a point from the
 smooth distribution is equivalent to drawing a point from an arbitrary
@@ -193,14 +193,14 @@ distribution and adding a (noise) vector from a product distribution).
 A linear function is represented by a weighted arithmetic circuit with only one
 addition gate (alternatively, by a depth-two circuit with a layer of
 multiplication gates and some constant inputs).\footnote{There is a natural
-tradeoff between the fan-in and depth, which may be useful depending on which is
+tradeoff between the fan-in and depth, that may be useful, depending on which is
 the more severe constraint.} Also, the number of generations required for
 evolution to succeed depends polynomially on the sparsity $k$ of the target
-linear function, the smoothness parameter of the distribution and the inverse of
-the target accuracy $\epsilon$, and has no dependence on $n$ (the dimension of
-the input space). Thus, our result shows \emph{attribute-efficient} evolvability
-of sparse linear functions (in the sense of
-Littlestone~\cite{Littlestone:1988}). For the precise statement, see
+linear function, the smoothness parameter $\Delta$ of the distribution and the inverse of
+the target accuracy $\epsilon$, and has no dependence on the dimension $n$ of
+the input space. Thus, our result shows \emph{attribute-efficient} evolvability
+of sparse linear functions, in the sense of
+Littlestone~\cite{Littlestone:1988}. For the precise statement, see
 Theorem~\ref{thm:sparse_linear} in Section~\ref{sec:sparse_linear}.
 
 Valiant also proposed a stronger selection mechanism -- when natural selection
