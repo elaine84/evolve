@@ -11,7 +11,7 @@ equivalent to selection using beneficial and neutral
 mutations~\cite{Valiant:2009-evolvability}. However, this reduction uses
 representation classes that may be somewhat complex. For restricted
 representation classes, it is not clear that such a reduction holds. In
-particular, one of the necessary ingredients seems to be \emph{polynomial-size}
+particular, the necessary ingredient seems to be \emph{polynomial-size}
 memory.} Also, the algorithm is guaranteed to succeed only with
 \emph{initialization} from the $0$ function.  Nevertheless, this evolutionary
 algorithm is appealing due to its simplicity and because it never uses a
@@ -112,7 +112,7 @@ remaining parameters.
 \begin{proof} The proof is straightforward, although a bit heavy on notation; we
 provide a sketch here. The mutator is as described in this section. Let
 %%
-\[ p = \min \left\{ \frac{1}{16}, \frac{\sqrt{\epsilon}}{16k^3 B},
+\[ p = \min \left\{ \frac{1}{16}, \frac{\sqrt{\epsilon}}{64 k^3 B},
 \frac{\sqrt{(k+1)\epsilon}}{k^2} \right\}, \]
 %%
 and let
@@ -133,8 +133,8 @@ $Y_i > \epsilon/(4(k+1)\lambda)$ by a simple union bound.  Also, by Markov's
 inequality, except with probability $\epsilon/(4(k+1))$, $Y_i <
 4(k+1)/(\epsilon\lambda)$. Thus, except with probability $\epsilon/2$, we have
 $\epsilon/(4(k+1)\lambda) \leq Y_i \leq 4(k+1)/(\epsilon\lambda)$ for $i = 1, 2,
-\ldots, k+1$. Let $g = 4(k+1)^2/(\epsilon\lambda) + (k+1)$. This ensures
-that, except with probability $\epsilon/2$, after $g$ time steps, at least $k$
+\ldots, k+1$. Let $g = 4(k+1)^2/(\epsilon\lambda) + (k+1)$. This ensures that,
+except with probability $\epsilon/2$, after $g$ time steps, at least $(k+1)$
 time steps where the mutator outputs mutations of type ``adding'' have occurred,
 and the first $k$ of these occurrences are all separated by at least
 $\epsilon/(4(k+1) \lambda)$ time steps of other types of mutations.
@@ -171,7 +171,7 @@ Furthermore, we claim that no mutation that adds an \emph{irrelevant} variable
 can be in $\best$. Suppose $w^{\prime\prime}$ is a mutation that adds an
 \emph{irrelevant} variable; according to Claim~\ref{claim:elderberry},
 $\loss_{f, D}(w^{\prime\prime})> \loss_{f, D}(w^\prime) + \alpha$, and hence
-$\loss_{f, D}(w^{\prime\prime}) > \loss_{f, D}(w^\prime) + t$. This ensures
+$\hat{\loss}_{f, D}(w^{\prime\prime}) > \hat{\loss}_{f, D}(w^\prime) + t$. This ensures
 that every representation in $\best$ corresponds to a mutation that adds some
 \emph{relevant} variable. Thus, the evolutionary algorithm never adds any
 \emph{irrelevant} variable.
@@ -184,14 +184,14 @@ and for the values of tolerance $t = 3\alpha/5$ and $\tau = \alpha/5$, any
 mutation from the set $\best$ reduces the expected loss by at least $\alpha/5$.
 (This argument is identical to the one in Theorem~\ref{thm:sparse_linear}.)
 Since the maximum loss is at most $4kB^2G^2$ for the class of distributions and
-a representation $w$ from the set $R$, in at most $20kB^2G^2/\alpha$ steps, a
+a representation $w$ from the set $R$; in at most $20kB^2G^2/\alpha$ steps, a
 representation satisfying $\loss_{f, D}(w) \leq \epsilon/(4k^2)$ must be
 reached. Note that once such a representation is reached, it is ensured that the
 loss does not increase substantially, since with probability at least $1/2$, the
 mutator outputs the same representation. Hence, it is guaranteed that there is
 always a neutral mutation. Thus, before the next ``heads'' step, it must be the
 case that $\ltwonorm{f^S - w}^2 \leq \epsilon/2k^2$. If $\lambda$ is set to
-$\epsilon\alpha/(80 k(k+1)B^2G^2$, the evolutionary algorithm using the
+$\epsilon\alpha/(80 k(k+1)B^2G^2)$, the evolutionary algorithm using the
 selection rule $\optsel$ succeeds. 
 
 It is readily verified that the values of $g$ and $s$ satisfy the claims in the

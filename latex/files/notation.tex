@@ -43,9 +43,9 @@ The performance of a representation $r$ is measured using a loss function $\ell
 : Y \times Y \rightarrow \reals^+$, such that $\ell(y, y) = 0$. For a function
 $g : X \rightarrow Y$, define the expected loss with respect to the ideal
 function $f : X \rightarrow Y$, under distribution $D$, as $\loss_{f, D}(g) =
-\E_{x \sim D}[\ell(g(x), f(x))]$\footnote{This definition does not require the
+\E_{x \sim D}[\ell(g(x), f(x))]$.\footnote{This definition does not require the
 expected loss to be bounded, but we will mainly be interested in situations when
-that is the case.}. The goal of evolution is to reach some representation $r^*$
+that is the case.} The goal of evolution is to reach some representation $r^*$
 such that $\loss_{f, D}(r^*) < \epsilon$. In the following discussion, we use
 the notation: $f$ the ideal function, $\epsilon$ the target accuracy, $D$ the
 target distribution over $X$ and $\loss_{f, D}(g)$ the expected loss function.  \medskip \\
@@ -53,7 +53,8 @@ target distribution over $X$ and $\loss_{f, D}(g)$ the expected loss function.  
 \noindent{\bf Mutator}: A mutator $\Mut(r, \epsilon)$, for a set of representations $R$, is
 a polynomial-time randomized Turing machine that takes as input a representation
 $r \in R$ and accuracy parameter $\epsilon$ and outputs a multiset $\Neigh(r,
-\epsilon) \subseteq R$. \medskip \\
+\epsilon) \subseteq R$. The running time requirement on $\Mut$ also ensure that
+$|\Neigh(r, \epsilon)|$ is polynomially bounded. \medskip \\
 %
 \noindent{\bf Selection}: (Natural) Selection is based on the empirical performance
 of each representation. Let $s : R \times [0, 1] \rightarrow \naturals$ be a
@@ -118,7 +119,7 @@ with respect to distribution $D$ over $X$, ideal function $f : X \rightarrow Y$,
 loss function $\ell$ and parameter $\epsilon$, a sequence $r_0, r_1, r_2,
 \ldots$ is produced, where $r_i \leftarrow \Sel[R, \Mut, s, t](r_{i - 1},
 \epsilon)$. If $r_i = \bot$ for some $i$, we consider evolution as halted and
-$r_j = \bot$ for $j > i$. We say that $\evalg$ succeeds at generation $g$ if
+$r_j = \bot$ for $j > i$. We say that $\evalg$ succeeds at generation $g$, if
 $g$ is the smallest index for which the expected loss $\loss_{f, D}(r_g) \leq
 \epsilon$.
 
@@ -140,8 +141,9 @@ starting representation $r_0$, we say $C$ is evolvable with
 
 \begin{remark} If the functions in concept class $C$ depend only on $k$
 variables, we say the evolutionary algorithm is attribute-efficient, if the size
-function is polylogarithmic in $n$ and polynomial in the remaining parameters
-and the number of generations $g$ required is independent of $n$.
+function, $s$, is polylogarithmic in $n$ and polynomial in $k$ and $1/\epsilon$
+and the number of generations, $g$, is polynomial in $k$ and $1/\epsilon$ and
+does not depend on $n$.
 \end{remark}
 
 The definition presented above varies slightly from the definition of Valiant,
@@ -228,12 +230,12 @@ satisfies the following:
 
 \noindent{\bf Incoherent Distributions}: We also consider \emph{incoherent}
 distributions.\footnote{This terminology is adapted from incoherence of
-matrices, \eg see~\cite{Donoho:2009-sparse}.}
-For a distribution $D$ over $\reals^n$, the coherence is defined as
-$\max_{i, j} \corr(x_i, x_j)$, where $\corr(x_i, x_j)$ is correlation. Again, we
-consider bounded distributions with zero mean. We also require the variance to
-be upper and lower bounded in each dimension. Formally, the
-distributions we consider are defined as:
+matrices, \eg see~\cite{Donoho:2009-sparse}.} For a distribution $D$ over
+$\reals^n$, the coherence is defined as $\max_{i, j} \corr(x_i, x_j)$, where
+$\corr(x_i, x_j)$ is the correlation between $x_i$ and $x_j$. Again, we consider
+bounded distributions with zero mean. We also require the variance to be upper
+and lower bounded in each dimension. Formally, the distributions we consider are
+defined as:
 
 \begin{definition}[$\mu$-Incoherent $(\Delta, G)$-Nice Distribution]
 \label{defn:bhutan} A distribution $D$ is a $\mu$-incoherent $(\Delta, G)$-nice

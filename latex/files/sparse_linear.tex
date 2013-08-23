@@ -47,7 +47,7 @@ Next, we define the mutator. Recall that the mutator is a randomized algorithm
 that takes as input an element $r \in R$ and accuracy parameter $\epsilon$, and
 outputs a multiset $\Neigh(r, \epsilon) \subseteq R$. Here, $\Neigh(r,
 \epsilon)$ is populated by $m$ independent draws from the following procedure,
-where $m$ will be specified later (see the proof of Thm.~\ref{thm:sparse_linear}).
+where $m$ will be specified later (see the proof of Theorem~\ref{thm:sparse_linear}).
 Starting from $w \in R$, define the mutated representation $w^\prime$, output by
 the mutator, as:
 %%
@@ -93,7 +93,7 @@ beneficial mutation.
 To simplify notation, let $S = \NZ(w)$. Recall that $f^S$ denotes the best
 approximation to $f$ using variables in the set $S$; thus, $\ltwonorm{f - w}^2 =
 \ltwonorm{f - f^S}^2 + \ltwonorm{f^S - w}^2$. At a high level, the argument for
-proving the success of an evolutionary mechanism is as follows: If
+proving the success of our evolutionary mechanism is as follows: If
 $\ltwonorm{f^S - w}^2$ is large, then a mutation of the type ``scaling'' or
 ``adjusting'' will get $w$ closer to $f^S$, reducing the expected loss. (The
 role of ``scaling'' mutations is primarily to ensure that the representations
@@ -113,15 +113,15 @@ with probability at least $1/12$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w) -
 this. \end{claim}
 %%
 \begin{claim} \label{claim:banana} When $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$,
-then with probability at least $\Delta \ltwonorm{f^S - w}/(6K^2 B)$, there
-exists a mutation that decreases the expected loss by at least $3
-\Delta^2\ltwonorm{f^S - w}^2/(4|S|^2)$. In particular, an ``adjusting'' type
-mutation achieves this. \end{claim}
+then with probability at least $\Delta \ltwonorm{f^S - w}/(6K^2 B)$, $\loss_{f,
+D}(w^\prime) \leq \loss_{f, D}(w) - 3 \Delta^2\ltwonorm{f^S - w}^2/(4|S|^2)$. In
+particular, an ``adjusting'' type mutation achieves this. \end{claim}
 %%
 \begin{claim} \label{claim:cantaloupe} When $\ltwonorm{f^S - w} \leq
-l^2\Delta^2/(4KB)$, but $\NZ(f) \not\subseteq S$, then with probability
-at least $\Delta \ltwonorm{f - w}/(6KBnk)$, there exists a mutation that
-decreases the expected loss by at least $\Delta^2 \ltwonorm{f-w}^2/(16k^2)$.
+l^2\Delta^2/(4KB)$, but $\NZ(f) \not\subseteq S$, then with probability at least
+$\Delta \ltwonorm{f - w}/(6KBnk)$, $\loss_{f, D}(w^\prime) \leq \loss_{f, D}(w)
+- \Delta^2 \ltwonorm{f-w}^2/(16k^2)$. In particular, a mutation of type
+``swapping'' or ``adding'' achieves this.
 \end{claim}
 
 \noindent Note that when $\NZ(f) \subseteq S$, then $f^S = f$. Thus, in this case
