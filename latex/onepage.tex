@@ -20,26 +20,40 @@ Kanade \\ UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}}
 \maketitle
 
 Darwin's theory of evolution through natural selection has been a cornerstone of
-biology for over a century and a half. Every cell is a computing machine,
-sensing its environment and producing appropriate responses.
+biology for over a century and a half.  Natural selection acts on
+\emph{phenotypes} that are a result of molecular activities at the level of
+cells; the molecular activities themselves are encoded in the DNA sequence, or
+\emph{genotype}.\footnote{There are epigenetic factors at play, but the general
+principle expounded in this document applies to those mechanisms as well.}
+Every cell is a computing machine, sensing its environment and producing
+appropriate responses.  Abstractly, cellular activity can be viewed as computing
+a function; the input is an ``internal representation'' of the environment using
+proteins and other molecules, and the output may be the activation or repression
+of proteins expression. Yet, a quantitative theory of the complexity of such
+functions that could arise through Darwinian mechanisms has remained virtually
+unexplored. Here, complexity is viewed through the lens of theoretical
+computer science, \eg the size of the circuit required to compute the
+function~\citep{Arora-Barak:textbook, Papadimitriou:textbook}.
 
-Abstractly, cellular activity can be viewed as the computation of a function,
- 
-
-Yet, a quantitative theory of complexity
-that could arise through Darwinian mechanisms has remained virtually unexplored.
-To address this question, Valiant introduced a computational model of
-evolution~\cite{Valiant:2009-evolvability}.  In his model, an organism is an
-entity that computes a function of its environment.  There is a (possibly
-hypothetical) \emph{ideal function} indicating the best behavior in every
-possible environment. The performance of the organism is measured by how close
-the function it computes is to the ideal. An organism produces a set of
-offspring, that may have mutations that  alter the function computed. The
-performance (fitness) measure acting on a population of mutants forms the basis
-of natural selection. The resources allowed are the most generous while
-remaining feasible; the mutation mechanism may be any efficient randomized
-Turing machine, and the function represented by the organism may be arbitrary as
-long as it is computable by an efficient Turing machine.
+To address this question, \citet{Valiant:2009-evolvability} introduced a
+computational model of evolution.  In this model, an organism is an entity that
+computes a function of its environment. For simplicity, each organism computes
+only one function, though in reality there may be
+thousands if not more. There is a (possibly hypothetical)
+\emph{ideal function} indicating the best behavior in every possible
+environment. The performance of the organism is measured by how close the
+function it computes is to the ideal. An organism produces a set of offspring,
+that may have mutations that  alter the function computed. The performance
+(fitness) measure acting on a population of mutants forms the basis of natural
+selection.\footnote{Recombination may increase the speed of evolution, but it is
+understood that in Valiant's model, it does not affect the complexity that can
+arise in functions.} The resources allowed are the most generous while remaining
+feasible; the mutation mechanism may be any efficient randomized Turing
+machine,\footnote{A Turing machine is a mathematical model on which all modern
+computers are based; the widely believed Church-Turing hypothesis states that
+\emph{any} feasible computation in nature can be simulated by a Turing
+machine.} and the function represented by the organism may be arbitrary as long
+as it is computable by an efficient Turing machine.
 
 Formulated this way, the question of evolvability can be asked in the language
 of computational learning theory. For what classes of ideal functions, $C$, can
