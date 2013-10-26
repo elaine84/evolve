@@ -59,15 +59,24 @@ Formulated this way, the question of evolvability can be asked in the language
 of computational learning theory. For what classes of ideal functions, $C$, can
 one expect to find an evolutionary mechanism that gets arbitrarily close to the
 ideal, within feasible computational resources? A function class captures a
-notion of complexity, say for example:
-\[ f(x_1, \ldots, x_n) = 2 x_1 + 3 x_4 - 7 x_9 + 6 x_12, \]
+notion of complexity, say for example,
+%%
+\[ f(x_1, \ldots, x_n) = 2 x_1 + 3.7 x_4 - 7.8 x_9 + 6 x_{12} + 18, \]
+%%
 is a linear function, and one could consider the class of all such linear
-functions. A more complex class would be that of quadratic functions, where the
-function could take a form $f(x_1, \ldots, x_n) = 3.2 x_1^2 - 7.3 x_1 x_6 + 18
-x_3 + 8.1$. The point here is that the highest degree of any term appearing the
-expression is $2$. One would expect that the more \emph{complex} the ideal
-function, the harder it would be for evolution to succeed in approximating it.
+functions. A more complex class is that of quadratic functions, where a function
+takes the form $f(x_1, \ldots, x_n) = 3.2 x_1^2 - 7.3 x_1 x_6 + 18 x_3 + 8.1$.
+The point here is that the highest degree of any term appearing the expression
+is $2$. One expects that the more \emph{complex} the ideal function, the harder
+it is for evolution to succeed in approximating it.
 
+Valiant's model is general in the sense that mutations are allowed to be
+arbitrary and no explicit 
+
+
+
+
+rather arbitrary and biologically unnatural.
 Current understanding of biology (or lack thereof) makes it
 difficult to formalize a notion of \emph{naturalness} for mutations in these
 frameworks; in particular, it is not well understood how mutations to DNA
