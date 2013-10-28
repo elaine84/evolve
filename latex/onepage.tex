@@ -48,7 +48,7 @@ may be thousands if not more. There is a (possibly hypothetical) \emph{ideal
 function} indicating the best behavior in every possible environment. The
 performance of the organism is measured by how close the function it computes is
 to the ideal. An organism produces a set of offspring, that may have mutations
-that  alter the function computed. The performance (fitness) measure acting on a
+that  alter the function computed. The performance measure acting on a
 population of mutants forms the basis of natural
 selection.\footnote{Recombination may increase the speed of evolution, but it is
 understood that in Valiant's model, it does not affect the complexity that can
@@ -76,13 +76,14 @@ is $2$. One expects that the more \emph{complex} the ideal function, the harder
 it is for evolution to succeed in approximating it. Here, the notion of
 approximation is the following: Suppose there is a distribution $D$ over inputs
 $(x_1, \ldots, x_n)$, the ideal function is $f$ and the organism computes some
-other function $h$. Then, the \emph{fitness} of the organism is $ - \E_{x \sim
-D}[(f(x) - h(x))^2]$.\footnote{The negative sign is required because the closer
-$h$ is to $f$ the higher the fitness. Here, we are simply assuming that the
-fitness depends on the approximation in terms of squared error. It is possible
+other function $h$. Then, the \emph{loss} of the organism is $\E_{x \sim
+D}[(f(x) - h(x))^2]$, the expected squared difference between the
+organism and the ideal.\footnote{The closer $h$ is to $f$,
+the smaller the loss. Here, we are simply assuming that the
+performance depends on the approximation in terms of squared error. It is possible
 to use other loss functions and indeed a very interesting (and largely
-unresolved) question is how robust these evolutionary mechanisms are to change
-in the fitness function.} An evolutionary mechanism is successful if the fitness
+unresolved) question is how robust these evolutionary mechanisms are to changes
+in the loss function.} An evolutionary mechanism is successful if the
 becomes \emph{close} to $0$ (which is the best possible) in a relatively small
 number of generations.
 
@@ -93,7 +94,7 @@ changes in phenotype.\footnote{It also has the added advantage that this allows
 one to talk about computationally feasible Darwinian evolution of any type, not
 just restricted to that observed on earth.} However, a consequence of this
 generality has been that \emph{feasible} evolutionary mechanisms in this model
-can be encodings of very sophisticated learning algorithms. These computations
+can be encodings of very sophisticated algorithms. These computations
 have to be performed by ``chemical computers'' in cells, which could be severely
 restricted in their abilities to perform computation. Thus, we are interested in
 understanding what evolutionary mechanisms could succeed when they have limited
@@ -109,10 +110,7 @@ protein. Genes are \emph{transcribed} to produce mRNA, which is then
 proteins.\footnote{In reality, this is a dynamical system where the rates of
 production are important. Note that this process need not be linear: a gene (mRNA
 transcript) can be transcribed (translated) multiple times, not only in series
-but also in parallel fashion.  We also ignore
-other \emph{epigenetic} effects, \ie molecular modifications to DNA that do not
-change its sequence but alter gene expression,~\eg the addition of methyl groups
-to nucleotides in a way that physically blocks transcription.}
+but also in parallel fashion.}
 In a transcription network, a gene's transcription may be regulated by a set of
 proteins called \emph{transcription factors}.
 These factors may increase or decrease a gene's transcription by
