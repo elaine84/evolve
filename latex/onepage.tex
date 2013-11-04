@@ -15,9 +15,12 @@
 
 \begin{document}
 \title{Attribute-Efficient Evolvability of Linear Functions} 
-\author{Elaine Angelino \\
-Harvard University \\ \texttt{elaine@eecs.harvard.edu} \and Varun
-Kanade \\ UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}}
+
+\author{
+Elaine Angelino \\ Harvard University \\ \texttt{elaine@eecs.harvard.edu} 
+\and 
+Varun Kanade \\ UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}
+}
 
 \maketitle
 
@@ -35,12 +38,12 @@ of proteins expression. Yet, a quantitative theory of the complexity of such
 functions that could arise through Darwinian mechanisms has remained virtually
 unexplored. Here, complexity is viewed through the lens of theoretical
 computer science, \eg the size of the circuit required to compute the
-function (cf. Arora and Barak~\cite{Arora-Barak:textbook},
-Papadimitriou~\cite{Papadimitriou:textbook}).
+function (cf. \citeN{Arora-Barak:textbook},
+\citeN{Papadimitriou:textbook}).
 
-To address this question, Valiant~\cite{Valiant:2009-evolvability} introduced a
+To address this question, \citeN{Valiant:2009-evolvability} introduced a
 computational model of evolution.\footnote{Also, see
-Valiant~\cite{Valiant:2013-PAC} for a very accessible treatment of computational
+\citeN{Valiant:2013-PAC} for a very accessible treatment of computational
 learning theory in general, and this model in particular.} In this model, an
 organism is an entity that computes a function of its environment. For
 simplicity, each organism computes only one function, though in reality there
@@ -83,7 +86,7 @@ the smaller the loss. Here, we are simply assuming that the
 performance depends on the approximation in terms of squared error. It is possible
 to use other loss functions and indeed a very interesting (and largely
 unresolved) question is how robust these evolutionary mechanisms are to changes
-in the loss function.} An evolutionary mechanism is successful if the
+in the loss function.} An evolutionary mechanism is successful if the loss
 becomes \emph{close} to $0$ (which is the best possible) in a relatively small
 number of generations.
 
@@ -127,7 +130,7 @@ regulate any single gene, and so transcription networks are sparsely connected.
 The number of transcription factors varies from hundreds in a bacterium to
 thousands in a human cell. Some transcription factors are always present in the
 cell and can be thought of as representing a \emph{snapshot} of the environment
-(cf. Alon~\cite{Alon:2006}). For example, the presence of sugar molecules in the
+(cf. \citeN{Alon:2006}). For example, the presence of sugar molecules in the
 environment may cause specific transcription factors to be \emph{activated},
 enabling them to regulate the production of other proteins.  One of these
 proteins could be an \emph{end-product}, such as an enzyme that catalyzes a
@@ -198,6 +201,6 @@ biological aspects related to this work. VK was supported by a Simons
 Postdoctoral Fellowship.
 
 \bibliography{all-refs}
-\bibliographystyle{acm}
+\bibliographystyle{acmtrans}
 
 \end{document}
