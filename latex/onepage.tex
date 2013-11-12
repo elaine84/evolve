@@ -15,9 +15,12 @@
 
 \begin{document}
 \title{Attribute-Efficient Evolvability of Linear Functions} 
-\author{Elaine Angelino \\
-Harvard University \\ \texttt{elaine@eecs.harvard.edu} \and Varun
-Kanade \\ UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}}
+
+\author{
+Elaine Angelino \\ Harvard University \\ \texttt{elaine@eecs.harvard.edu} 
+\and 
+Varun Kanade \\ UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}
+}
 
 \maketitle
 
@@ -35,12 +38,12 @@ of proteins expression. Yet, a quantitative theory of the complexity of such
 functions that could arise through Darwinian mechanisms has remained virtually
 unexplored. Here, complexity is viewed through the lens of theoretical
 computer science, \eg the size of the circuit required to compute the
-function (cf. Arora and Barak~\cite{Arora-Barak:textbook},
-Papadimitriou~\cite{Papadimitriou:textbook}).
+function (cf. \citeN{Arora-Barak:textbook},
+\citeN{Papadimitriou:textbook}).
 
-To address this question, Valiant~\cite{Valiant:2009-evolvability} introduced a
+To address this question, \citeN{Valiant:2009-evolvability} introduced a
 computational model of evolution.\footnote{Also, see
-Valiant~\cite{Valiant:2013-PAC} for a very accessible treatment of computational
+\citeN{Valiant:2013-PAC} for a very accessible treatment of computational
 learning theory in general, and this model in particular.} In this model, an
 organism is an entity that computes a function of its environment. For
 simplicity, each organism computes only one function, though in reality there
@@ -78,12 +81,12 @@ approximation is the following: Suppose there is a distribution $D$ over inputs
 $(x_1, \ldots, x_n)$, the ideal function is $f$ and the organism computes some
 other function $h$. Then, the \emph{loss} of the organism is $\E_{x \sim
 D}[(f(x) - h(x))^2]$, the expected squared difference between the
-organism and the ideal.\footnote{The closer $h$ is to $f$,
+organism's function and the ideal.\footnote{The closer $h$ is to $f$,
 the smaller the loss. Here, we are simply assuming that the
 performance depends on the approximation in terms of squared error. It is possible
 to use other loss functions and indeed a very interesting (and largely
 unresolved) question is how robust these evolutionary mechanisms are to changes
-in the loss function.} An evolutionary mechanism is successful if the
+in the loss function.} An evolutionary mechanism is successful if the loss
 becomes \emph{close} to $0$ (which is the best possible) in a relatively small
 number of generations.
 
@@ -96,7 +99,7 @@ just restricted to that observed on earth.} However, a consequence of this
 generality has been that \emph{feasible} evolutionary mechanisms in this model
 can be encodings of very sophisticated algorithms. These computations
 have to be performed by ``chemical computers'' in cells, which could be severely
-restricted in their abilities to perform computation. Thus, we are interested in
+restricted in their computational capabilities. Thus, we are interested in
 understanding what evolutionary mechanisms could succeed when they have limited
 computational power at their disposal. We illustrate our point with a particular
 kind of biological circuit: transcription networks.
@@ -127,7 +130,7 @@ regulate any single gene, and so transcription networks are sparsely connected.
 The number of transcription factors varies from hundreds in a bacterium to
 thousands in a human cell. Some transcription factors are always present in the
 cell and can be thought of as representing a \emph{snapshot} of the environment
-(cf. Alon~\cite{Alon:2006}). For example, the presence of sugar molecules in the
+(cf. \citeN{Alon:2006}). For example, the presence of sugar molecules in the
 environment may cause specific transcription factors to be \emph{activated},
 enabling them to regulate the production of other proteins.  One of these
 proteins could be an \emph{end-product}, such as an enzyme that catalyzes a
@@ -158,18 +161,19 @@ in a way that alters its ability to bind to DNA.}
 
 In our work, we look at linear functions, \eg $f(x) = 3x_1 + 7 x_3 - 5 x_8$.  A
 model to compute linear functions is an arithmetic circuit with one addition
-gate and several input wires. Each input wire can have a positive or negative weight
-associated with it.  Thus, the linear function $f(x) = 3x_1 + 7 x_3 -5x_8$, can
-be computed by a simple circuit that has one addition gate and three input wires
-having weight $3$, $7$ and $-5$ respectively. We now want to know that if the
-\emph{ideal function} is sparse, \ie most of the weights are zero, does there
-exist an evolutionary mechanism that would be successful, while having the
-property that the ``cellular circuit'' at each stage of evolution is itself a
-sparse one? Under rather mild assumptions on the distribution of inputs, we show
-that this is indeed the case. A further interesting property of this mechanism
-is that the main resource required, the number of generations, depends only on
-the number of relevant variables in the \emph{ideal function}, and not on the
-total number of variables.
+gate and several input wires. Each input wire can have a positive or negative
+weight associated with it.  Thus, the linear function $f(x) = 3x_1 + 7 x_3
+-5x_8$, can be computed by a simple circuit that has one addition gate and three
+input wires having weight $3$, $7$ and $-5$ respectively. We now want to know
+that if the \emph{ideal function} is sparse, \ie most of the weights are zero,
+does there exist an evolutionary mechanism that would be successful, while
+having the property that the ``cellular circuit'' at each stage of evolution is
+itself a sparse one? Under rather mild assumptions on the distribution of
+inputs, we show that this is indeed the case. A further interesting property of
+this mechanism is that the main resource required, the number of generations,
+depends only on the number of relevant variables in the \emph{ideal function},
+and not on the total number of variables. The population required for evolution
+to succeed depends on the total number of variables, not just the relevant ones.
 
 Of course, a linear function may be a very restrictive model of what actually
 goes on in the cell. As part of future work, we think it is worth investigating
@@ -181,10 +185,10 @@ the total number of variables.
 
 From the point of view of computer science, there have been very interesting
 developments in understanding the power of Valiant's model. We have largely left
-these out of this document for reasons of brevity and accessibility. The
-interested reader is referred in particular to the work of Vitaly Feldman and
-Paul Valiant. The second author's thesis contains an exposition of some of those
-results and other work.
+these out of this document for reasons of brevity and accessibility. Apart from
+Valiant's original paper, the interested reader is referred in particular to the
+work of Vitaly Feldman and Paul Valiant. The second author's thesis contains an
+exposition of some of those results and other work.
 
 In the case of biological literature, our omissions are even greater. The
 companion paper to this note~\cite{AK:2013} contains a fuller bibliography. Our
@@ -198,6 +202,6 @@ biological aspects related to this work. VK was supported by a Simons
 Postdoctoral Fellowship.
 
 \bibliography{all-refs}
-\bibliographystyle{acm}
+\bibliographystyle{acmtrans}
 
 \end{document}

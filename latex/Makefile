@@ -14,7 +14,9 @@ onepage.pdf: onepage.tex all-refs.bib latex_macros.tex
 	pdflatex onepage
 clean:
 	rm -f main.aux main.bbl main.log main.blg main.out
+	rm -f onepage.aux onepage.bbl onepage.log onepage.blg onepage.out
 flush: clean
 	rm -f main.pdf
+	rm -f onepage.pdf
 
 
