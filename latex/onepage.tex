@@ -17,9 +17,12 @@
 \title{Attribute-Efficient Evolvability of Linear Functions} 
 
 \author{
-Elaine Angelino \\ Harvard University \\ \texttt{elaine@eecs.harvard.edu} 
-\and 
-Varun Kanade \\ UC Berkeley \\ \texttt{vkanade@eecs.berkeley.edu}
+Extended Abstract \\ \\
+\begin{tabular}{l l}
+\hspace{-0.13in} Elaine Angelino & Varun Kanade \\
+\hspace{-0.13in} Harvard University & UC Berkeley \\
+\hspace{-0.13in} \texttt{elaine@eecs.harvard.edu} & \texttt{vkanade@eecs.berkeley.edu}
+\end{tabular}
 }
 
 \maketitle
@@ -47,8 +50,16 @@ computational model of evolution.\footnote{Also, see
 learning theory in general, and this model in particular.} In this model, an
 organism is an entity that computes a function of its environment. For
 simplicity, each organism computes only one function, though in reality there
-may be thousands if not more. There is a (possibly hypothetical) \emph{ideal
-function} indicating the best behavior in every possible environment. The
+may be thousands if not more.
+For example, consider an enzyme that metabolizes sugars.
+The corresponding function computed by the cell could determine how much of
+this enzyme to produce, as function of the concentrations of various sugar
+molecules present in the environment.
+There is a (possibly hypothetical) \emph{ideal
+function} indicating the best behavior in every possible environment,
+\eg the optimal amount of enzyme to produce, not necessarily to maximize the
+yield of its products but rather the overall performance of the organism,
+including tradeoffs between some action and its energetic costs. The
 performance of the organism is measured by how close the function it computes is
 to the ideal. An organism produces a set of offspring, that may have mutations
 that  alter the function computed. The performance measure acting on a
@@ -69,10 +80,17 @@ one expect to find an evolutionary mechanism that gets arbitrarily close to the
 ideal, within feasible computational resources? A function class captures a
 notion of complexity, say for example,
 %%
-\[ f(x_1, \ldots, x_n) = 2 x_1 + 3.7 x_4 - 7.8 x_9 + 6 x_{12} + 18, \]
+\[ f(x_1, \ldots, x_n) = 2 x_1 + 3.7 x_4 - 0.7 x_9 + 6 x_{12} + 1.8, \]
 %%
 is a linear function, and one could consider the class of all such linear
-functions. A more complex class is that of quadratic functions, where a function
+functions.
+In the toy example of the enzyme that metabolizes sugars, the various $x_i$
+could be different molecules in the environment, where those appearing on the
+right hand side of the equation correspond to sugars. The different
+coefficients, if tuned by natural selection, could reflect differences
+among the sugars with respect to their benefits versus costs to the cell, and
+the positive additive constant corresponds to the baseline level of enzyme.
+A more complex class is that of quadratic functions, where a function
 takes the form $f(x_1, \ldots, x_n) = 3.2 x_1^2 - 7.3 x_1 x_6 + 18 x_3 + 8.1$.
 The point here is that the highest degree of any term appearing the expression
 is $2$. One expects that the more \emph{complex} the ideal function, the harder
@@ -186,14 +204,16 @@ the total number of variables.
 From the point of view of computer science, there have been very interesting
 developments in understanding the power of Valiant's model. We have largely left
 these out of this document for reasons of brevity and accessibility. Apart from
-Valiant's original paper, the interested reader is referred in particular to the
-work of Vitaly Feldman and Paul Valiant. The second author's thesis contains an
-exposition of some of those results and other work.
+Valiant's original paper~\cite{Valiant:2009-evolvability},
+the interested reader is referred in particular to the work of Vitaly Feldman
+and Paul Valiant~\cite{Feldman:2008-evolvability,Feldman:2009-robustness,Feldman:2011-LTF,Valiant:2012-real}.
+The second author's thesis contains an exposition of some of these results and
+other work~\cite{Kanade:2012-thesis}.
 
 In the case of biological literature, our omissions are even greater. The
-companion paper to this note~\cite{AK:2013} contains a fuller bibliography. Our
-main purpose here is to introduce the computational framework in a language that
-is more widely understood.
+companion paper to this note~\cite{AK:2013} contains a more complete
+bibliography. Our main purpose here is to introduce the computational framework
+in a language that is more widely understood.
 
 \subsection*{Acknowledgments} 
 We would like to thank Leslie Valiant for helpful discussions and comments on an
