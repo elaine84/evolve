@@ -1,0 +1,229 @@
+\documentclass{acmtr2e}
+
+\usepackage{amsmath,amssymb,amsfonts,fullpage}
+%\usepackage{hyperref}
+\usepackage[usenames]{color}
+\usepackage{graphicx}
+%\usepackage{subfigure}
+%\usepackage[round, semicolon]{natbib}
+%%\usepackage[round,colon]{natbib}
+
+\firstfoot{}
+\runningfoot{}
+
+\input{latex_macros}
+
+\begin{document}
+\title{Attribute-Efficient Evolvability of Linear Functions \\
+\normalsize{Extended Abstract}}
+
+\author{
+\begin{tabular}{l l}
+\hspace{-0.13in} Elaine Angelino & Varun Kanade \\
+\hspace{-0.13in} Harvard University & UC Berkeley \\
+\hspace{-0.13in} \texttt{elaine@eecs.harvard.edu} & \texttt{vkanade@eecs.berkeley.edu}
+\end{tabular}
+}
+
+\maketitle
+\vspace{-0.15in}
+
+Darwin's theory of evolution through natural selection has been a cornerstone of
+biology for over a century and a half.  Natural selection acts on
+\emph{phenotypes} that are a result of molecular activities at the level of
+cells; the molecular activities themselves are encoded in the DNA sequence, or
+\emph{genotype}.\footnote{There are epigenetic factors at play, but the general
+principle expounded in this document applies to those mechanisms as well.}
+Every cell is a computing machine, sensing its environment and producing
+appropriate responses.  Abstractly, cellular activity can be viewed as computing
+a function; the input is an ``internal representation'' of the environment using
+proteins and other molecules, and the output is the activation or repression
+of proteins expression. Yet, a quantitative theory of the complexity of such
+functions that could arise through Darwinian mechanisms has remained virtually
+unexplored. Here, complexity is viewed through the lens of theoretical
+computer science, \eg the size of the circuit required to compute the
+function (cf. \citeN{Arora-Barak:textbook},
+\citeN{Papadimitriou:textbook}).
+
+To address this question, \citeN{Valiant:2009-evolvability} introduced a
+computational model of evolution.\footnote{Also, see
+\citeN{Valiant:2013-PAC} for a very accessible treatment of computational
+learning theory in general, and this model in particular.} In this model, an
+organism is an entity that computes a function of its environment. For
+simplicity, each organism computes only one function, though in reality there
+may be thousands if not more.
+For example, consider an enzyme that metabolizes sugars.
+The corresponding function computed by the cell could determine how much of
+this enzyme to produce, as function of the concentrations of various sugar
+molecules present in the environment.
+There is a (possibly hypothetical) \emph{ideal
+function} indicating the best behavior in every possible environment,
+\eg the optimal amount of enzyme to produce, not necessarily to maximize the
+yield of its products but rather the overall performance of the organism,
+including tradeoffs between some action and its energetic costs. The
+performance of the organism is measured by how close the function it computes is
+to the ideal. An organism produces a set of offspring, that may have mutations
+that  alter the function computed. The performance measure acting on a
+population of mutants forms the basis of natural
+selection.\footnote{Recombination may increase the speed of evolution, but it is
+understood that in Valiant's model, it does not affect the complexity that can
+arise in functions.} The resources allowed are the most generous while remaining
+feasible; the mutation mechanism may be any efficient randomized Turing
+machine,\footnote{A Turing machine is a mathematical model on which all modern
+computers are based; the widely believed Church-Turing hypothesis states that
+\emph{any} feasible computation in nature can be simulated by a Turing machine.}
+and the function represented by the organism may be arbitrary as long as it is
+computable by an efficient Turing machine.
+
+Formulated this way, the question of evolvability can be asked in the language
+of computational learning theory. For what classes of ideal functions, $C$, can
+one expect to find an evolutionary mechanism that gets arbitrarily close to the
+ideal, within feasible computational resources? A function class captures a
+notion of complexity, say for example,
+%%
+\[ f(x_1, \ldots, x_n) = 2 x_1 + 3.7 x_4 - 0.7 x_9 + 6 x_{12} + 1.8, \]
+%%
+is a linear function, and one could consider the class of all such linear
+functions.
+In the toy example of the enzyme that metabolizes sugars, the various $x_i$
+could be different molecules in the environment, where those appearing on the
+right hand side of the equation correspond to sugars. The different
+coefficients, if tuned by natural selection, could reflect differences
+among the sugars with respect to their benefits versus costs to the cell, and
+the positive additive constant corresponds to the baseline level of enzyme.
+A more complex class is that of quadratic functions, where a function
+takes the form $f(x_1, \ldots, x_n) = 3.2 x_1^2 - 7.3 x_1 x_6 + 18 x_3 + 8.1$.
+The point here is that the highest degree of any term appearing the expression
+is $2$. One expects that the more \emph{complex} the ideal function, the harder
+it is for evolution to succeed in approximating it. Here, the notion of
+approximation is the following: Suppose there is a distribution $D$ over inputs
+$(x_1, \ldots, x_n)$, the ideal function is $f$ and the organism computes some
+other function $h$. Then, the \emph{loss} of the organism is $\E_{x \sim
+D}[(f(x) - h(x))^2]$, the expected squared difference between the
+organism's function and the ideal.\footnote{The closer $h$ is to $f$,
+the smaller the loss. Here, we are simply assuming that the
+performance depends on the approximation in terms of squared error. It is possible
+to use other loss functions and indeed a very interesting (and largely
+unresolved) question is how robust these evolutionary mechanisms are to changes
+in the loss function.} An evolutionary mechanism is successful if the loss
+becomes \emph{close} to $0$ (which is the best possible) in a relatively small
+number of generations.
+
+The reason for allowing mutations and representations of functions to be quite
+general in Valiant's model is primarily the lack of our current understanding of
+how mutations occur in nature and also the relationship betewen changes in genotype to
+changes in phenotype.\footnote{It also has the added advantage that this allows
+one to talk about computationally feasible Darwinian evolution of any type, not
+just restricted to that observed on earth.} However, a consequence of this
+generality has been that \emph{feasible} evolutionary mechanisms in this model
+can be encodings of very sophisticated algorithms. These computations
+have to be performed by ``chemical computers'' in cells, which could be severely
+restricted in their computational capabilities. Thus, we are interested in
+understanding what evolutionary mechanisms could succeed when they have limited
+computational power at their disposal. We illustrate our point with a particular
+kind of biological circuit: transcription networks.
+
+The view presented here is an exaggerated simplification of the actual
+transcription process, the goal being to focus on the complexity of the circuit
+representation. A transcription network consists of 
+interacting genes and proteins that are involved in the production of new
+protein. Genes are \emph{transcribed} to produce mRNA, which is then
+\emph{translated} into sequences of amino acids that ultimately fold into
+proteins.\footnote{In reality, this is a dynamical system where the rates of
+production are important. Note that this process need not be linear: a gene (mRNA
+transcript) can be transcribed (translated) multiple times, not only in series
+but also in parallel fashion.}
+In a transcription network, a gene's transcription may be regulated by a set of
+proteins called \emph{transcription factors}.
+These factors may increase or decrease a gene's transcription by
+physically binding to regions of DNA that are typically close to the gene.
+In natural systems, only a small number of transcription factors
+regulate any single gene, and so transcription networks are sparsely connected.
+%%For example, Balaji~\etal studied a yeast
+%%transcription network of 157 transcription factors regulating 4,410 genes. They
+%%observed this network to have 12,873 interactions (edges) where each gene was
+%%regulated on average by about 2.9 transcription factors, the distribution of
+%%in-degrees was well-described by an exponential fit, and only about 45 genes had
+%%an in-degree of 15 or greater~\cite{Balaji:2006}.
+
+The number of transcription factors varies from hundreds in a bacterium to
+thousands in a human cell. Some transcription factors are always present in the
+cell and can be thought of as representing a \emph{snapshot} of the environment
+(cf. \citeN{Alon:2006}). For example, the presence of sugar molecules in the
+environment may cause specific transcription factors to be \emph{activated},
+enabling them to regulate the production of other proteins.  One of these
+proteins could be an \emph{end-product}, such as an enzyme that catalyzes a
+metabolic reaction involving the sugar. Alternatively, the transcription factor
+could regulate another transcription factor that itself regulates other genes --
+we view this as intermediate computation -- and may participate in further
+``computation'' to produce the desired end-result.
+%
+While transcription networks may include cycles (loops), here for simplicity we
+focus on systems that are directed acyclic graphs, and the resulting computation
+can be viewed as a circuit. 
+%We illustrate a small, real transcription network in Figure~\ref{fig:network}. 
+These circuits are by necessity shallow due to a temporal constraint, that the
+time required for sufficient quantities of protein to be produced is of the same
+order of magnitude as cell-division time.\footnote{Other kinds of networks, such
+as signaling networks, operate by changing the shapes of proteins. The fact that
+these transformations are rapid may allow for much larger depth. Note that fast
+conformational changes govern how transcription factors directly process
+information from the environment in order to regulate gene expression.  In our
+example, a sugar molecule binds to a transcription factor and changes its shape
+in a way that alters its ability to bind to DNA.} 
+%
+%For example, Luscombe~\etal measured the shortest path length (in number of
+%intermediate nodes) between transcription factors and regulated genes
+%corresponding to terminal nodes (leaves) in a yeast transcription network. In
+%the static network, the mean such path length was 4.7 and the longest path
+%involved 12 intermediate transcription factors~\cite{Luscombe:2004}.
+
+In our work, we look at linear functions, \eg $f(x) = 3x_1 + 7 x_3 - 5 x_8$.  A
+model to compute linear functions is an arithmetic circuit with one addition
+gate and several input wires. Each input wire can have a positive or negative
+weight associated with it.  Thus, the linear function $f(x) = 3x_1 + 7 x_3
+-5x_8$, can be computed by a simple circuit that has one addition gate and three
+input wires having weight $3$, $7$ and $-5$ respectively. We now want to know
+that if the \emph{ideal function} is sparse, \ie most of the weights are zero,
+does there exist an evolutionary mechanism that would be successful, while
+having the property that the ``cellular circuit'' at each stage of evolution is
+itself a sparse one? Under rather mild assumptions on the distribution of
+inputs, we show that this is indeed the case. A further interesting property of
+this mechanism is that the main resource required, the number of generations,
+depends only on the number of relevant variables in the \emph{ideal function},
+and not on the total number of variables. The population required for evolution
+to succeed depends on the total number of variables, not just the relevant ones.
+
+Of course, a linear function may be a very restrictive model of what actually
+goes on in the cell. As part of future work, we think it is worth investigating
+whether other functions such as the sigmoid operating on linear functions can also
+be evolved, assuming that the number of relevant variables is much smaller than
+the total number of variables.
+
+\subsection*{Bibliographic Note}
+
+From the point of view of computer science, there have been very interesting
+developments in understanding the power of Valiant's model. We have largely left
+these out of this document for reasons of brevity and accessibility. Apart from
+Valiant's original paper~\cite{Valiant:2009-evolvability},
+the interested reader is referred in particular to the work of Vitaly Feldman
+and Paul Valiant~\cite{Feldman:2008-evolvability,Feldman:2009-robustness,Feldman:2011-LTF,Valiant:2012-real}.
+The second author's thesis contains an exposition of some of these results and
+other work~\cite{Kanade:2012-thesis}.
+
+In the case of biological literature, our omissions are even greater. The
+companion paper to this note~\cite{AK:2013} contains a more complete
+bibliography. Our main purpose here is to introduce the computational framework
+in a language that is more widely understood.
+
+\subsection*{Acknowledgments} 
+We would like to thank Leslie Valiant for helpful discussions and comments on an
+early version of this paper. We are grateful to Frank Solomon for discussing
+biological aspects related to this work. EA was supported by a grant from the
+National Library of Medicine (4R01LM010213-04). VK is supported by a Simons
+Postdoctoral Fellowship.
+
+\bibliography{all-refs}
+\bibliographystyle{acmtrans}
+
+\end{document}

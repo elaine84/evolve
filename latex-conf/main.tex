@@ -1,0 +1,94 @@
+\documentclass{sig-alternate-2013}
+
+\conferenceinfo{ITCS}{'14 Princeton, New Jersey, USA}
+
+\usepackage{amsmath,amssymb}
+\usepackage[usenames]{color}
+\usepackage{graphicx}
+\usepackage{subfigure}
+%%\usepackage[round,colon]{natbib}
+
+\input{latex_macros}
+
+\begin{document}
+\title{Attribute-Efficient Evolvability of Linear Functions} 
+\numberofauthors{2}
+\author{
+\alignauthor
+Elaine Angelino \titlenote{This author is supported in part by a grant from the
+National Library of Medicine (4R01LM010213-04) and NSF grant CCF-09-64401.} \\
+	\affaddr{Harvard University}\\
+	\email{elaine@eecs.berkeley.edu}
+\alignauthor
+Varun Kanade\titlenote{This author is supported by a Simons Postdoctoral
+Fellowship.}\\
+	\affaddr{University of California, Berkeley}\\
+	\email{vkanade@eecs.berkeley.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+\input{files/abstract}
+\end{abstract}
+
+\category{Theory of computation}{Theory and algorithms for application
+domains}{Machine learning theory}
+%\category{Machine Learning Theory}
+
+\terms{Evolvability, Computational Learning Theory, Compressed Sensing}
+
+\section{Introduction}
+\label{sec:introduction}
+\input{files/introduction}
+
+\section{Model and Preliminaries}
+\label{sec:notation}
+\input{files/notation}
+
+\section{Evolving Sparse Linear Functions}
+\label{sec:algorithms}
+\input{files/sparse_linear}
+
+\subsection{Evolving Sparse Linear Functions Using $\optsel$}
+\label{sec:greedy}
+\input{files/greedy}
+
+% \section{Evolving Sparse LTFs}
+% \label{sec:sparse_LTF}
+% \input{files/sparse_LTF}
+% 
+% \section{Evolving Sparse Disjunctions}
+% \label{sec:sparse_disj}
+% \input{files/sparse_disj}
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+\input{files/conclusion.tex}
+
+\subsection*{Acknowledgments} 
+We would like to thank Leslie Valiant for helpful discussions and comments on an
+earlier version of this paper. We are grateful to Frank Solomon for discussing
+biological aspects related to this work.
+
+\bibliography{all-refs}
+\bibliographystyle{plain}
+
+\newpage
+\appendix 
+\section{Omitted Proofs}
+
+\subsection{Proofs from Section~\ref{sec:notation-class}}
+\label{app:notation-class}
+\input{files/app_notation}
+
+\subsection{Proofs from Section~\ref{sec:sparse_linear}}
+\label{app:sparse_linear}
+\input{files/app_sparse_linear}
+
+\subsection{Proofs from Section~\ref{sec:greedy}}
+\label{app:greedy}
+\input{files/app_greedy}
+
+
+\end{document}

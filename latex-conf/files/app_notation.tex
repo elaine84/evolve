@@ -1,0 +1,23 @@
+\begin{proof}[Proof of Lemma~\ref{lemma:amsterdam}] Note that for any $x \sim
+D$, we can write $x = \tilde{x} + \eta$, where $\tilde{x}$ is drawn from some
+smooth bounded distribution, and $\eta$ is drawn from the uniform distribution
+over $[-\sqrt{3} \Delta, \sqrt{3} \Delta]^n$. Note that $\eta$ and $\tilde{x}$
+are independent, and all components of $\eta$ are independent. First, we observe
+that $\E[x_i^2] = \E[(\tilde{x}_i + \eta_i)^2] \geq \E[\eta_i^2] = \Delta^2$.
+Now, consider the following:
+%%
+\begin{align*}
+\ip{w}{w} &= \E\left[\left(\sum_{i=1}^n w_i x_i\right)^2\right] \\
+%\intertext{Using the fact that $x = \tilde{x} + \eta$, we get} %\eanote{Clarify.}}
+&= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
+&= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
+2\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
+\eta_i\right) \right] + \E\left[\left(\sum_{i=1}^n w_i \eta_i\right)^2\right] \\
+&\geq \sum_{i=1}^n w_i^2 \E[\eta_i^2] \mbox{~~~~~~~Since $\eta_i$ are all independent}
+\\
+&\geq \sum_{i = 1}^n w_i^2 \Delta^2  \mbox{~~~~~~~~~~Since $\E[\eta_i^2] = \Delta^2$ by
+definition} \\
+&= \sum_{i \in \NZ(w)} w_i^2 \Delta^2
+\end{align*}
+The conclusions of the Lemma follow easily by looking at the above expression.
+\end{proof}

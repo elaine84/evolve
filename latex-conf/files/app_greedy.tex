@@ -1,0 +1,160 @@
+\begin{proof}[Proof of Claim~\ref{claim:date}] Since $S \subseteq \NZ(f)$, the
+residual $r = f - w$ is such that $\NZ(r) \subseteq \NZ(f)$. Consider $i \in \NZ(r)$
+that maximizes $|r_i|\cdot \ltwonorm{e^i}$. Then, we have:
+\begin{align}
+\left|\frac{\ip{e^i}{r}}{\ltwonorm{e^i}} \right| &\geq
+\frac{|r_i|\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in \NZ(r), j \neq i}
+\frac{|r_j|\ip{e^i}{e^j}}{\ltwonorm{e^i}} \nonumber  \\
+&\geq |r_i|\cdot \ltwonorm{e^i} - \frac{1}{2k} \sum_{j \in \NZ(r), j \neq i}
+|r_j| \cdot \ltwonorm{e^j} \label{eqn:chives} \\
+&\geq |r_i| \cdot \ltwonorm{e^i} \cdot \frac{k+1}{2k}, \nonumber
+\end{align}
+where in the last two steps we used the fact that $\corr(x_i, x_j) =
+\ip{e^i}{e^j}/(\ltwonorm{e^i} \ltwonorm{e^j}) \leq 1/(2k)$ and that $|\NZ(r)
+\setminus \{ i \}| \leq k-1$. On the other hand, for any $i^\prime \not\in
+\NZ(r)$, we have
+\begin{align}
+\left| \frac{\ip{e^{i^\prime}}{r}}{\ltwonorm{e^{i^\prime}}} \right| &\leq
+\sum_{j \in \NZ(r)} \frac{|r_j\ip{e^{i^\prime}}{e^j}|}{\ltwonorm{e^{i^\prime}}}
+\nonumber \\
+&\leq \frac{1}{2k} \sum_{j \in \NZ(r)} |r_j| \cdot \ltwonorm{e^j} \leq \frac{1}{2}
+|r_i| \cdot \ltwonorm{e^i} \label{eqn:dill}
+\end{align}
+
+\noindent Here, again in the last two steps, we have used the fact that
+$\corr(x_{i^\prime}, x_j) \leq 1/(2k)$ and that $|r_i| \cdot \ltwonorm{e^i}$ is
+the largest such term.
+
+First, we claim that if $\ltwonorm{r}^2 \geq \epsilon$, then the $i$ that
+maximized $|r_i| \cdot \ltwonorm{e^i}$ must be from the set $\NZ(f) \setminus
+S$. (Note that $\ltwonorm{r}^2 = \ltwonorm{f - w}^2 = \loss_{f, D}(w)$, so if
+$\ltwonorm{r}^2 \leq \epsilon$, evolution has reached its goal.) By the
+triangle inequality, $\sum_{i \in \NZ(r)} |r_i| \cdot \ltwonorm{e^i} \geq
+\ltwonorm{r} \geq \sqrt{\epsilon}$. Hence, it must be the case that $|r_i| \cdot
+\ltwonorm{e^i} \geq \sqrt{\epsilon}/{k}$. For contradiction, assume that $i \in
+S$. Then, since $f^S$ is the projection of $f$ in the space spanned by $S$, we
+have $\ip{e^i}{r} = \ip{e^i}{f^S - w}$, since $r = f - f^S + f^S - w$ and
+$\ip{e^i}{f - f^S} = 0$. But, by the assumption of the claim, $|\ip{e^i}{r}|\leq
+\ltwonorm{e^i} \cdot \ltwonorm{f^S - w} \leq \ltwonorm{e^i} \cdot
+\sqrt{\epsilon}/(2k)$, and by (\ref{eqn:chives}), we know that $|\ip{e^i}{r}|
+\geq \ltwonorm{e^i} \cdot (|r_i| \cdot \ltwonorm{e^i}) \cdot (k+1)/(2k) >
+\ltwonorm{e^i} \cdot \ltwonorm{r} / (2k) \ge \ltwonorm{e^i} \cdot \sqrt{\epsilon}/(2k)$.
+Thus, it cannot be the case that $i \in S$.
+
+Let $w^\prime = w + \gamma e^i$. Then, 
+%%
+\begin{align} 
+%
+\ltwonorm{f - (w + \gamma e^i)}^2 - \ltwonorm{f - w}^2 &= - 2 \gamma \ip{f -
+w}{e^i} + \gamma^2 \ltwonorm{e^i}^2 \nonumber \\
+%
+&\leq - \ltwonorm{e^i}^2 \left(|\gamma| \cdot |r_i| \cdot \frac{k+1}{k} -
+|\gamma|^2\right) \nonumber
+%%
+\intertext{Now suppose $\gamma$ satisfies $1 - \delta \leq
+(2|\gamma|k)/(|r_i|(k+1)) \leq 1 + \delta$, then using the fact that the quadratic
+function on the RHS is maximized at $|\gamma| = (k+1) |r_i|/(2k)$, we have}
+\ltwonorm{f - (w + \gamma e^i)}^2 - \ltwonorm{f - w}^2 &\leq - \ltwonorm{e^i}^2
+\cdot \frac{r_i^2}{4} \cdot \frac{(k+1)^2}{k^2} \cdot (1 - \delta^2) \label{eqn:eggplant}
+\end{align}
+
+Note that for any $i^\prime \not\in S$, the ``best'' representation of the form
+$w + \beta e^{i^\prime}$ is when $\beta =
+\ip{e^{i^\prime}}{r}/\ltwonorm{e^{i^\prime}}^2$, and the corresponding reduction
+in squared loss is $(\ip{e^{i^\prime}}{r})^2/\ltwonorm{e^{i^\prime}}^2$. Thus,
+for any $i^\prime \neq i$, we have
+%%
+\begin{align}
+%%
+\ltwonorm{f - (w + \beta e^{i^\prime})}^2 - \ltwonorm{f - w}^2 &\leq -
+\frac{\ip{e^{i^\prime}}{r}^2}{\ltwonorm{e^{i^\prime}}^2} \nonumber \\
+%
+&\leq - \frac{r_i^2}{4} \ltwonorm{e^i}^2 &\mbox{Using~(\ref{eqn:dill})}
+\nonumber
+\end{align}
+Setting $\delta = \sqrt{1/(k+1)}$ completes the proof of the claim. To
+see that $b - a \geq \sqrt{(k+1)\epsilon}/k^2$, notice that any $\gamma$,
+such that $|\gamma| \in [(1 - \delta) ((k+1)/(2k)) |r_i|, (1 - \delta)
+((k+1)/(2k)) |r_i|]$, achieves the claimed reduction in squared loss. Since
+$|r_i| \cdot \ltwonorm{e^i} \geq \sqrt{\epsilon}/k$, we have that $|r_i| \geq
+\sqrt{\epsilon}/k$. Hence, $b - a \geq 2 \delta ((k+1)/2k) (\sqrt{\epsilon}/k)
+\geq \sqrt{(k+1) \epsilon}/k^2$, for $\delta = \sqrt{1/(k+1)}$.
+\end{proof}
+
+\begin{proof}[Proof of Claim~\ref{claim:elderberry}] 
+The proof follows along the lines of the proofs of Claims~\ref{claim:apple} and
+\ref{claim:banana}.  First, suppose that $\ltwonorm{w} \geq 2 \ltwonorm{f^S}$.
+In this case, we claim that for $\gamma \in [1/2, 3/4]$, the mutation $\gamma w$
+reduces the squared loss by at least $\ltwonorm{f^S - w}^2/12$. This analysis is
+completely identical to that in Claim~\ref{claim:apple} and hence is omitted.
+The only difference is that the probability that such a mutation is selected is
+$1/16$, conditioned on the event that the mutator chooses mutations that don't
+add an extra variable.
+
+Next, we assume that $\ltwonorm{w} \leq 2 \ltwonorm{f^S}$. Let $r^S = f^S - w$.
+Now, as in the proof of Claim~\ref{claim:date}, consider $i \in \NZ(r^S)$ (recall
+that $\NZ(r^S) = S$) that maximizes $|r^S_i| \cdot \ltwonorm{e^i}$.
+Then, the following is true:
+\begin{align}
+%%
+\left| \frac{\ip{e^i}{r^S}}{\ltwonorm{e^i}} \right| &\geq |r^S_i|
+\frac{\ip{e^i}{e^i}}{\ltwonorm{e^i}} - \sum_{j \in S, j \neq i} |r^S_j|
+\frac{\ip{e^i}{e^j}}{\ltwonorm{e^i}} \nonumber \\
+%%
+&\geq |r^S_i| \cdot \ltwonorm{e^i} - \frac{1}{2k} \sum_{j \in S, j \neq i}
+|r^S_j| \cdot \ltwonorm{e^j} \nonumber \\
+%%
+&\geq |r^S_i| \cdot \ltwonorm{e^i} \cdot \frac{k+1}{2k} \label{eqn:fennel}
+\end{align}
+%
+where in the last two steps we used the fact that $\corr(x_i, x_j) \leq 1/(2k)$
+and that $|r^S_j| \cdot \ltwonorm{e^j}$ is maximized for $j = i$, and the fact
+that $|S| \leq k$. Also, by the triangle inequality, we know that $\sum_{j \in
+S} |r^S_j| \cdot \ltwonorm{e^j} \geq \ltwonorm{r^S}$; hence, by definition of
+$i$, we have that $|r^S_i| \cdot \ltwonorm{e^i} \geq \ltwonorm{r^S}/k$. Now, let
+$\beta = \ip{e^i}{r^S}/\ltwonorm{e^i}^2$, and for $\gamma \in [\beta -
+|\beta|/2, \beta + |\beta|/2]$, consider the mutation $w + \gamma e^i$. We have,
+%%
+\begin{align*}
+%%
+\ltwonorm{f^S - (w + \gamma e^i)}^2 - \ltwonorm{f^S - w}^2 &= -2 \gamma
+\ip{e^i}{r^S} + \gamma^2 \ltwonorm{e^i}^2 \\
+%%
+&= - \ltwonorm{e^i}^2(2 |\gamma| |\beta| - |\gamma|^2) \\
+%%
+&\leq - \frac{3}{4} \ltwonorm{e^i}^2 \beta^2 &\mbox{For $\gamma \in [\beta -
+|\beta|/2, \beta + |\beta|/2]$} \\
+%%
+&\leq - \frac{3}{16} \frac{\ltwonorm{r^S}^2}{k^2} &\mbox{Using
+(\ref{eqn:fennel}) and the defn. of $\beta$}
+\end{align*}
+
+In order for $w + \gamma e^i$ to be a valid mutation, we need to check that
+$|w_i| + 3 |\beta|/2 < B$. To see this, observe the following:
+%%
+\begin{align*}
+\ltwonorm{w}^2 &\geq \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 - \sum_{j_1 < j_2; j_1,
+j_2 \in \NZ(w)} 2 |w_{j_1} w_{j_2}| |\ip{e^{j_1}}{e^{j_2}}| \\
+&\geq \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 - \frac{1}{k} \sum_{j_1 < j_2}
+|w_{j_1} w_{j_2}| \ltwonorm{e^{j_1}}\ltwonorm{e^{j_2}} \\
+&\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 + \frac{1}{2k} \sum_{j_1 < j_2}
+(|w_{j_1}| \ltwonorm{e^{j_1}} - |w_{j_2}| \ltwonorm{e^{j_2}})^2 \\
+&\geq \frac{1}{2} \sum_{j \in \NZ(w)} w_j^2 \ltwonorm{e^j}^2 %\qquad \eanote{~Check!}
+\end{align*}
+
+\noindent Hence, by a fairly loose analysis, $|w_i|  \leq 2 \ltwonorm{w}/\Delta
+\leq 4 \ltwonorm{f}/\Delta \leq 4uk/\Delta$ (since $\ltwonorm{e^i} \geq \Delta$
+for the class of distributions defined in Defn.~\ref{defn:bhutan}). Also
+$|\beta| = |\ip{e^i}{r^S}|/\ltwonorm{e^i}^2 \leq \ltwonorm{r^S}/\ltwonorm{e^i}
+\leq 3 \ltwonorm{f}/\Delta$ (since $\ltwonorm{r^S} \leq \ltwonorm{f^S} +
+\ltwonorm{w} \leq 3 \ltwonorm{f^S} \leq 3 \ltwonorm{f}$). It's easy to see that
+$|w_i| + (3/2) |\beta| \leq B$, for $B = 10 uk/\Delta$.
+
+Finally, note that conditioned on the mutator choosing a mutation that doesn't
+add new variables, the probability of choosing such a mutation is at least
+$|\beta|/(8Bk)$ ($1/4$ for choosing a mutation of type ``adjusting'', $1/k$ for
+choosing the appropriate variable to adjust and $|\beta|/(2B)$ for choosing the
+correct value). Combining the claims for mutations of the ``scaling'' and
+``adjusting'' types and taking the appropriate minimum values proves the
+statement of the claim.
+\end{proof}
