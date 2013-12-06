@@ -63,7 +63,8 @@ $\gamma$ have the same sign. This, combined with the above equation, gives}
 |\gamma| |\beta| + \gamma^2 \leq - 3 |\beta|^2/4$, hence, the
 above equation and the fact that $\ltwonorm{e^i} \leq 1$ together yield}
 \ltwonorm{f^S - (w + \gamma e^i)}^2 &\leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
-\beta^2 \ltwonorm{e^i}^2 \leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
+\beta^2 \ltwonorm{e^i}^2 \\
+&\leq \ltwonorm{f^S - w}^2 - \frac{3}{4}
 \frac{\ltwonorm{f^S - w}^2 \Delta^2}{|S|^2}
 \end{align*}
 
@@ -123,6 +124,8 @@ conclude that there exists an $i$ for which}
 %
 |\ip{e^i}{r}| &\geq \frac{\ltwonorm{r} \Delta}{2 k} \nonumber
 %
+\end{align}
+\begin{align}
 \intertext{The crucial observation is that $|\NZ(f)| \leq k < K$. Let $\beta =
 \frac{\ip{r}{e^i}}{\ltwonorm{e^i}^2}$. Finally, Lemma~\ref{lemma:amsterdam}
 (part 2) implies that there exists an $i^\prime$ for which $w_{i^\prime}^2 \leq
@@ -131,7 +134,8 @@ w_{i^\prime} e^{i^\prime}$ for $\gamma \in [\beta - |\beta|/2, \beta +
 |\beta|/2]$. Then, we have}
 %%
 \ltwonorm{f - (w + \gamma e^i - w_{i^\prime} e^{i^\prime})}^2 &= \ltwonorm{f - (w
-+ \gamma e^i)}^2 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} +
++ \gamma e^i)}^2 \\
+&\quad - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} +
 w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \label{eqn:artichoke}
 %%
 \intertext{We bound the first term on the right hand side of the above expression and then
@@ -146,15 +150,20 @@ the latter two.}
 3 \beta^2/4$. Hence,}
 \ltwonorm{f - (w + \gamma e^i)}^2 &\leq \ltwonorm{r}^2 - \frac{3}{4} \beta^2
 \label{eqn:broccoli}
+\end{align}
 %%
+\begin{align}
 \intertext{To bound the remaining two terms in (\ref{eqn:artichoke}), recall that
 $f - w = f - f^S + r^S$ and that $\ip{f - f^S}{e^{i^\prime}} = 0$
 (since $i^\prime \in S$). Thus, we get that}
 %%
-- 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
-\ltwonorm{e^{i^\prime}}^2 &\leq 2 |w_{i^\prime}| |\ip{r^S + \gamma
+&- 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
+\ltwonorm{e^{i^\prime}}^2 \\
+&\quad \quad \quad \mbox{~~~~}\leq 2 |w_{i^\prime}| |\ip{r^S + \gamma
 e^i}{e^{i^\prime}}| + w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \nonumber
 %%
+\end{align}
+\begin{align}
 \intertext{Using the fact that $\ltwonorm{r^S} \leq \gamma$, $|w_{i^\prime}|<
 \gamma$ (which can be verified by the setting of $K$ below),
 $|\ip{e^i}{e^{i^\prime}}| \leq 1$ and $\ltwonorm{e^{i^\prime}} \leq 1$, we
@@ -163,6 +172,8 @@ obtain}
 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} + w_{i^\prime}^2
 \ltwonorm{e^{i^\prime}}^2 &\leq 6 |w_{i^\prime}||\gamma| \label{eqn:cabbage}
 %%
+\end{align}
+\begin{align}
 \intertext{Recall that $|w_{i^\prime}| \leq \ltwonorm{w}/\sqrt{K}$. Also $\ltwonorm{w}
 \leq \ltwonorm{f^S} + \ltwonorm{r^S} \leq 2 \ltwonorm{f^S} \leq 2 \ltwonorm{f}
 \leq 2uk$, where we have used the fact that $\ltwonorm{r^S}$ is small. Combining

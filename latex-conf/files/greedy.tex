@@ -139,15 +139,15 @@ time steps where the mutator outputs mutations of type ``adding'' have occurred,
 and the first $k$ of these occurrences are all separated by at least
 $\epsilon/(4(k+1) \lambda)$ time steps of other types of mutations.
 
-Also, let $m = p^{-1}\ln(4g/\epsilon)$ and let $s = (200gkG^2B^2/\alpha^2)
-\ln(4m/\epsilon)$ be the \emph{size function}.  These values ensure that for
-$g$ generations, except with probability $\epsilon/2$, the mutator always
-produces a mutation that had probability at least $p$ of being produced
-(conditioned on the type of mutations output by the mutator at that time step),
-and that for all the representations concerned, $|\hat{\loss}_{f, D}(w) -
-\loss_{f, D}(w)| \leq \tau$, where $\tau = \alpha/5$. Thus, allowing the process
-to fail with probability $\epsilon$, we assume that none of the undesirable
-events have occurred.
+Also, let $m = p^{-1}\ln(4g/\epsilon)$ and let the \emph{size function} be $s =
+(200gkG^2B^2/\alpha^2) \ln(4m/\epsilon)$.  These values ensure that for $g$
+generations, except with probability $\epsilon/2$, the mutator always produces a
+mutation that had probability at least $p$ of being produced (conditioned on the
+type of mutations output by the mutator at that time step), and that for all the
+representations concerned, $|\hat{\loss}_{f, D}(w) - \loss_{f, D}(w)| \leq
+\tau$, where $\tau = \alpha/5$. Thus, allowing the process to fail with
+probability $\epsilon$, we assume that none of the undesirable events have
+occurred.
 
 We will show that the steps with mutations other than ``adding'' are sufficient
 to ensure that evolution reaches the (almost) best possible target with the

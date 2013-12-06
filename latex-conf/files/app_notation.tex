@@ -12,7 +12,8 @@ Now, consider the following:
 &= \E\left[\left(\sum_{i = 1}^n w_i (\tilde{x}_i + \eta_i) \right)^2 \right] \\ 
 &= \E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i\right)^2\right] +
 2\E\left[\left(\sum_{i=1}^n w_i \tilde{x}_i \right)\left(\sum_{i=1}^n w_i
-\eta_i\right) \right] + \E\left[\left(\sum_{i=1}^n w_i \eta_i\right)^2\right] \\
+\eta_i\right) \right] \\
+\mbox{}&\quad + \E\left[\left(\sum_{i=1}^n w_i \eta_i\right)^2\right] \\
 &\geq \sum_{i=1}^n w_i^2 \E[\eta_i^2] \mbox{~~~~~~~Since $\eta_i$ are all independent}
 \\
 &\geq \sum_{i = 1}^n w_i^2 \Delta^2  \mbox{~~~~~~~~~~Since $\E[\eta_i^2] = \Delta^2$ by

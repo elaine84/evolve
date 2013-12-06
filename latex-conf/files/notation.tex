@@ -93,8 +93,10 @@ produced signifying failure of evolution.
 \displaystyle\min_{r^\prime \in \Neigh(r, \epsilon)} \hat{\loss}_{f,
 D}(r^\prime)$.  If $\widehat{\opt} > \hat{\loss}_{f, D}(r) + t(r, \epsilon)$,
 then $\bot$ is produced signifying failure of evolution.  Otherwise, consider
-the multiset, $\best = \{ r^\prime \in \Neigh(r, \epsilon) ~|~ \hat{\loss}_{f,
-D}(r^\prime) \leq \widehat{\opt} + t(r, \epsilon) \}$, and then $r^\prime$ is
+the multiset, 
+\[ \best = \{ r^\prime \in \Neigh(r, \epsilon) ~|~ \hat{\loss}_{f,
+D}(r^\prime) \leq \widehat{\opt} + t(r, \epsilon) \},\] 
+and then $r^\prime$ is
 chosen from $\best$ randomly as the surviving creature at the next generation.
 \end{enumerate}
 
