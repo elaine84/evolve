@@ -1,4 +1,4 @@
-\begin{proof}[Proof of Claim \ref{claim:apple}] We show that in this case, a
+\begin{proof}[of Claim \ref{claim:apple}] We show that in this case, a
 ``scaling'' mutation achieves the desired result. Restricted to the direction
 $w$, the best approximation to $f^S$ is $\frac{\ip{f^S}{w}}{\ltwonorm{w}^2}w$.
 We have that
@@ -31,7 +31,7 @@ $1/4$, and combined with the probability of choosing a scaling mutation we get
 the desired result.
 \end{proof}
 
-\begin{proof}[Proof of Claim~\ref{claim:banana}] Here, we appeal to a mutation
+\begin{proof}[of Claim~\ref{claim:banana}] Here, we appeal to a mutation
 that adjusts the relative weights of the variables within the set $S = \NZ(w)$.
 Consider the vector $f^S - w$, and note that $\NZ(f^S -w ) \subseteq S$. Let
 $r^S = f^S - w$ denote the residual, which lies in the space spanned by $S$.
@@ -86,7 +86,7 @@ $f \in \lin^k_{l, u}$ is $uk$. Thus, our choice of $B = 10 uk / \Delta$ is
 sufficient.  This completes the proof of Claim~\ref{claim:banana}.
 \end{proof}
 
-\begin{proof}[Proof of Claim~\ref{claim:cantaloupe}] Finally, we show that if
+\begin{proof}[of Claim~\ref{claim:cantaloupe}] Finally, we show that if
 $\ltwonorm{f^S - w}$ is very small, but $\NZ(f) \not\subseteq S$, then it must
 be the case that a ``swapping'' or ``adding'' mutation is beneficial. We focus
 on the swapping case, \ie when $|S| = K$; the adding step is a special case of
@@ -133,11 +133,12 @@ conclude that there exists an $i$ for which}
 w_{i^\prime} e^{i^\prime}$ for $\gamma \in [\beta - |\beta|/2, \beta +
 |\beta|/2]$. Then, we have}
 %%
-\ltwonorm{f - (w + \gamma e^i - w_{i^\prime} e^{i^\prime})}^2 &= \ltwonorm{f - (w
-+ \gamma e^i)}^2 \\
-&\quad - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} +
+&\ltwonorm{f - (w + \gamma e^i - w_{i^\prime} e^{i^\prime})}^2 \nonumber \\
+&\mbox{~~~~}= \ltwonorm{f - (w + \gamma e^i)}^2 - 2 w_{i^\prime} \ip{f - (w + \gamma e^i)}{e^{i^\prime}} +
 w_{i^\prime}^2 \ltwonorm{e^{i^\prime}}^2 \label{eqn:artichoke}
 %%
+\end{align}
+\begin{align}
 \intertext{We bound the first term on the right hand side of the above expression and then
 the latter two.}
 %
