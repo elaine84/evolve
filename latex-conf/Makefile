@@ -3,9 +3,9 @@ onepage: onepage.pdf clean
 main.pdf: main.tex all-refs.bib files/*.tex latex_macros.tex
 	pdflatex main
 	pdflatex main
-	bibtex main
-	pdflatex main
-	pdflatex main
+	#bibtex main
+	#pdflatex main
+	#pdflatex main
 onepage.pdf: onepage.tex all-refs.bib latex_macros.tex
 	pdflatex onepage
 	pdflatex onepage

@@ -1,6 +1,18 @@
 \documentclass{sig-alternate-2013}
 
-\conferenceinfo{ITCS}{'14 Princeton, New Jersey, USA}
+\newfont{\mycrnotice}{ptmr8t at 7pt}
+\newfont{\myconfname}{ptmri8t at 7pt}
+\let\crnotice\mycrnotice%
+\let\confname\myconfname%
+
+\permission{Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.}
+\conferenceinfo{ITCS'14,}{January 12--14, 2014, Princeton, New Jersey, USA.}
+\copyrightetc{Copyright 2014 ACM \the\acmcopyr}
+\crdata{978-1-4503-2698-8/14/01\ ...\$15.00.\\
+http://dx.doi.org/10.1145/2554797.2554824}
+
+\clubpenalty=10000
+\widowpenalty = 10000
 
 \usepackage{amsmath,amssymb}
 \usepackage[usenames]{color}
@@ -35,7 +47,6 @@ Fellowship.}\\
 \category{F.2}{Analysis of Algorithms and Problem Complexity}{General}
 %\category{Machine Learning Theory}
 
-\terms{Theory}
 \keywords{Evolvability, Computational Learning Theory, Regression}
 
 \section{Introduction}
@@ -71,8 +82,9 @@ We would like to thank Leslie Valiant for helpful discussions and comments on an
 earlier version of this paper. We are grateful to Frank Solomon for discussing
 biological aspects related to this work.
 
-\bibliography{all-refs}
-\bibliographystyle{plain}
+% \bibliography{all-refs}
+% \bibliographystyle{plain}
+\input{files/all-refs.tex}
 
 \newpage
 \appendix 
